@@ -8,3 +8,4 @@ CitableObject = "e2b2f5ea-1cd8-4ce8-9b2b-05dad64c2a57"
 
 [compat]
 CitableObject = "0.2"
+julia = "1.5"
