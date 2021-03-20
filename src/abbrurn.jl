@@ -1,7 +1,7 @@
 "Short form of a Cite2Urn containing only collection and object ID."
 abstract type AbbreviatedUrn end
 
-"Abbreviated URN for stem."
+"Abbreviated URN for a morphological stem."
 struct StemUrn <: AbbreviatedUrn
     collection::AbstractString
     objectid::AbstractString
@@ -30,7 +30,7 @@ struct RuleUrn <: AbbreviatedUrn
 end
 
 
-"Abbreviated URN for lexeme."
+"Abbreviated URN for a lexeme."
 struct LexemeUrn <: AbbreviatedUrn
     collection::AbstractString
     objectid::AbstractString
@@ -44,7 +44,9 @@ struct LexemeUrn <: AbbreviatedUrn
     end
 end
 
-"Abbreviated URN for morphological form."
+"""
+Abbreviated URN for a morphological form.
+"""
 struct FormUrn <: AbbreviatedUrn
     collection::AbstractString
     objectid::AbstractString
@@ -59,7 +61,17 @@ struct FormUrn <: AbbreviatedUrn
 end
 
 
-"""Compose SFST representation of an `AbbreviatedUrn`.
+"""
+    fstsafe(au::AbbreviatedUrn)
+
+Compose SFST representation of an `AbbreviatedUrn`.
+
+Example:
+
+```julia-repl
+julia> LexemeUrn("lexicon.lex123") |> fstsafe
+"<u>lexicon\\.lex123</u>"
+```
 """
 function fstsafe(au::AbbreviatedUrn)
     string("<u>", au.collection, raw"\.", au.objectid, "</u>")
