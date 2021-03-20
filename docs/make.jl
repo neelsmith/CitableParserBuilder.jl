@@ -1,4 +1,5 @@
 push!(LOAD_PATH,"../")
+import Pkg; Pkg.add("CitableObject")
 using Documenter, CitableParserBuilder
 using CitableObject
 
