@@ -1,11 +1,30 @@
-"""Constructs an `AbbreviatedUrn` string from a `Cite2Urn`.
+"""
+    abbreviate(urn::Cite2Urn)
+
+Constructs an `AbbreviatedUrn` string from a `Cite2Urn`.
+
+Example:
+```julia-repl
+julia> abbreviate(Cite2Urn("urn:cite2:kanones:lsj.v1:n123"))
+"lsj.n123"
+```
+
+Example: a pipeline abbreviating a `Cite2Urn` and forming a `LexemeUrn`
+from the abbreviated string value.
+```julia-repl
+julia> Cite2Urn("urn:cite2:kanones:lsj.v1:n123") |> abbreviate |> LexemeUrn
+LexemeUrn("lsj", "n123")
+```
 """
 function abbreviate(urn::Cite2Urn)::String
     string(collectionid(urn), ".", objectcomponent(urn))
 end
 
 
-"""Constructs a `Cite2Urn` from an `AbbreviatedUrn`
+"""
+    expand(au::AbbreviatedUrn, registry::Dict)
+
+Constructs a `Cite2Urn` from an `AbbreviatedUrn`
 and a dictionary mapping collection identifiers in 
 AbbreviatedUrns's to full `Cite2Urn`s for a
 versioned collection.
