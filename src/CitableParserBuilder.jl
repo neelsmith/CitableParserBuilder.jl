@@ -10,7 +10,7 @@ export RuleUrn
 export FormUrn
 export Analysis
 
-export fstsafe, expand, abbreviate
+export fstsafe, expand, abbreviate, abbreviation
 
 
 

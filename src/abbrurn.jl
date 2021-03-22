@@ -76,3 +76,8 @@ julia> LexemeUrn("lexicon.lex123") |> fstsafe
 function fstsafe(au::AbbreviatedUrn)
     string("<u>", au.collection, raw"\.", au.objectid, "</u>")
 end
+
+
+function abbreviation(au)
+    string(au.collection,".", au.objectid)
+end

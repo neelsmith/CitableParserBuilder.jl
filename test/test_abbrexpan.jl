@@ -16,3 +16,8 @@ end
     expectedurn = Cite2Urn("urn:cite2:kanones:morphforms.v1:1000000001")
     @test expanded == expectedurn
 end
+
+@testset "Compose abbreviation string for an AbbreviatedUrn" begin
+    formurn = FormUrn("morphforms.1000000001")
+    @test abbreviation(formurn) == "morphforms.1000000001"
+end
