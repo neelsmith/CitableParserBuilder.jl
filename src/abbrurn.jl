@@ -82,5 +82,5 @@ function protectunderscore(s)
 end
 
 function abbreviation(au)
-    string(protectunderscore(au.collection),".", protectunderscore(au.objectid))
+    string(au.collection,".", au.objectid)
 end
