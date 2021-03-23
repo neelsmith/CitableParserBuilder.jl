@@ -74,10 +74,13 @@ julia> LexemeUrn("lexicon.lex123") |> fstsafe
 ```
 """
 function fstsafe(au::AbbreviatedUrn)
-    string("<u>", au.collection, raw"\.", au.objectid, "</u>")
+    string("<u>", protectunderscore(au.collection), raw"\.", protectunderscore(au.objectid), "</u>")
 end
 
+function protectunderscore(s)
+    replace(s, "_" => raw"\_")
+end
 
 function abbreviation(au)
-    string(au.collection,".", au.objectid)
+    string(protectunderscore(au.collection),".", protectunderscore(au.objectid))
 end
