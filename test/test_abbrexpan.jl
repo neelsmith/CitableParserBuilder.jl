@@ -21,3 +21,8 @@ end
     formurn = FormUrn("morphforms.1000000001")
     @test abbreviation(formurn) == "morphforms.1000000001"
 end
+
+@testset "In abbreviation string, preserve FST reserved characters without escaping" begin
+    rule = RuleUrn("nouninfl.h_hs2")
+    @test abbreviation(rule) == "nouninfl.h_hs2"
+end
