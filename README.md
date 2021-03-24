@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/neelsmith/CitableParserBuilder.jl.svg?branch=main)](https://travis-ci.com/neelsmith/CitableParserBuilder.jl)
+
 # CitableParserBuilder.jl
 
 Common infrastructure for managing citable morphological datasets and compiling parsers with the Stuttgart FST toolkit.
