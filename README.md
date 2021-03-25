@@ -1,3 +1,5 @@
+![build](https://github.com/HCMID/Orthography.jl/actions/workflows/Documentation.yml/badge.svg)
+
 
 # CitableParserBuilder.jl
 
