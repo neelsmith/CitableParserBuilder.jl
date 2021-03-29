@@ -1,21 +1,17 @@
 module CitableParserBuilder
 using CitableObject
 
-export AbbreviatedUrn
 
-
-export LexemeUrn
-export StemUrn
-export RuleUrn
-export FormUrn
 export Analysis
+export Stem, Rule
+export AbbreviatedUrn
+export LexemeUrn, FormUrn, StemUrn, RuleUrn
 
 export fstsafe, expand, abbreviate, abbreviation
-
-
 
 include("abbrurn.jl")
 include("analysis.jl")
 include("citeurn.jl")
+include("types.jl")
 
 end # module
