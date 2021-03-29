@@ -1,6 +1,6 @@
 module CitableParserBuilder
 using CitableObject
-
+using Documenter, DocStringExtensions
 
 export Analysis
 export Stem, Rule

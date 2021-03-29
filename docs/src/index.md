@@ -12,6 +12,7 @@ The `CitableParserBuilder` package offers common functions and structures used b
     2. the morphological form
     3. the stem used to arrive at the analysis
     4. the inflectional rule used to arrive at the analysis
+- `Stem` and `Rule`.  Abstract types for specific stem and rule types identified by `AbbreviatedUrn`s.  `Stem`s     
 - `AbbreviatedUrn`.  An abstract type supporting an abbreviated notation for `Cite2Urn`s.  The package includes implementations of the `AbbrevatedUrn` for each uniquely identified component of an `Analysis`:
     1. `LexemeUrn`
     2. `FormUrn`

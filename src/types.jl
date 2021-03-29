@@ -26,3 +26,16 @@ function id(r::Rule)
     @warn("Unrecognized implementation of Rule")
     nothing
 end
+
+"Function required to get string value for inflection class of a Stem implementation."
+function inflectiontype(s::Stem)
+    @warn("Unrecognized implementation of Stem")
+    nothing
+end
+
+"Function required to get string value for inflection class of a Rule implementation."
+function inflectiontype(s::Rule)
+    @warn("Unrecognized implementation of Rule")
+    nothing
+end
+

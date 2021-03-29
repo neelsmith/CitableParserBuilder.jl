@@ -17,9 +17,10 @@ FormUrn
 ## Functions for working with `AbbreviatedUrn`s
 
 ```@docs
-abbreviate(urn::Cite2Urn)
-expand(au::AbbreviatedUrn, registry::Dict)
-fstsafe(au::AbbreviatedUrn)
+abbreviate
+expand
+fstsafe
+abbreviation
 ```
 
 ## Functions for working with `Stem`s and `Rule`s
@@ -27,6 +28,7 @@ fstsafe(au::AbbreviatedUrn)
 ```@docs
 CitableParserBuilder.lexeme
 CitableParserBuilder.id
+CitableParserBuilder.inflectiontype
 ```
 
 
