@@ -1,4 +1,20 @@
-# `CitableParserBuilder` documentation
+# CitableParserBuilder
 
-The `CitableParserBuilder` package offers common functions and structures used by the `Kanones.jl` and `Tabulae.jl` packages for building ancient Greek and Latin morphological parsers, respectively.  (`Kanones.jl` and `Tabulae.jl` are not yet registered packages.)
+The `CitableParserBuilder` package offers common functions and structures used by the `Kanones` and `Tabulae` packages for building ancient Greek and Latin morphological parsers, respectively.  Since both `Kanones` and `Tabulae` build finite state transducers with the [Stuttgart Finite State Transducer](https://github.com/santhoshtr/sfst), `CitableParserBuilder` includes utilities for transcoding string values to and from URN values and SFST-PL expressions.
+
+!!! note
+    `Kanones.jl` and `Tabulae.jl` are not yet registered packages.
+
+## Shared structures
+
+- `Analysis`.  URN values define the four components of an Analysis:
+    1. the lexeme
+    2. the morphological form
+    3. the stem used to arrive at the analysis
+    4. the inflectional rule used to arrive at the analysis
+- `AbbreviatedUrn`.  An abstract type supporting an abbreviated notation for `Cite2Urn`s.  The package includes implementations of the `AbbrevatedUrn` for each uniquely identified component of an `Analysis`:
+    1. `LexemeUrn`
+    2. `FormUrn`
+    3. `StemUrn`
+    4. `RuleUrn`
 
