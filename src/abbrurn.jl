@@ -61,10 +61,9 @@ struct FormUrn <: AbbreviatedUrn
 end
 
 
-"""
-    fstsafe(au::AbbreviatedUrn)
+"""Compose SFST representation of an `AbbreviatedUrn`.
 
-Compose SFST representation of an `AbbreviatedUrn`.
+$(SIGNATURES)
 
 Example:
 
@@ -81,6 +80,11 @@ function protectunderscore(s)
     replace(s, "_" => raw"\_")
 end
 
+
+"""Create string abbreviation for an `AbbreviatedUrn`.
+
+$(SIGNATURES)
+"""
 function abbreviation(au)
     string(au.collection,".", au.objectid)
 end

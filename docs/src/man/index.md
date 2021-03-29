@@ -1,20 +1,35 @@
 # API documentation
 
-## Functions
-
-```@docs
-abbreviate(urn::Cite2Urn)
-expand(au::AbbreviatedUrn, registry::Dict)
-fstsafe(au::AbbreviatedUrn)
-```
-
 ## Structures
 
 ```@docs
-LexemeUrn
+AbbreviatedUrn
+Stem
+Rule
+Analysis
 StemUrn
 RuleUrn
+LexemeUrn
 FormUrn
-Analysis
 ```
+
+
+## Functions for working with `AbbreviatedUrn`s
+
+```@docs
+abbreviate
+expand
+fstsafe
+abbreviation
+```
+
+## Functions for working with `Stem`s and `Rule`s
+
+```@docs
+CitableParserBuilder.lexeme
+CitableParserBuilder.id
+CitableParserBuilder.inflectiontype
+```
+
+
 

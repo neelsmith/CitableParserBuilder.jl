@@ -1,6 +1,12 @@
 # User's guide
 
+## The `Analysis` type
 
+TBA
+
+## `Stem`s and `Rule`s
+
+TBA
 
 ## Abbreviated URNs
 
