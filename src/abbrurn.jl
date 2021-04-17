@@ -1,6 +1,36 @@
 "Short form of a Cite2Urn containing only collection and object ID."
 abstract type AbbreviatedUrn end
 
+"""Equality function for all subtypes of `AbbreviatedUrn`.
+
+$(SIGNATURES)
+"""
+function Base.:(==)(x::T, y::T)  where {T <: AbbreviatedUrn}
+    collection(x) == collection(y) && objectid(x) == objectid(y)
+
+end
+
+
+"""Default implementation of function to find collection value of `AbbreviatedUrn`.
+
+$(SIGNATURES)
+"""
+function collection(au::T) where {T <: AbbreviatedUrn}
+    # default to looking for a member!
+    au.collection
+end
+
+
+"""Default implementation of function to find collection value of `AbbreviatedUrn`.
+
+$(SIGNATURES)
+"""
+function objectid(au::T) where {T <: AbbreviatedUrn}
+    # default to looking for a member!
+    au.objectid
+end
+
+
 "Abbreviated URN for a morphological stem."
 struct StemUrn <: AbbreviatedUrn
     collection::AbstractString
