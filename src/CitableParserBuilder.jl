@@ -4,6 +4,8 @@ using Documenter, DocStringExtensions
 
 export Analysis
 export Stem, Rule
+export ==
+export objectid, collection
 export AbbreviatedUrn
 export LexemeUrn, FormUrn, StemUrn, RuleUrn
 

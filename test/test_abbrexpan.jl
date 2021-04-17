@@ -26,3 +26,11 @@ end
     rule = RuleUrn("nouninfl.h_hs2")
     @test abbreviation(rule) == "nouninfl.h_hs2"
 end
+
+@testset "Test equality function" begin
+    s1 = StemUrn("x.y")
+    s2 = StemUrn("x.y")
+    s3 = StemUrn("x.z")
+    @test s1 == s2
+    @test s1 != s3
+end
