@@ -1,8 +1,8 @@
 module CitableParserBuilder
-using CitableObject
+using CitableObject, CitableText
 using Documenter, DocStringExtensions
 
-export Analysis
+export Analysis, AnalyzedToken
 export Stem, Rule
 export ==
 export objectid, collection
@@ -11,6 +11,7 @@ export LexemeUrn, FormUrn, StemUrn, RuleUrn
 
 export fstsafe, expand, abbreviate, abbreviation
 export readfst
+export cex
 
 include("abbrurn.jl")
 include("analysis.jl")
