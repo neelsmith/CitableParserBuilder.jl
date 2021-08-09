@@ -2,7 +2,7 @@ module CitableParserBuilder
 using CitableObject, CitableText
 using Documenter, DocStringExtensions
 
-export Analysis, AnalyzedToken
+export Analysis, AnalyzedToken, CitableParser
 export Stem, Rule
 export ==
 export objectid, collection
