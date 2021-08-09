@@ -2,11 +2,18 @@
 
 ## The `Analysis` type
 
-TBA
+Each individual `Analysis` associates four features, identified by URN, with a string value for a token:
+
+1. the lexeme 
+2. the form
+3. the stem
+4. the inflectional rule
+
+For a morphologically ambiguous token, there will be multiple valid `Analysis` objects with the same string value.
 
 ## `Stem`s and `Rule`s
 
-TBA
+The `CitableParserBuilder` assumes a typical model of computational morphological analysis that crosses a lexicon of stems with a set of inflectional patterns to create a comprehensive set of recognized forms.  The stem and rule  of an `Analysis`  explain how the analysis' lexeme and form were arrived at.
 
 ## Abbreviated URNs
 

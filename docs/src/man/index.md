@@ -11,6 +11,7 @@ StemUrn
 RuleUrn
 LexemeUrn
 FormUrn
+AnalyzedToken
 ```
 
 
@@ -36,4 +37,16 @@ CitableParserBuilder.inflectiontype
 
 ```@docs
 readfst
+```
+
+
+## Parsers and analyses
+
+
+```@docs
+parsetoken
+parsewordlist
+parselistfromfile
+parselistfromurl
+cex
 ```
