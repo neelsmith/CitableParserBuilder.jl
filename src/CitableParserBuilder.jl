@@ -11,7 +11,7 @@ export LexemeUrn, FormUrn, StemUrn, RuleUrn
 
 export fstsafe, expand, abbreviate, abbreviation
 export readfst
-export cex
+export cex, fromcex
 export parsetoken, parsewordlist, parselistfromfile, parselistfromurl
 
 
