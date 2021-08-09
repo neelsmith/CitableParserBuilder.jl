@@ -12,7 +12,10 @@ export LexemeUrn, FormUrn, StemUrn, RuleUrn
 export fstsafe, expand, abbreviate, abbreviation
 export readfst
 export cex
+export parsetoken, parsewordlist, parselistfromfile, parselistfromurl
 
+
+include("parser.jl")
 include("abbrurn.jl")
 include("analysis.jl")
 include("citeurn.jl")
