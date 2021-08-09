@@ -24,3 +24,15 @@ end
     expected = "Et|urn:cts:demo:latin.sample:1|et,ls.n16278,morphforms.1000000001,rules.example1,stems.example1"
     @test cex(tkn) == expected
 end
+
+@testset "Test parsing serialized Analysis" begin
+  cex = "οὑτω,lsj.n76063,morphforms.1000000004,litgreek.indeclinable4,uninflectedstems.n76063"
+  a = fromcex(cex)
+  @test isa(a, Analysis)
+  @test a.lexeme == LexemeUrn("lsj.n76063")
+  @test a.form == FormUrn("morphforms.1000000004")
+  @test a.stem == StemUrn("litgreek.indeclinable4")
+  @test a.rule == RuleUrn("uninflectedstems.n76063")
+end
+
+

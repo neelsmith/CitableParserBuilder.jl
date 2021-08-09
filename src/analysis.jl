@@ -44,3 +44,38 @@ function cex(tkn::AnalyzedToken; delim="|", delim2=";", delim3=",")
     columns = [tkn.surfacetoken, tkn.texturn.urn, join(alist,delim2)]
     join(columns, delim)
 end
+
+
+"""Compose delimited text representation for a 
+map of tokens to a vector of analyses.
+
+$(SIGNATURES)
+"""
+function cex(prs)::Tuple{ String, Vector{Analysis} }
+    cexlines = []
+    for pr in prs
+        if isempty(pr[2])
+            push!(cexlines, string(pr[1],"|"))
+        else
+            for id in pr[2]
+                push!(cexlines, string(pr[1],"|", cex(id)))
+            end
+        end
+    end
+    join(cexlines,"\n")
+end
+
+
+"""Parse delimited-text representaiton into an `Analysis`.
+
+$(SIGNATURES)
+"""
+function fromcex(s, delim = ",")::Analysis
+    parts = split(s, delim)
+    Analysis(parts[1],
+    LexemeUrn(parts[2]),
+    FormUrn(parts[3]),
+    StemUrn(parts[4]),
+    RuleUrn(parts[5])
+    )
+end
