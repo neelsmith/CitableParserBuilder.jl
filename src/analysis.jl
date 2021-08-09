@@ -41,6 +41,6 @@ function cex(tkn::AnalyzedToken; delim="|", delim2=";", delim3=",")
     for a in tkn.analyses
         push!(alist, cex(a,delim3))
     end
-    columns = [a.surfacetoken, a.texturn.urn,join(alist,delim2)]
+    columns = [tkn.surfacetoken, tkn.texturn.urn, join(alist,delim2)]
     join(columns, delim)
 end
