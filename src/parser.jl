@@ -1,7 +1,5 @@
 abstract type CitableParser end
 
-
-
 """Required function to parse a single token with a `CitableParser`.
 
 $(SIGNATURES)
@@ -12,40 +10,40 @@ function parsetoken(p::T, t::AbstractString) where {T <: CitableParser}
 end
 
 
-"""Required function to parse a list of tokens with a `CitableParser`.
-
+"""Parse a list of tokens with a `CitableParser`.
 
 $(SIGNATURES)
 
-Should return pairs of tokens with a (possibly empty) Vector of Analyses.
+Should return a (possibly empty) Vector of Analyses.
 """
-function parsewordlist(p::T, v) where {T <: CitableParser}
-    @warn("parsewordlist function not defined for type ", typeof(p))
-    nothing
+function parsewordlist(p::T, tokens) where {T <: CitableParser}
+    parses = []
+    for t in tokens
+        push!(parses, parsetoken(p,t))
+    end
+    parses
 end
 
 
-
-"""Required function to parse a list of tokens in a file with a `CitableParser`.
+"""Parse a list of tokens in a file with a `CitableParser`.
 
 $(SIGNATURES)
 
-Should return pairs of tokens with a (possibly empty) Vector of Analyses.
+Should return pairings of tokens with a (possibly empty) Vector of Analyses.
 """
-function parselistfromfile(p::T, f) where {T <: CitableParser}
-    @warn("parselistfromfile function not defined for type ", typeof(p))
-    nothing
+function parselistfromfile(p::T, f; delim = '|') where {T <: CitableParser}
+    words = readdlm(f, delim)
+    parsewordlist(p, words)
 end
 
 
-
-"""Required function to parse a list of tokens at a given url with a `CitableParser`.
+"""Parse a list of tokens at a given url with a `CitableParser`.
 
 $(SIGNATURES)
 
-Should return pairs of tokens with a (possibly empty) Vector of Analyses.
+Should return pairings of tokens with a (possibly empty) Vector of Analyses.
 """
 function parselistfromurl(p::T, u) where {T <: CitableParser}
-    @warn("parselistfromurl function not defined for type ", typeof(p))
-    nothing
+    words = split(String(HTTP.get(u).body) , "\n")
+    parsewordlist(p,words)
 end
