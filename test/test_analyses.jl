@@ -36,3 +36,7 @@ end
 end
 
 
+@testset "Test parsing analyses from file" begin
+  noanalysis = "αἰτια|"
+  
+end

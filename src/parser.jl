@@ -5,8 +5,9 @@ abstract type CitableParser end
 $(SIGNATURES)
 """
 function parsetoken(p::T, t::AbstractString) where {T <: CitableParser}
-    @warn("parsetoken function not defined for type ", typeof(p))
-    nothing
+    #@warn("parsetoken function not defined for type ", typeof(p))
+    #nothing
+    p.stringparser(t)
 end
 
 
