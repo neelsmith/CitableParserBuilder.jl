@@ -14,8 +14,18 @@ FormUrn
 AnalyzedToken
 ```
 
+## Parsing
 
-## Functions for working with `AbbreviatedUrn`s
+```@docs
+parsetoken
+parsewordlist
+parselistfromfile
+parselistfromurl
+parsenode
+parsecorpus
+```
+
+## Working with `AbbreviatedUrn`s
 
 ```@docs
 abbreviate
@@ -24,7 +34,7 @@ fstsafe
 abbreviation
 ```
 
-## Functions for working with `Stem`s and `Rule`s
+## Working with `Stem`s and `Rule`s
 
 ```@docs
 CitableParserBuilder.lexeme
@@ -40,13 +50,8 @@ readfst
 ```
 
 
-## Parsers and analyses
-
+## Serialization
 
 ```@docs
-parsetoken
-parsewordlist
-parselistfromfile
-parselistfromurl
 cex
 ```

@@ -1,9 +1,10 @@
 name = "CitableParserBuilder"
 uuid = "c834cb9d-35b9-419a-8ff8-ecaeea9e2a2a"
 authors = ["Neel Smith <dnsmith.neel@gmail.com>"]
-version = "0.8.1"
+version = "0.9.0"
 
 [deps]
+CitableCorpus = "cf5ac11a-93ef-4a1a-97a3-f6af101603b5"
 CitableObject = "e2b2f5ea-1cd8-4ce8-9b2b-05dad64c2a57"
 CitableText = "41e66566-473b-49d4-85b7-da83b66615d8"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
@@ -11,6 +12,7 @@ Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
+CitableCorpus = "0.3"
 CitableObject = "0.3, 0.4, 0.5, 0.6"
 CitableText = "0.9"
 DocStringExtensions = "0.8"

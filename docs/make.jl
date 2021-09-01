@@ -17,11 +17,12 @@ using CitableObject
 makedocs(
     sitename="CitableParserBuilder.jl",
     pages = [
-        "Home" => "index.md",
-        "Guide" => [
-            "guide/guide.md",
+        "Overview" => "index.md",
+        "User's guide" => [
+
             "guide/parser.md",
-            "guide/analyses.md"
+            "guide/analyses.md",
+            "guide/parsers.md"
         ],
         "API documentation" => [
             "man/index.md"
