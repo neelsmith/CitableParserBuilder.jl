@@ -3,10 +3,10 @@ abstract type CitableParser end
 """Required function to parse a single token with a `CitableParser`.
 
 $(SIGNATURES)
+
+Should return a (possibly empty) Vector of Analyses.
 """
 function parsetoken(p::T, t::AbstractString) where {T <: CitableParser}
-    #@warn("parsetoken function not defined for type ", typeof(p))
-    #nothing
     p.stringparser(t)
 end
 
@@ -37,7 +37,6 @@ function parselistfromfile(p::T, f; delim = '|') where {T <: CitableParser}
     parsewordlist(p, words)
 end
 
-
 """Parse a list of tokens at a given url with a `CitableParser`.
 
 $(SIGNATURES)
@@ -47,4 +46,32 @@ Should return pairings of tokens with a (possibly empty) Vector of Analyses.
 function parselistfromurl(p::T, u) where {T <: CitableParser}
     words = split(String(HTTP.get(u).body) , "\n")
     parsewordlist(p,words)
+end
+
+
+
+
+
+"""Parse a `CitableNode` with text for a single token with a `CitableParser`.
+
+$(SIGNATURES)
+
+Should return a pairing of the CitableNode with a list of analyses.
+"""
+function parsenode(p::T, cn::CitableNode) where {T <: CitableParser}
+    (cn, p.stringparser(cn.text))
+end
+
+"""Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token.
+
+$(SIGNATURES)
+
+Should return a list of pairings of CitableNodes with a list of analyses.
+"""
+function parsecorpus(p::T, c::CitableTextCorpus) where {T <: CitableParser}
+    results = []
+    for cn in c.corpus
+        push!(results, (cn, p.stringparser(cn.text)))
+    end
+    results
 end
