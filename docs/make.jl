@@ -22,6 +22,7 @@ makedocs(
 
             "guide/parser.md",
             "guide/analyses.md",
+            "guide/corpora.md",
             "guide/parsers.md"
         ],
         "API documentation" => [
