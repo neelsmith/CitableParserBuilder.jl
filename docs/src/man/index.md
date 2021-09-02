@@ -25,6 +25,12 @@ parsenode
 parsecorpus
 ```
 
+## Creating an analyzed corpus
+
+```@docs
+analyzecorpus
+```
+
 ## Working with `AbbreviatedUrn`s
 
 ```@docs

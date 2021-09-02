@@ -93,6 +93,8 @@ Cite2Urn
 ```jldoctest loaded
 expanded.urn
 
+# output
+
 "urn:cite2:kanones:morphforms.v1:1000000001"
 ```
 

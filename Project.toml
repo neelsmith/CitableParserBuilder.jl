@@ -1,7 +1,7 @@
 name = "CitableParserBuilder"
 uuid = "c834cb9d-35b9-419a-8ff8-ecaeea9e2a2a"
 authors = ["Neel Smith <dnsmith.neel@gmail.com>"]
-version = "0.9.0"
+version = "0.10.0"
 
 [deps]
 CitableCorpus = "cf5ac11a-93ef-4a1a-97a3-f6af101603b5"
