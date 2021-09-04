@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Analyzing text corpora · CitableParserBuilder.jl</title><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit">CitableParserBuilder.jl</span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Overview</a></li><li><span class="tocitem">User&#39;s guide</span><ul><li><a class="tocitem" href="../parser/">Users&#39; guide: the <code>CitableParser</code></a></li><li><a class="tocitem" href="../analyses/">User&#39;s guide: working with analyses</a></li><li class="is-active"><a class="tocitem" href>Analyzing text corpora</a><ul class="internal"><li><a class="tocitem" href="#Example-of-analyzing-a-citable-text-corpus"><span>Example of analyzing a citable text corpus</span></a></li></ul></li><li><a class="tocitem" href="../parsers/">Examples of <code>CitableParser</code>s</a></li></ul></li><li><span class="tocitem">API documentation</span><ul><li><a class="tocitem" href="../../man/">API documentation</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">User&#39;s guide</a></li><li class="is-active"><a href>Analyzing text corpora</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Analyzing text corpora</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/neelsmith/CitableParserBuilder.jl/blob/master/docs/src/guide/corpora.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Analyzing-text-corpora"><a class="docs-heading-anchor" href="#Analyzing-text-corpora">Analyzing text corpora</a><a id="Analyzing-text-corpora-1"></a><a class="docs-heading-anchor-permalink" href="#Analyzing-text-corpora" title="Permalink"></a></h1><p>Use an <code>OrthographicSystem</code> together with a <code>CitableParser</code> to analyze a full text corpus.  Implementations of the <code>OrthographicSystem</code> abstraction can parse a citable text corpus into a list of tokens.  Since <code>CitableParser</code>s can parse citable tokens, the <code>analyzecorpus</code> function trivially composes these functions to create a list of analyses for each token in a citable corpus.</p><h2 id="Example-of-analyzing-a-citable-text-corpus"><a class="docs-heading-anchor" href="#Example-of-analyzing-a-citable-text-corpus">Example of analyzing a citable text corpus</a><a id="Example-of-analyzing-a-citable-text-corpus-1"></a><a class="docs-heading-anchor-permalink" href="#Example-of-analyzing-a-citable-text-corpus" title="Permalink"></a></h2><p>Let&#39;s instantiate a dummy parser that just analyzes all tokens the same way.</p><pre><code class="language-julia">using CitableParserBuilder
+struct FakeParser &lt;: CitableParser
+    label
+    stringparser
+end
+function fakestringparser(token) 
+    # Returns only nothing values no matter
+    # what the token is
+    [
+        Analysis(
+        token,
+        LexemeUrn(&quot;fakeparser.nothing&quot;),
+        FormUrn(&quot;fakeparser.nothing&quot;),
+        StemUrn(&quot;fakeparser.nothing&quot;),
+        RuleUrn(&quot;fakeparser.nothing&quot;)
+    )
+    ]
+end
+fp = FakeParser(&quot;Parser generating nothing but nothing&quot;, fakestringparser)
+typeof(fp)
+
+# output
+
+FakeParser</code></pre><p>Now let&#39;s create a text corpus.</p><pre><code class="language-julia">using CitableText, CitableCorpus
+ mred = CitableTextCorpus([
+        CitableNode(CtsUrn(&quot;urn:cts:docstrings:mred.themesong:1&quot;),&quot;A horse is a horse, of course, of course,&quot;),
+        CitableNode(CtsUrn(&quot;urn:cts:docstrings:mred.themesong:2&quot;),&quot;And no one can talk to a horse of course,&quot;),
+        CitableNode(CtsUrn(&quot;urn:cts:docstrings:mred.themesong:3&quot;),&quot;That is, of course, unless the horse is the famous Mr. Ed.&quot;),
+])
+typeof(mred)
+
+# output
+
+CitableTextCorpus</code></pre><p>We&#39;ll use the <code>Orthography</code> module&#39;s sample <code>simpleAscii</code> orthography.</p><pre><code class="language-julia">using Orthography
+analyses = analyzecorpus(fp, simpleAscii(), mred)
+analyses |&gt; length
+
+# output
+
+31</code></pre><p>Each analysis pairs a <code>CitableNode</code> with a list of <code>Analysis</code> objects.</p><pre><code class="language-julia">tkn1 = analyses[1]
+tkn1[1]
+
+# output
+
+CitableNode(CtsUrn(&quot;urn:cts:docstrings:mred.themesong:1.1&quot;), &quot;A&quot;)</code></pre><pre><code class="language-julia">analysisvector = tkn1[2]
+length(analysisvector)
+
+# output
+
+1</code></pre><pre><code class="language-julia">analysisvector[1]
+
+# output
+
+Analysis(&quot;A&quot;, LexemeUrn(&quot;fakeparser&quot;, &quot;nothing&quot;), FormUrn(&quot;fakeparser&quot;, &quot;nothing&quot;), StemUrn(&quot;fakeparser&quot;, &quot;nothing&quot;), RuleUrn(&quot;fakeparser&quot;, &quot;nothing&quot;))</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../analyses/">« User&#39;s guide: working with analyses</a><a class="docs-footer-nextpage" href="../parsers/">Examples of <code>CitableParser</code>s »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Saturday 4 September 2021 11:50">Saturday 4 September 2021</span>. Using Julia version 1.5.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
