@@ -4,7 +4,7 @@
         label
         stringparser
     end
-    function fakestringparser(token) 
+    function fakestringparser(token, data...) 
         # Returns only nothing values no matter
         # what the token is
         [
@@ -22,6 +22,7 @@
     r = FakeParser("Parser generating nothing but nothing", fakestringparser)
     
     parse = parsetoken(r, "token")
+
     @test length(parse) == 1
     @test  parse[1].token == "token"
     
