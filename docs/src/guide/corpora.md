@@ -9,10 +9,9 @@ Let's instantiate a dummy parser that just analyzes all tokens the same way.
 ```jldoctest corpus
 using CitableParserBuilder
 struct FakeParser <: CitableParser
-    label
     stringparser
 end
-function fakestringparser(token) 
+function fakestringparser(token, data...) 
     # Returns only nothing values no matter
     # what the token is
     [
@@ -25,7 +24,7 @@ function fakestringparser(token)
     )
     ]
 end
-fp = FakeParser("Parser generating nothing but nothing", fakestringparser)
+fp = FakeParser(fakestringparser)
 typeof(fp)
 
 # output
@@ -52,6 +51,7 @@ CitableTextCorpus
 We'll use the `Orthography` module's sample `simpleAscii` orthography.
 
 
+
 ```jldoctest corpus
 using Orthography
 analyses = analyzecorpus(fp, simpleAscii(), mred)
@@ -61,6 +61,7 @@ analyses |> length
 
 31
 ```
+
 
 Each analysis pairs a `CitableNode` with a list of `Analysis` objects.
 
