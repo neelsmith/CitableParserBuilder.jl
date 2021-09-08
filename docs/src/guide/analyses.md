@@ -37,6 +37,7 @@ lexurn.objectid
 ```
 
 
+
 ### Abbreviated URNs and `Cite2Urn`s
 
 You can use the `abbreviate` function to create an abbreviation string from a `Cite2Urn` using the collection identifier and the object identifer of the `Cite2Urn`.
