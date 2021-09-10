@@ -15,7 +15,7 @@ export readfst
 export cex, fromcex
 export parsetoken, parsewordlist, parselistfromfile, parselistfromurl
 export parsenode, parsecorpus
-export analyzecorpus
+#export analyzecorpus
 
 
 include("parser.jl")
