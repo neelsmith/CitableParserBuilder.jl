@@ -26,3 +26,42 @@
     analyses = analyzecorpus(fp, simpleAscii(), mred)
     @test length(analyses) == 31
 end
+
+@testset "Test inclusion of varargs in corpus analysis" begin
+    struct ParserWithDictionary <: CitableParser
+        stringparser
+    end
+    function dictionaryparser(token, data) 
+        dict = data[1]
+        lc = lowercase(token)
+        if haskey(dict, lc)
+            @info("LC ", lc, " IS a key")
+        else
+            @info("LC ", lc, " is NOT a key")
+        end
+        formval = haskey(dict, lc) ? dict[lc] : "UNANALYZED"
+        @info("FORMVAL ", formval, " LC " , lc)
+        @info("FROM DICT ", dict)
+        [
+            Analysis(
+            token,
+            LexemeUrn("fakeparser." * token),
+            FormUrn("fakeparser." * formval),
+            StemUrn("fakeparser.nothing"),
+            RuleUrn("fakeparser.nothing")
+        )
+        ]
+    end
+    dictp = ParserWithDictionary(dictionaryparser)
+
+    data = Dict(
+            "a" => "ART",
+            "is" => "VRB",
+            "horse" => "NOUN",
+            "of" => "PREP",
+            "course" => "NOUN",
+        )
+    shortmred = CitableTextCorpus([
+            CitableNode(CtsUrn("urn:cts:docstrings:mred.themesong:1"),"A horse is a horse, of course, of course,")])
+    analyses = analyzecorpus(dictp, simpleAscii(), shortmred, data)            
+end
