@@ -1,6 +1,6 @@
 module CitableParserBuilder
 using CitableObject, CitableText, CitableCorpus
-using Orthography
+#using Orthography
 using Documenter, DocStringExtensions
 
 export Analysis, AnalyzedToken, CitableParser
@@ -19,7 +19,7 @@ export analyzecorpus
 
 
 include("parser.jl")
-include("corpus.jl")
+#include("corpus.jl")
 include("abbrurn.jl")
 include("analysis.jl")
 include("citeurn.jl")
