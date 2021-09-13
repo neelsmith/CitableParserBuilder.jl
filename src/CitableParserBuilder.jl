@@ -1,6 +1,5 @@
 module CitableParserBuilder
 using CitableObject, CitableText, CitableCorpus
-#using Orthography
 using Documenter, DocStringExtensions
 
 export Analysis, AnalyzedToken, CitableParser
@@ -15,11 +14,9 @@ export readfst
 export cex, fromcex
 export parsetoken, parsewordlist, parselistfromfile, parselistfromurl
 export parsenode, parsecorpus
-#export analyzecorpus
 
 
 include("parser.jl")
-#include("corpus.jl")
 include("abbrurn.jl")
 include("analysis.jl")
 include("citeurn.jl")
