@@ -7,7 +7,7 @@ $(SIGNATURES)
 Should return a (possibly empty) Vector of Analyses.
 """
 function parsetoken(p::T, t::AbstractString, data = nothing) where {T <: CitableParser}
-    @info("Parsetoken: passing data as a ", typeof(data))
+    #@info("Parsetoken: passing data as a ", typeof(data))
     p.stringparser(t, data)
 end
 
