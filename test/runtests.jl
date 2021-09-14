@@ -1,5 +1,5 @@
 using CitableParserBuilder
-using CitableObject, CitableText
+using CitableObject, CitableText, CitableCorpus
 using Test
 
 

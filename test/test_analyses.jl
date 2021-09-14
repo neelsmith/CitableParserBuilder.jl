@@ -7,7 +7,9 @@
     stem = StemUrn("stems.example1")
     a = Analysis(str, lex, form, stem, rule)
     expected = "et,ls.n16278,morphforms.1000000001,rules.example1,stems.example1" 
-    @test cex(a) == expected
+    @test CitableParserBuilder.cex(a) == expected
+    piped  = "et|ls.n16278|morphforms.1000000001|rules.example1|stems.example1"
+    @test CitableParserBuilder.cex(a, "|") == piped
 end
 
 
@@ -20,9 +22,10 @@ end
     a = Analysis(str, lex, form, stem, rule)
 
     u = CtsUrn("urn:cts:demo:latin.sample:1")
-    tkn = AnalyzedToken("Et", u, [a]) 
+    cn = CitableNode(u, "Et")
+    tkn = AnalyzedToken(cn, [a]) 
     expected = "Et|urn:cts:demo:latin.sample:1|et,ls.n16278,morphforms.1000000001,rules.example1,stems.example1"
-    @test cex(tkn) == expected
+    @test CitableParserBuilder.cex(tkn) == expected
 end
 
 @testset "Test parsing serialized Analysis" begin
@@ -37,6 +40,6 @@ end
 
 
 @testset "Test parsing analyses from file" begin
-  noanalysis = "αἰτια|"
+
   
 end

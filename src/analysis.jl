@@ -11,7 +11,7 @@ struct Analysis
     rule::RuleUrn
 end
 
-"""Serialize an `Analaysis` as delimted text.
+"""Serialize an `Analysis` as delimted text.
 
 $(SIGNATURES)
 """
@@ -27,22 +27,17 @@ end
 """Morphological analyses for a token identified by CTS URN.
 """
 struct AnalyzedToken
-    surfacetoken::AbstractString
-    texturn::CtsUrn
+    citablenode::CitableNode
     analyses::Vector{Analysis}
 end
 
-"""Serialize an `Analaysis` as delimited text.
+
+"""Serialize an `AnalyzedToken` as delimted text.
 
 $(SIGNATURES)
 """
-function cex(tkn::AnalyzedToken; delim="|", delim2=";", delim3=",")
-    alist = []
-    for a in tkn.analyses
-        push!(alist, cex(a,delim3))
-    end
-    columns = [tkn.surfacetoken, tkn.texturn.urn, join(alist,delim2)]
-    join(columns, delim)
+function cex(a::AnalyzedToken, delim = ",")
+    join(cex(a.citablenode,delim), cex(a.analyses,delim), delim)
 end
 
 
@@ -50,6 +45,9 @@ end
 map of tokens to a vector of analyses.
 
 $(SIGNATURES)
+
+This could be useful for serializing analyzes for a list
+of unique tokens in a corpus.    
 """
 function cex(prs)::Tuple{ String, Vector{Analysis} }
     cexlines = []
@@ -70,7 +68,7 @@ end
 
 $(SIGNATURES)
 """
-function fromcex(s, delim = ",")::Analysis
+function analysis_fromcex(s, delim = ",")::Analysis
     parts = split(s, delim)
     Analysis(parts[1],
     LexemeUrn(parts[2]),
@@ -79,3 +77,21 @@ function fromcex(s, delim = ",")::Analysis
     RuleUrn(parts[5])
     )
 end
+
+
+"""Parse delimited-text representaiton into an `AnalyzedToken`.
+
+$(SIGNATURES)
+"""
+function analyzedtoken_fromcex(s, delim = ",")::AnalyzedToken
+    parts = split(s, delim)
+    cn = CitableNode(CtsUrn(parts[1]), parts[2])
+    Analysis(cn,
+    parts[3],
+    LexemeUrn(parts[4]),
+    FormUrn(parts[5]),
+    StemUrn(parts[6]),
+    RuleUrn(parts[7])
+    )
+end
+
