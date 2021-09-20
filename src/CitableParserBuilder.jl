@@ -2,16 +2,24 @@ module CitableParserBuilder
 using CitableObject, CitableText, CitableCorpus
 using Documenter, DocStringExtensions
 
+using CitableBase
+import CitableBase: cex
+import CitableBase: urn
+import CitableBase: label
+
+# Citable functions from CitableBase 3.0.0
+export urn, label, cex
+
 export Analysis, AnalyzedToken, CitableParser
 export Stem, Rule
-export ==
+#export ==
 export objectid, collection
 export AbbreviatedUrn
 export LexemeUrn, FormUrn, StemUrn, RuleUrn
 
 export fstsafe, expand, abbreviate, abbreviation
 export readfst
-export cex, analysis_fromcex, analyzedtoken_fromcex
+export analysis_fromcex, analyzedtoken_fromcex
 export parsetoken, parsewordlist, parselistfromfile, parselistfromurl
 export parsenode, parsecorpus
 
@@ -19,6 +27,7 @@ export parsenode, parsecorpus
 include("parser.jl")
 include("abbrurn.jl")
 include("analysis.jl")
+include("analyzed_token.jl")
 include("citeurn.jl")
 include("types.jl")
 include("fstreader.jl")

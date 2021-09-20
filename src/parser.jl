@@ -50,13 +50,13 @@ function parselistfromurl(p::T, u, data = nothing) where {T <: CitableParser}
 end
 
 
-"""Parse a `CitableNode` with text for a single token with a `CitableParser`.
+"""Parse a `CitablePassage` with text for a single token with a `CitableParser`.
 
 $(SIGNATURES)
 
-Should return a pairing of the CitableNode with a list of analyses.
+Should return a pairing of the CitablePassage with a list of analyses.
 """
-function parsenode(p::T, cn::CitableNode, data = nothing) where {T <: CitableParser}
+function parsenode(p::T, cn::CitablePassage, data = nothing) where {T <: CitableParser}
     (cn, p.stringparser(cn.text, data))
 end
 
@@ -64,7 +64,7 @@ end
 
 $(SIGNATURES)
 
-Should return a list of pairings of a CitableNode with a list of analyses.
+Should return a list of pairings of a CitablePassage with a list of analyses.
 """
 function parsecorpus(p::T, c::CitableTextCorpus, data = nothing) where {T <: CitableParser}
     results = []

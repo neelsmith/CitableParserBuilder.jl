@@ -1,4 +1,4 @@
-"""A citable morphological analysis.
+"""Citable analysis of a string value.
 
 An `Analysis` has five members: a token string value, and four abbreviated
 URNs, one each for the lexeme, form, rule and stem.
@@ -11,33 +11,37 @@ struct Analysis
     rule::RuleUrn
 end
 
-"""Serialize an `Analysis` as delimted text.
+"""Serialize an `Analysis` to delimited text.
+Abbreviated URNs are expanded to full CITE2 URNs
+using `registry` as the expansion dictionary.
 
 $(SIGNATURES)
 """
-function cex(a::Analysis, delim = ",")
+function cex(a::Analysis, delim = "|", registry = nothing)
+    if isnothing(registry)
+        abbrcex(a, delim)
+    else
+        join([ a.token,
+            expand(a.lexeme, registry),
+            expand(a.form, registry),
+            expand(a.rule, registry),
+            expand(a.stem, registry)
+            ], delim)
+    end
+end
+
+"""Serialize an `Analysis` using abbreviated URNs as identifiers.
+
+$(SIGNATURES)
+"""
+function abbrcex(a::Analysis, delim = "|")
+    @info("Seralizing analysis with abbreviations")
     join([ a.token,
         abbreviation(a.lexeme),
         abbreviation(a.form),
         abbreviation(a.rule),
         abbreviation(a.stem)
         ], delim)
-end
-
-"""Morphological analyses for a token identified by CTS URN.
-"""
-struct AnalyzedToken
-    citablenode::CitableNode
-    analyses::Vector{Analysis}
-end
-
-
-"""Serialize an `AnalyzedToken` as delimted text.
-
-$(SIGNATURES)
-"""
-function cex(a::AnalyzedToken, delim = ",")
-    join(cex(a.citablenode,delim), cex(a.analyses,delim), delim)
 end
 
 
@@ -85,7 +89,7 @@ $(SIGNATURES)
 """
 function analyzedtoken_fromcex(s, delim = ",")::AnalyzedToken
     parts = split(s, delim)
-    cn = CitableNode(CtsUrn(parts[1]), parts[2])
+    cn = CitablePassage(CtsUrn(parts[1]), parts[2])
     Analysis(cn,
     parts[3],
     LexemeUrn(parts[4]),

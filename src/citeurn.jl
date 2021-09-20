@@ -1,7 +1,6 @@
-"""
-    abbreviate(urn::Cite2Urn)
+"""Constructs an `AbbreviatedUrn` string from a `Cite2Urn`.
 
-Constructs an `AbbreviatedUrn` string from a `Cite2Urn`.
+$(SIGNATURES)
 
 Example:
 ```julia-repl
@@ -21,10 +20,7 @@ function abbreviate(urn::Cite2Urn)::String
 end
 
 
-"""
-    expand(au::AbbreviatedUrn, registry::Dict)
-
-Constructs a `Cite2Urn` from an `AbbreviatedUrn`
+"""Constructs a `Cite2Urn` from an `AbbreviatedUrn`
 and a dictionary mapping collection identifiers in 
 AbbreviatedUrns's to full `Cite2Urn`s for a
 versioned collection.

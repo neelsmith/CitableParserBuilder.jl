@@ -5,13 +5,13 @@ abstract type AbbreviatedUrn end
 
 $(SIGNATURES)
 """
-function Base.:(==)(x::T, y::T)  where {T <: AbbreviatedUrn}
+#=function Base.:(==)(x::T, y::T)  where {T <: AbbreviatedUrn}
     collection(x) == collection(y) && objectid(x) == objectid(y)
 
 end
+=#
 
-
-"""Default implementation of function to find collection value of `AbbreviatedUrn`.
+"""Default implementation of function to find the collection value of an `AbbreviatedUrn`.
 
 $(SIGNATURES)
 """
@@ -21,7 +21,7 @@ function collection(au::T) where {T <: AbbreviatedUrn}
 end
 
 
-"""Default implementation of function to find collection value of `AbbreviatedUrn`.
+"""Default implementation of function to find the object identifier of `AbbreviatedUrn`.
 
 $(SIGNATURES)
 """
