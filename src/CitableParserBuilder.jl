@@ -21,7 +21,7 @@ export objectid, collection
 export AbbreviatedUrn
 export LexemeUrn, FormUrn, StemUrn, RuleUrn
 
-export fstsafe, expand, abbreviate, abbreviation
+export fstsafe, expand, abbreviate
 export readfst
 export analysis_fromcex, analyzedtoken_fromcex
 export parsetoken, parsewordlist, parselistfromfile, parselistfromurl

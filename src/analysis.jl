@@ -36,10 +36,10 @@ $(SIGNATURES)
 """
 function abbrcex(a::Analysis, delim = "|")
     join([ a.token,
-        abbreviation(a.lexeme),
-        abbreviation(a.form),
-        abbreviation(a.rule),
-        abbreviation(a.stem)
+        a.lexeme,
+        a.form,
+        a.rule,
+        a.stem
         ], delim)
 end
 
