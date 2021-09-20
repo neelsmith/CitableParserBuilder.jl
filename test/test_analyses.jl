@@ -25,7 +25,7 @@ end
     cn = CitablePassage(u, "Et")
     tkn = AnalyzedToken(cn, [a]) 
     # Note that this 
-    expected = "et|urn:cts:demo:latin.sample:1|et|ls.n16278|morphforms.1000000001|rules.example1|stems.example1"
+    expected = "urn:cts:demo:latin.sample:1|Et|et|urn:cts:demo:latin.sample:1|et|ls.n16278|morphforms.1000000001|rules.example1|stems.example1"
     @test cex(tkn)[1] == expected
 end
 
