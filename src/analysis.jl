@@ -35,7 +35,6 @@ end
 $(SIGNATURES)
 """
 function abbrcex(a::Analysis, delim = "|")
-    @info("Seralizing analysis with abbreviations")
     join([ a.token,
         abbreviation(a.lexeme),
         abbreviation(a.form),
@@ -79,23 +78,6 @@ function analysis_fromcex(s, delim = ",")::Analysis
     FormUrn(parts[3]),
     StemUrn(parts[4]),
     RuleUrn(parts[5])
-    )
-end
-
-
-"""Parse delimited-text representaiton into an `AnalyzedToken`.
-
-$(SIGNATURES)
-"""
-function analyzedtoken_fromcex(s, delim = ",")::AnalyzedToken
-    parts = split(s, delim)
-    cn = CitablePassage(CtsUrn(parts[1]), parts[2])
-    Analysis(cn,
-    parts[3],
-    LexemeUrn(parts[4]),
-    FormUrn(parts[5]),
-    StemUrn(parts[6]),
-    RuleUrn(parts[7])
     )
 end
 

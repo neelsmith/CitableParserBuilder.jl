@@ -25,21 +25,23 @@ end
     cn = CitablePassage(u, "Et")
     tkn = AnalyzedToken(cn, [a]) 
     # Note that this 
-    expected = "urn:cts:demo:latin.sample:1|Et|et|urn:cts:demo:latin.sample:1|et|ls.n16278|morphforms.1000000001|rules.example1|stems.example1"
+    expected = "urn:cts:demo:latin.sample:1|Et|et|ls.n16278|morphforms.1000000001|rules.example1|stems.example1"
     @test cex(tkn)[1] == expected
 end
 
-@testset "Test parsing serialized Analysis" begin
-  cex = "οὑτω,lsj.n76063,morphforms.1000000004,litgreek.indeclinable4,uninflectedstems.n76063"
-  @test_broken "Serializing anlaysis" == nothing
-  #=
-  a = fromcex(cex)
-  @test isa(a, Analysis)
+@testset "Test parsing a serialized AnalyzedToken" begin
+  cexsrc = "urn:cts:demo:latin.sample:1|Et|et|ls.n16278|morphforms.1000000001|rules.example1|stems.example1"
+  atkn = CitableParserBuilder.analyzedtokenabbr_fromcex(cexsrc, "|" )
+  @test isa(atkn, AnalyzedToken)
+#=
+  atkn = CitableParserBuilder.analyzedtokenabbr_fromcex(cexsrc, "," )
+  
+  a = atkn.analyses
   @test a.lexeme == LexemeUrn("lsj.n76063")
   @test a.form == FormUrn("morphforms.1000000004")
   @test a.stem == StemUrn("litgreek.indeclinable4")
   @test a.rule == RuleUrn("uninflectedstems.n76063")
-  =#
+=#
 end
 
 
