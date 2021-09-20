@@ -33,15 +33,12 @@ end
   cexsrc = "urn:cts:demo:latin.sample:1|Et|et|ls.n16278|morphforms.1000000001|rules.example1|stems.example1"
   atkn = CitableParserBuilder.analyzedtokenabbr_fromcex(cexsrc, "|" )
   @test isa(atkn, AnalyzedToken)
-#=
-  atkn = CitableParserBuilder.analyzedtokenabbr_fromcex(cexsrc, "," )
-  
-  a = atkn.analyses
-  @test a.lexeme == LexemeUrn("lsj.n76063")
-  @test a.form == FormUrn("morphforms.1000000004")
-  @test a.stem == StemUrn("litgreek.indeclinable4")
-  @test a.rule == RuleUrn("uninflectedstems.n76063")
-=#
+  @test length(atkn.analyses) == 1
+  a = atkn.analyses[1]
+  @test a.lexeme == LexemeUrn("ls.n16278")
+  @test a.form == FormUrn("morphforms.1000000001")
+  @test a.rule == RuleUrn("rules.example1")
+  @test a.stem == StemUrn("stems.example1")
 end
 
 

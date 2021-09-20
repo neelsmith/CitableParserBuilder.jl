@@ -2,6 +2,15 @@
 abstract type AbbreviatedUrn end
 
 
+"""Override `Base.==` for `AbbreviatedUrn`.
+
+$(SIGNATURES)
+"""
+function ==(au1::T, au2::T) where {T <: AbbreviatedUrn}
+    collection(au1) == collection(au2) && objectid(au1) == objectid(au2)
+
+end
+
 """Override `Base.show` for `AbbreviatedUrn`.
 
 $(SIGNATURES)

@@ -4,6 +4,7 @@ using Documenter, DocStringExtensions
 
 import Base: print
 import Base: show
+import Base: ==
 
 using CitableBase
 import CitableBase: cex
@@ -13,10 +14,11 @@ import CitableBase: label
 # Citable functions from CitableBase 3.0.0
 export urn, label, cex, print
 export print, show
+export ==
 
 export Analysis, AnalyzedToken, CitableParser
 export Stem, Rule
-#export ==
+
 export objectid, collection
 export AbbreviatedUrn
 export LexemeUrn, FormUrn, StemUrn, RuleUrn
