@@ -1,11 +1,8 @@
-"""Read SFST output from file, and parse into a dictionary of
-tokens -> (possibly empty) array of SFST strings.
+"""Read SFST output from file `f`, and parse into a dictionary keying
+tokens to a (possibly empty) array of SFST strings.
 
 $(SIGNATURES)
 
-## Parameters
-
-- `f` Name of file to read in.
 """
 function  readfst(f)
     analyses = Dict()
@@ -23,4 +20,29 @@ function  readfst(f)
         end
     end
     analyses
+end
+
+
+"""Compose SFST representation of an `AbbreviatedUrn`.
+
+$(SIGNATURES)
+
+Example:
+
+```julia-repl
+julia> LexemeUrn("lexicon.lex123") |> fstsafe
+"<u>lexicon\\.lex123</u>"
+```
+"""
+function fstsafe(au::AbbreviatedUrn)
+    string("<u>", protectunderscore(au.collection), raw"\.", protectunderscore(au.objectid), "</u>")
+end
+
+"""Escape underscore character for SFST syntax.
+
+
+$(SIGNATURES)
+"""
+function protectunderscore(s)
+    replace(s, "_" => raw"\_")
 end

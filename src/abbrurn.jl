@@ -1,15 +1,15 @@
 "Short form of a Cite2Urn containing only collection and object ID."
 abstract type AbbreviatedUrn end
 
-"""Equality function for all subtypes of `AbbreviatedUrn`.
+
+"""Override `Base.show` for `AbbreviatedUrn`.
 
 $(SIGNATURES)
 """
-#=function Base.:(==)(x::T, y::T)  where {T <: AbbreviatedUrn}
-    collection(x) == collection(y) && objectid(x) == objectid(y)
-
+function show(io::IO, au::T) where {T <: AbbreviatedUrn}
+    print(io, join([collection(au), objectid(au)], "."))
 end
-=#
+
 
 """Default implementation of function to find the collection value of an `AbbreviatedUrn`.
 
@@ -20,7 +20,6 @@ function collection(au::T) where {T <: AbbreviatedUrn}
     au.collection
 end
 
-
 """Default implementation of function to find the object identifier of `AbbreviatedUrn`.
 
 $(SIGNATURES)
@@ -30,6 +29,13 @@ function objectid(au::T) where {T <: AbbreviatedUrn}
     au.objectid
 end
 
+"""Override `Base.print` for `AbbreviatedUrn`.
+
+$(SIGNATURES)
+"""
+function print(io::IO, au::T) where {T <: AbbreviatedUrn}
+    print(io, join([collection(au), objectid(au)], "."))
+end
 
 "Abbreviated URN for a morphological stem."
 struct StemUrn <: AbbreviatedUrn
@@ -58,7 +64,6 @@ struct RuleUrn <: AbbreviatedUrn
         end
     end
 end
-
 
 "Abbreviated URN for a lexeme."
 struct LexemeUrn <: AbbreviatedUrn
@@ -90,40 +95,3 @@ struct FormUrn <: AbbreviatedUrn
     end
 end
 
-
-"""Compose SFST representation of an `AbbreviatedUrn`.
-
-$(SIGNATURES)
-
-Example:
-
-```julia-repl
-julia> LexemeUrn("lexicon.lex123") |> fstsafe
-"<u>lexicon\\.lex123</u>"
-```
-"""
-function fstsafe(au::AbbreviatedUrn)
-    string("<u>", protectunderscore(au.collection), raw"\.", protectunderscore(au.objectid), "</u>")
-end
-
-function protectunderscore(s)
-    replace(s, "_" => raw"\_")
-end
-
-
-"""Override `Base.print` for `AbbreviatedUrn`.
-
-$(SIGNATURES)
-"""
-function print(io::IO, au::T) where {T <: AbbreviatedUrn}
-    print(io, join([collection(au), objectid(au)], "."))
-end
-
-
-"""Override `Base.show` for `AbbreviatedUrn`.
-
-$(SIGNATURES)
-"""
-function show(io::IO, au::T) where {T <: AbbreviatedUrn}
-    print(io, join([collection(au), objectid(au)], "."))
-end
