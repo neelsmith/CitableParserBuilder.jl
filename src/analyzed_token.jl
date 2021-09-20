@@ -19,7 +19,6 @@ function urn(at::AnalyzedToken)
     at.passage.urn
 end
 
-
 """Serialize an `AnalyzedToken` as delimited text with abbreviated URN values.
 
 $(SIGNATURES)
@@ -36,7 +35,7 @@ function abbrcex(at::AnalyzedToken, delim = "|")
     lines
 end
 
-"""Serilaize an `AnalyzedToken` as delimited text (required for `Citable` interface).
+"""Serialize an `AnalyzedToken` as delimited text (required for `Citable` interface).
 
 $(SIGNATURES)
 """

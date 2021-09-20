@@ -111,10 +111,19 @@ function protectunderscore(s)
 end
 
 
-"""Create string abbreviation for an `AbbreviatedUrn`.
+"""Override `Base.print` for `AbbreviatedUrn`.
 
 $(SIGNATURES)
 """
-function abbreviation(au)
-    string(au.collection,".", au.objectid)
+function print(io::IO, au::T) where {T <: AbbreviatedUrn}
+    print(io, join([collection(au), objectid(au)], "."))
+end
+
+
+"""Override `Base.show` for `AbbreviatedUrn`.
+
+$(SIGNATURES)
+"""
+function show(io::IO, au::T) where {T <: AbbreviatedUrn}
+    print(io, join([collection(au), objectid(au)], "."))
 end

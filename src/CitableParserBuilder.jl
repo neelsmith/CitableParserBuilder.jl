@@ -2,13 +2,17 @@ module CitableParserBuilder
 using CitableObject, CitableText, CitableCorpus
 using Documenter, DocStringExtensions
 
+import Base: print
+import Base: show
+
 using CitableBase
 import CitableBase: cex
 import CitableBase: urn
 import CitableBase: label
 
 # Citable functions from CitableBase 3.0.0
-export urn, label, cex
+export urn, label, cex, print
+export print, show
 
 export Analysis, AnalyzedToken, CitableParser
 export Stem, Rule
