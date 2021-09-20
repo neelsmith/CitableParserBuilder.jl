@@ -46,18 +46,18 @@ function cex(at::AnalyzedToken, delim = "|"; registry = nothing)
     else
         lines = []
         for analysis in at.analyses
-            push!(lines, cex(at.passage, delim), cex(analysis, delim, registry = registry))
+            push!(lines, cex(at.passage, delim), cex(analysis, delim; registry = registry))
         end
         lines
     end
 end
 
 
-"""Parse a one-line delimited-text representation into an `AnalyzedToken`.  Note that for a single CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
+"""Parse a one-line delimited-text representation into an `AnalyzedToken`, using abbreviated URNs for identifiers.  Note that for a single CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
 
 $(SIGNATURES)
 """
-function analyzedtokenabbr_fromcex(s, delim = "|")::AnalyzedToken
+function analyzedtoken_fromabbrcex(s, delim = "|")::AnalyzedToken
     parts = split(s, delim)
     cn = CitablePassage(CtsUrn(parts[1]), parts[2])
     AnalyzedToken(
@@ -72,20 +72,55 @@ function analyzedtokenabbr_fromcex(s, delim = "|")::AnalyzedToken
     )
 end
 
+"""Parse a one-line delimited-text representation into an `AnalyzedToken`, using CITE2 URNs for identifiers.  Note that for a single CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
+
+$(SIGNATURES)
+"""
+function analyzedtoken_fromcex(s, delim = "|")
+    parts = split(s, delim)
+    cn = CitablePassage(CtsUrn(parts[1]), parts[2])
+    AnalyzedToken(
+        cn,
+        [Analysis( 
+            parts[3],
+            Cite2Urn(parts[4]) |> abbreviate |> LexemeUrn,
+            Cite2Urn(parts[5]) |> abbreviate |> FormUrn,
+            Cite2Urn(parts[6]) |> abbreviate |> StemUrn,
+            Cite2Urn(parts[7]) |> abbreviate |>  RuleUrn   
+        )]
+    )
+end
+
+
 
 """Parse a Vector of lines of delimited-text into a Vector of `AnalyzedToken`s. 
 
 $(SIGNATURES)
 """
-function analyzedtokenabbrs_fromcex()
-    @warn("Not yet implemented")
+function analyzedtokens_fromabbrcex(cexlines, delim = "|")
+    analyses = [] 
+    currentPassage = nothing
+    currentAnalyses = []
+    for ln in cexlines
+        @info("Analyzing line ", ln)
+        tkn = analyzedtoken_fromabbrcex(ln, delim)
+        if tkn.passage == currentPassage
+            push!(currentAnalyses, tkn.analyses)
+        else
+            if ! isnothing(currentPassage)
+                push!(analyses, AnalyzedToken(currentPassage, currentAnalyses))
+                @info("Add analysis; results now ", analyses)
+            end
+
+            currentPassage = tkn.passage
+            currentAnalyses = tkn.analyses
+        end
+    end
+
+    analyses
 end
 
 
-function analyzedtoken_fromcex()
-    @warn("Not yet implemented")
-    nothing
-end
 
 function analyzedtokens_fromcex()
     @warn("Not yet implemented")

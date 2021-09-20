@@ -17,15 +17,15 @@ using `registry` as the expansion dictionary.
 
 $(SIGNATURES)
 """
-function cex(a::Analysis, delim = "|", registry = nothing)
+function cex(a::Analysis, delim = "|"; registry = nothing)
     if isnothing(registry)
         abbrcex(a, delim)
     else
         join([ a.token,
             expand(a.lexeme, registry),
             expand(a.form, registry),
-            expand(a.rule, registry),
-            expand(a.stem, registry)
+            expand(a.stem, registry),
+            expand(a.rule, registry)
             ], delim)
     end
 end
@@ -38,8 +38,8 @@ function abbrcex(a::Analysis, delim = "|")
     join([ a.token,
         a.lexeme,
         a.form,
-        a.rule,
-        a.stem
+        a.stem,
+        a.rule
         ], delim)
 end
 
@@ -66,18 +66,18 @@ function cex(prs)::Tuple{ String, Vector{Analysis} }
     join(cexlines,"\n")
 end
 
-
 """Parse delimited-text representaiton into an `Analysis`.
 
 $(SIGNATURES)
 """
 function analysis_fromcex(s, delim = ",")::Analysis
     parts = split(s, delim)
-    Analysis(parts[1],
-    LexemeUrn(parts[2]),
-    FormUrn(parts[3]),
-    StemUrn(parts[4]),
-    RuleUrn(parts[5])
+    Analysis(
+        parts[1],
+        Cite2Urn(parts[2]) |> abbreviate |> LexemeUrn,
+        Cite2Urn(parts[3]) |> abbreviate |> FormUrn,
+        Cite2Urn(parts[4]) |> abbreviate |> StemUrn,
+        Cite2Urn(parts[5]) |> abbreviate |> RuleUrn
     )
 end
 
