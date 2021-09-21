@@ -12,7 +12,7 @@
     @test cex(a, "|") == piped
 end
 
-@testset "Test serializing analysis using a URN registry" begin
+@testset "Test serializing analysis using CITE2 URNs" begin
   dict = Dict(
     "ls" => "urn:cite2:citedemo:ls.v1:",
     "morphforms" => "urn:cite2:citedemo:morphforms.v1:",
@@ -25,9 +25,9 @@ end
   rule = RuleUrn("rules.example1")
   stem = StemUrn("stems.example1")
   a = Analysis(str, lex, form, stem, rule)
-  expected = "et,urn:cite2:citedemo:ls.v1:n16278,urn:cite2:citedemo:morphforms.v1:1000000001,urn:cite2:citedemo:rules.v1:example1,urn:cite2:citedemo:stems.v1:example1"
+  expected = "et,urn:cite2:citedemo:ls.v1:n16278,urn:cite2:citedemo:morphforms.v1:1000000001,urn:cite2:citedemo:stems.v1:example1,urn:cite2:citedemo:rules.v1:example1"
   @test cex(a, ","; registry = dict) == expected
-  piped  = "et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:rules.v1:example1|urn:cite2:citedemo:stems.v1:example1"
+  piped  = "et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1"
   @test cex(a; registry = dict) == piped
 end
 
