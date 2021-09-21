@@ -3,9 +3,9 @@
 
 # CitableParserBuilder.jl
 
-Common infrastructure for managing citable morphological datasets and compiling parsers with the Stuttgart FST toolkit.
+Common infrastructure for managing citable analytical parsers. Includes utilities for compiling parsers with the Stuttgart FST toolkit.
 
-The `CitableParserBuilder` package is used by `Kanones.jl` and `Tabulae.jl`.  (`Kanones.jl` and `Tabulae.jl` are not yet registered packages.)
+The `CitableParserBuilder` package is used by `Kanones.jl`, `Tabulae.jl`, and `Lycian.jl`.
 
 
 See the documentation:  <https://neelsmith.github.io/CitableParserBuilder.jl/stable/>.

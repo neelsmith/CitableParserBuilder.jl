@@ -6,37 +6,31 @@
     rule = RuleUrn("rules.example1")
     stem = StemUrn("stems.example1")
     a = Analysis(str, lex, form, stem, rule)
-    expected = "et,ls.n16278,morphforms.1000000001,rules.example1,stems.example1" 
-    @test cex(a) == expected
+    expected = "et,ls.n16278,morphforms.1000000001,stems.example1,rules.example1" 
+    @test cex(a, ",") == expected
+    piped  = "et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1"
+    @test cex(a, "|") == piped
+end
+
+@testset "Test serializing analysis using CITE2 URNs" begin
+  dict = Dict(
+    "ls" => "urn:cite2:citedemo:ls.v1:",
+    "morphforms" => "urn:cite2:citedemo:morphforms.v1:",
+    "rules" => "urn:cite2:citedemo:rules.v1:",
+    "stems" => "urn:cite2:citedemo:stems.v1:"
+  )
+  str = "et"
+  form = FormUrn("morphforms.1000000001")
+  lex = LexemeUrn("ls.n16278")
+  rule = RuleUrn("rules.example1")
+  stem = StemUrn("stems.example1")
+  a = Analysis(str, lex, form, stem, rule)
+  expected = "et,urn:cite2:citedemo:ls.v1:n16278,urn:cite2:citedemo:morphforms.v1:1000000001,urn:cite2:citedemo:stems.v1:example1,urn:cite2:citedemo:rules.v1:example1"
+  @test cex(a, ","; registry = dict) == expected
+  piped  = "et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1"
+  @test cex(a; registry = dict) == piped
 end
 
 
-@testset "Test serializing analyzed token" begin
-    str = "et"
-    form = FormUrn("morphforms.1000000001")
-    lex = LexemeUrn("ls.n16278")
-    rule = RuleUrn("rules.example1")
-    stem = StemUrn("stems.example1")
-    a = Analysis(str, lex, form, stem, rule)
-
-    u = CtsUrn("urn:cts:demo:latin.sample:1")
-    tkn = AnalyzedToken("Et", u, [a]) 
-    expected = "Et|urn:cts:demo:latin.sample:1|et,ls.n16278,morphforms.1000000001,rules.example1,stems.example1"
-    @test cex(tkn) == expected
-end
-
-@testset "Test parsing serialized Analysis" begin
-  cex = "οὑτω,lsj.n76063,morphforms.1000000004,litgreek.indeclinable4,uninflectedstems.n76063"
-  a = fromcex(cex)
-  @test isa(a, Analysis)
-  @test a.lexeme == LexemeUrn("lsj.n76063")
-  @test a.form == FormUrn("morphforms.1000000004")
-  @test a.stem == StemUrn("litgreek.indeclinable4")
-  @test a.rule == RuleUrn("uninflectedstems.n76063")
-end
 
 
-@testset "Test parsing analyses from file" begin
-  noanalysis = "αἰτια|"
-  
-end

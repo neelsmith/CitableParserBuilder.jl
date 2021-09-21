@@ -32,7 +32,6 @@ parsecorpus
 abbreviate
 expand
 fstsafe
-abbreviation
 ```
 
 ## Working with `Stem`s and `Rule`s

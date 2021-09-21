@@ -1,4 +1,4 @@
-"""A citable morphological analysis.
+"""Citable analysis of a string value.
 
 An `Analysis` has five members: a token string value, and four abbreviated
 URNs, one each for the lexeme, form, rule and stem.
@@ -11,38 +11,36 @@ struct Analysis
     rule::RuleUrn
 end
 
-"""Serialize an `Analaysis` as delimted text.
+"""Serialize an `Analysis` to delimited text.
+Abbreviated URNs are expanded to full CITE2 URNs
+using `registry` as the expansion dictionary.
 
 $(SIGNATURES)
 """
-function cex(a::Analysis, delim = ",")
-    join([ a.token,
-        abbreviation(a.lexeme),
-        abbreviation(a.form),
-        abbreviation(a.rule),
-        abbreviation(a.stem)
-        ], delim)
-end
-
-"""Morphological analyses for a token identified by CTS URN.
-"""
-struct AnalyzedToken
-    surfacetoken::AbstractString
-    texturn::CtsUrn
-    analyses::Vector{Analysis}
-end
-
-"""Serialize an `Analaysis` as delimited text.
-
-$(SIGNATURES)
-"""
-function cex(tkn::AnalyzedToken; delim="|", delim2=";", delim3=",")
-    alist = []
-    for a in tkn.analyses
-        push!(alist, cex(a,delim3))
+function cex(a::Analysis, delim = "|"; registry = nothing)
+    if isnothing(registry)
+        abbrcex(a, delim)
+    else
+        join([ a.token,
+            expand(a.lexeme, registry),
+            expand(a.form, registry),
+            expand(a.stem, registry),
+            expand(a.rule, registry)
+            ], delim)
     end
-    columns = [tkn.surfacetoken, tkn.texturn.urn, join(alist,delim2)]
-    join(columns, delim)
+end
+
+"""Serialize an `Analysis` using abbreviated URNs as identifiers.
+
+$(SIGNATURES)
+"""
+function abbrcex(a::Analysis, delim = "|")
+    join([ a.token,
+        a.lexeme,
+        a.form,
+        a.stem,
+        a.rule
+        ], delim)
 end
 
 
@@ -50,6 +48,9 @@ end
 map of tokens to a vector of analyses.
 
 $(SIGNATURES)
+
+This could be useful for serializing analyzes for a list
+of unique tokens in a corpus.    
 """
 function cex(prs)::Tuple{ String, Vector{Analysis} }
     cexlines = []
@@ -65,17 +66,18 @@ function cex(prs)::Tuple{ String, Vector{Analysis} }
     join(cexlines,"\n")
 end
 
-
 """Parse delimited-text representaiton into an `Analysis`.
 
 $(SIGNATURES)
 """
-function fromcex(s, delim = ",")::Analysis
+function analysis_fromcex(s, delim = ",")::Analysis
     parts = split(s, delim)
-    Analysis(parts[1],
-    LexemeUrn(parts[2]),
-    FormUrn(parts[3]),
-    StemUrn(parts[4]),
-    RuleUrn(parts[5])
+    Analysis(
+        parts[1],
+        Cite2Urn(parts[2]) |> abbreviate |> LexemeUrn,
+        Cite2Urn(parts[3]) |> abbreviate |> FormUrn,
+        Cite2Urn(parts[4]) |> abbreviate |> StemUrn,
+        Cite2Urn(parts[5]) |> abbreviate |> RuleUrn
     )
 end
+
