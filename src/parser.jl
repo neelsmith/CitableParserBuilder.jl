@@ -16,12 +16,13 @@ end
 
 $(SIGNATURES)
 
-Should return a (possibly empty) Vector of Analysis objects. 
+Should return a (possibly empty) Vector of Vectors Analysis objects.
+Each outer Vector corresponds to one vocabulary item.
 """
-function parsewordlist(p::T, tokens, data = nothing) where {T <: CitableParser}
+function parsewordlist(p::T, vocablist, data = nothing) where {T <: CitableParser}
     parses = []
-    for t in tokens
-        push!(parses, parsetoken(p,t,data))
+    for vocab in vocablist
+        push!(parses, parsetoken(p,vocab,data))
     end
     parses
 end

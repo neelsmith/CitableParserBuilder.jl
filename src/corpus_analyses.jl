@@ -30,21 +30,62 @@ function lexically_ambiguous(atkn::AnalyzedToken)
     end
 end
 
+
+"""True if  `Analysis` items in a vector of analyses identify more than one lexeme.
+$(SIGNATURES)
+"""
+function lexically_ambiguous(vect)
+    if isempty(vect) || length(vect) < 2
+        false
+    else
+        uniquelexemes = map(a -> a.lexeme, vect) |> unique
+        length(uniquelexemes) > 1
+    end
+end
+
 """Compute lexical ambiguity in corpus analyzed by parser.
 $(SIGNATURES)
 """
 function lexical_ambiguity(c::CitableTextCorpus, p::CitableParser, data)
-    @warn("Not yet implemented")
-    nothing
+    parses = parsecorpus(p, c, data)
+    ambiguous = filter(p -> lexically_ambiguous(p), parses)
+    length(ambiguous) / length(c.passages)
 end
-
 
 """Compute lexical ambiguity in list of words analyzed by parser.
 $(SIGNATURES)
 """
 function lexical_ambiguity(vocablist, p::CitableParser, data)
-    @warn("Not yet implemented")
-    nothing
+    parses = parsewordlist(p, vocablist, data)
+    ambiguous = filter(p -> lexically_ambiguous(p), parses)
+    length(ambiguous) / length(vocablist)
+end
+
+
+
+
+"""True if `atkn` can be analyzed to more than one form.
+$(SIGNATURES)
+"""
+function formally_ambiguous(atkn::AnalyzedToken)
+    if isempty(atkn.analyses) || length(atkn.analyses) < 2
+        false
+    else
+        uniqueforms = map(a -> a.form, atkn.analyses) |> unique
+        length(uniqueforms) > 1
+    end
+end
+
+"""True if  `Analysis` items in a vector of analyses identify more than one form.
+$(SIGNATURES)
+"""
+function formally_ambiguous(vect)
+    if isempty(vect) || length(vect) < 2
+        false
+    else
+        uniqueforms = map(a -> a.form, vect) |> unique
+        length(uniqueforms) > 1
+    end
 end
 
 
@@ -52,8 +93,9 @@ end
 $(SIGNATURES)
 """
 function formal_ambiguity(c::CitableTextCorpus, p::CitableParser, data)
-    @warn("Not yet implemented")
-    nothing
+    parses = parsecorpus(p, c, data)
+    ambiguous = filter(p -> formally_ambiguous(p), parses)
+    length(ambiguous) / length(c.passages)
 end
 
 
@@ -61,8 +103,9 @@ end
 $(SIGNATURES)
 """
 function formal_ambiguity(vocablist, p::CitableParser, data)
-    @warn("Not yet implemented")
-    nothing
+    parses = parsewordlist(p, vocablist, data)
+    ambiguous = filter(p -> formally_ambiguous(p), parses)
+    length(ambiguous) / length(vocablist)
 end
 
 
