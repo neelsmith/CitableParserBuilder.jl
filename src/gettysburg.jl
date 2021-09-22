@@ -31,12 +31,14 @@ end
 function parsegburgstring(s::AbstractString, data)
     objid = s in keys(data) ? data[s] : "UNANALYZED"
     if objid == "UNANALYZED"
-        #@warn("$s not found in $(typeof(data))")
+        @warn("$s not found") # in $(typeof(data))")
+        []
+    else
+        @info("Objid ", objid)
+        formurn = objid == "." ? FormUrn("gburgform.dot") : FormUrn("gburgform.$objid")
+        lexurn = s == "." ? LexemeUrn("gburglex.period") : LexemeUrn("gburglex.$s")
+        ruleurn = RuleUrn("gburgrule.all")
+        stemurn = StemUrn("gburgstem.all")
+        [Analysis(s, lexurn, formurn, stemurn, ruleurn)]
     end
-    @info("Objid ", objid)
-    formurn = objid == "." ? FormUrn("gburgform.dot") : FormUrn("gburgform.$objid")
-    lexurn = s == "." ? LexemeUrn("gburglex.period") : LexemeUrn("gburglex.$s")
-    ruleurn = RuleUrn("gburgrule.all")
-    stemurn = StemUrn("gburgstem.all")
-    [Analysis(s, lexurn, formurn, stemurn, ruleurn)]
 end

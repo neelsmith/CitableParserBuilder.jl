@@ -21,7 +21,6 @@ export ==
 export Analysis, AnalyzedToken, CitableParser
 export Stem, Rule
 
-
 export AbbreviatedUrn
 export objectid, collection
 export LexemeUrn, FormUrn, StemUrn, RuleUrn
@@ -32,7 +31,7 @@ export analyzedtoken_fromcex
 
 export parsetoken, parsewordlist, parselistfromfile, parselistfromurl
 export parsepassage, parsecorpus
-export coverage
+export coverage, lexical_ambiguity, formal_ambiguity, lexical_frequencies, formal_frequencies
 
 include("parser.jl")
 include("abbrurn.jl")
