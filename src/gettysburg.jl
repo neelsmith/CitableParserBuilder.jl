@@ -1,0 +1,39 @@
+# For use in testing and demonstrations: 
+# pure-Julia POS tagger for the corpus of all
+# extant versions of the Gettysburg address.
+#
+using CSV, HTTP
+
+"""POS tagger keyed to the text of the Gettysburg address.
+
+- `stringparser` is the parsing function required by the `CitableParser` interface.
+- `data` is a dictionary of tokens to form POS tag.
+"""
+struct GettysburgParser <: CitableParser
+    stringparser
+    data
+end
+
+GETTYSBURG_DICT_URL = "https://raw.githubusercontent.com/neelsmith/CitableCorpusAnalysis.jl/main/test/data/posdict.csv"
+
+"""Instantiate a `GettysburgParser`.
+"""
+function gettysburgParser() 
+    dict = CSV.File(HTTP.get(CitableParserBuilder.GETTYSBURG_DICT_URL).body) |> Dict
+    GettysburgParser(parsegburgstring, dict)
+end
+
+"""Parse String `s` by looking it up in a given dictionary.
+"""
+function parsegburgstring(s::AbstractString, data)
+    objid = s in keys(data) ? data[s] : "UNANALYZED"
+    if objid == "UNANALYZED"
+        #@warn("$s not found in $(typeof(data))")
+    end
+    @info("Objid ", objid)
+    formurn = objid == "." ? FormUrn("gburgform.dot") : FormUrn("gburgform.$objid")
+    lexurn = s == "." ? LexemeUrn("gburglex.period") : LexemeUrn("gburglex.$s")
+    ruleurn = RuleUrn("gburgrule.all")
+    stemurn = StemUrn("gburgstem.all")
+    [Analysis(s, lexurn, formurn, stemurn, ruleurn)]
+end

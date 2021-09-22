@@ -1,5 +1,6 @@
 using CitableParserBuilder
 using CitableObject, CitableText, CitableCorpus
+using Orthography
 using Test
 
 
@@ -12,3 +13,5 @@ include("test_fstencoding.jl")
 include("test_types.jl")
 include("test_fstreader.jl")
 include("test_citable.jl")
+
+include("test_gettysburg.jl")

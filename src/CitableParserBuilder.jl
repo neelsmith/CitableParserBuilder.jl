@@ -1,5 +1,7 @@
 module CitableParserBuilder
 using CitableObject, CitableText, CitableCorpus
+using Orthography
+
 using Documenter, DocStringExtensions
 
 import Base: print
@@ -29,7 +31,7 @@ export readfst
 export analyzedtoken_fromcex
 
 export parsetoken, parsewordlist, parselistfromfile, parselistfromurl
-export parsenode, parsecorpus
+export parsepassage, parsecorpus
 
 
 include("parser.jl")
@@ -39,5 +41,6 @@ include("analyzed_token.jl")
 include("citeurn.jl")
 include("types.jl")
 include("fstreader.jl")
+include("gettysburg.jl")
 
 end # module
