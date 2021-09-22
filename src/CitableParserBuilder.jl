@@ -32,7 +32,7 @@ export analyzedtoken_fromcex
 
 export parsetoken, parsewordlist, parselistfromfile, parselistfromurl
 export parsepassage, parsecorpus
-
+export coverage
 
 include("parser.jl")
 include("abbrurn.jl")
@@ -42,5 +42,6 @@ include("citeurn.jl")
 include("types.jl")
 include("fstreader.jl")
 include("gettysburg.jl")
+include("corpus_analyses.jl")
 
 end # module

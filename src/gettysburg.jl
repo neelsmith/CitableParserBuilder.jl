@@ -1,6 +1,9 @@
 # For use in testing and demonstrations: 
 # pure-Julia POS tagger for the corpus of all
 # extant versions of the Gettysburg address.
+# 
+# POS values are taken from:
+# https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
 #
 using CSV, HTTP
 
