@@ -108,9 +108,6 @@ function formal_ambiguity(vocablist, p::CitableParser, data)
     length(ambiguous) / length(vocablist)
 end
 
-
-
-
 """Compute frequencies of lexemes in corpus analyzed by parser.
 $(SIGNATURES)
 """
