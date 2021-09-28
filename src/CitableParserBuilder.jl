@@ -1,5 +1,7 @@
 module CitableParserBuilder
 using CitableObject, CitableText, CitableCorpus
+using Orthography
+
 using Documenter, DocStringExtensions
 
 import Base: print
@@ -19,7 +21,6 @@ export ==
 export Analysis, AnalyzedToken, CitableParser
 export Stem, Rule
 
-
 export AbbreviatedUrn
 export objectid, collection
 export LexemeUrn, FormUrn, StemUrn, RuleUrn
@@ -29,8 +30,8 @@ export readfst
 export analyzedtoken_fromcex
 
 export parsetoken, parsewordlist, parselistfromfile, parselistfromurl
-export parsenode, parsecorpus
-
+export parsepassage, parsecorpus
+export coverage, lexical_ambiguity, formal_ambiguity, lexical_frequencies, formal_frequencies
 
 include("parser.jl")
 include("abbrurn.jl")
@@ -39,5 +40,7 @@ include("analyzed_token.jl")
 include("citeurn.jl")
 include("types.jl")
 include("fstreader.jl")
+include("gettysburg.jl")
+include("corpus_analyses.jl")
 
 end # module

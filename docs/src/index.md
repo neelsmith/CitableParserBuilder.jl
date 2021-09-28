@@ -29,7 +29,7 @@ Types implementing the `CitableParser` abstraction must have a member function n
 - `parsewordlist`: parse a list of string values
 - `parselistfromfile`: parse a list of string values in a local file
 - `parselistfromurl`: parse a list of string values from the contents of a URL
-- `parsenode`: parse the text component of a `CitablePassage` as a single token
+- `parsepassage`: parse the text component of a `CitablePassage` as a single token
 - `parsecorpus`: parse the text components of all nodes in a `CitableCorpus` as individual tokens
 
 

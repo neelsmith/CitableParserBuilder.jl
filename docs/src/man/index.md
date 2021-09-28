@@ -21,7 +21,7 @@ parsetoken
 parsewordlist
 parselistfromfile
 parselistfromurl
-parsenode
+parsepassage
 parsecorpus
 ```
 

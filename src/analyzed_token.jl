@@ -104,17 +104,17 @@ function analyzedtokens_fromabbrcex(cexlines, delim = "|")
     for ln in filter(l -> ! isempty(l), cexlines)
         tkn = analyzedtoken_fromabbrcex(ln, delim)
         if tkn.passage == currentPassage
-            @info("Adding to current passages ", currentPassage )
+            #@info("Adding to current passages ", currentPassage )
             push!(currentAnalyses, tkn.analyses[1])
         else
             if ! isnothing(currentPassage)
                 push!(analyses, AnalyzedToken(currentPassage, currentAnalyses))
-                @info("Add analysis to empty passage; results now ", length(analyses), currentPassage)
+                #@info("Add analysis to empty passage; results now ", length(analyses), currentPassage)
             end
 
             currentPassage = tkn.passage
             currentAnalyses = tkn.analyses
-            @info("Set curr. analyses to ", currentAnalyses, currentPassage)
+            #@info("Set curr. analyses to ", currentAnalyses, currentPassage)
         end
     end  
     push!(analyses, AnalyzedToken(currentPassage, currentAnalyses))
@@ -131,17 +131,17 @@ function analyzedtokens_fromcex(cexlines, delim = "|")
     for ln in filter(l -> ! isempty(l), cexlines)
         tkn = analyzedtoken_fromcex(ln, delim)
         if tkn.passage == currentPassage
-            @info("Adding to current passages ", currentPassage )
+            #@info("Adding to current passages ", currentPassage )
             push!(currentAnalyses, tkn.analyses[1])
         else
             if ! isnothing(currentPassage)
                 push!(analyses, AnalyzedToken(currentPassage, currentAnalyses))
-                @info("Add analysis to empty passage; results now ", length(analyses), currentPassage)
+                #@info("Add analysis to empty passage; results now ", length(analyses), currentPassage)
             end
 
             currentPassage = tkn.passage
             currentAnalyses = tkn.analyses
-            @info("Set curr. analyses to ", currentAnalyses, currentPassage)
+            #@info("Set curr. analyses to ", currentAnalyses, currentPassage)
         end
     end  
     push!(analyses, AnalyzedToken(currentPassage, currentAnalyses))

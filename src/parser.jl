@@ -16,12 +16,13 @@ end
 
 $(SIGNATURES)
 
-Should return a (possibly empty) Vector of Analyses.
+Should return a (possibly empty) Vector of Vectors Analysis objects.
+Each outer Vector corresponds to one vocabulary item.
 """
-function parsewordlist(p::T, tokens, data = nothing) where {T <: CitableParser}
+function parsewordlist(p::T, vocablist, data = nothing) where {T <: CitableParser}
     parses = []
-    for t in tokens
-        push!(parses, parsetoken(p,t, data))
+    for vocab in vocablist
+        push!(parses, parsetoken(p,vocab,data))
     end
     parses
 end
@@ -54,22 +55,22 @@ end
 
 $(SIGNATURES)
 
-Should return a pairing of the CitablePassage with a list of analyses.
+Should return an AnalyzedToken.
 """
-function parsenode(p::T, cn::CitablePassage, data = nothing) where {T <: CitableParser}
-    (cn, p.stringparser(cn.text, data))
+function parsepassage(p::T, cn::CitablePassage, data = nothing) where {T <: CitableParser}
+    AnalyzedToken(cn, p.stringparser(cn.text, data))
 end
 
 """Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token.
 
 $(SIGNATURES)
 
-Should return a list of pairings of a CitablePassage with a list of analyses.
+Should return a list of `AnalyzedToken`s.
 """
 function parsecorpus(p::T, c::CitableTextCorpus, data = nothing) where {T <: CitableParser}
     results = []
-    for cn in c.corpus
-        push!(results, (cn, p.stringparser(cn.text, data)))
+    for cn in c.passages
+        push!(results, AnalyzedToken(cn, p.stringparser(cn.text, data)))
     end
     results
 end
