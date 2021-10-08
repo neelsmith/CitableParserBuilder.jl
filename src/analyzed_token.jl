@@ -48,8 +48,21 @@ function cex(at::AnalyzedToken, delim = "|"; registry = nothing)
         for analysis in at.analyses
             push!(lines, cex(at.passage, delim), cex(analysis, delim; registry = registry))
         end
-        lines
+        join(lines, "\n")
     end
+end
+
+
+"""Serialize a Vector of `AnalyzedToken`s as delimited text.
+
+$(SIGNATURES)
+"""
+function cex(v::AbstractVector{AnalyzedToken}, delim = "|"; registry = nothing)
+    lines = []
+    for at in v
+        push!(lines, cex(at, delim; registry = registry))
+    end
+    join(lines, "\n")
 end
 
 

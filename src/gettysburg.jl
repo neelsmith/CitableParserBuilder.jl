@@ -28,7 +28,10 @@ end
 
 """Parse String `s` by looking it up in a given dictionary.
 """
-function parsegburgstring(s::AbstractString, data)
+function parsegburgstring(s::AbstractString, data = nothing)
+    if isnothing(data) 
+        throw(ArgumentError("The GettysburgParser type requires the CitableParser's data parameter in addition to a string token."))
+    end
     objid = s in keys(data) ? data[s] : "UNANALYZED"
     if objid == "UNANALYZED"
         @warn("String $s not parsed by Gettysburg parser.") # in $(typeof(data))")

@@ -12,27 +12,3 @@ Notable points:
 
 
 
-
-## Abbreviated URNs
-
-The package defines an abstract `AbbreviatedUrn` structure, with four implementations:  the `LexemeUrn`, `FormUrn`, `StemUrn` and `RuleUrn` structures.
-
-An `AbbreviatedUrn` has a collection identifier, and an object identifier.  You can construct an `AbbreviatedUrn` from a dot-delimited string.
-
-```jldoctest loaded
-using CitableParserBuilder
-lexurn = LexemeUrn("lsj.n125")
-lexurn.collection
-
-# output
-
-"lsj"
-```
-```jldoctest loaded
-lexurn.objectid
-
-# output
-
-"n125"
-```
-

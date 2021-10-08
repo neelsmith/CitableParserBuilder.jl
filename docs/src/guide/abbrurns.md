@@ -10,6 +10,25 @@ The modules implements the `AbbrevatedUrn` for each uniquely identified componen
 4. `RuleUrn`
 
 
+An `AbbreviatedUrn` has a collection identifier, and an object identifier.  You can construct an `AbbreviatedUrn` from a dot-delimited string.
+
+```jldoctest loaded
+using CitableParserBuilder
+lexurn = LexemeUrn("lsj.n125")
+lexurn.collection
+
+# output
+
+"lsj"
+```
+```jldoctest loaded
+lexurn.objectid
+
+# output
+
+"n125"
+```
+
 
 ## Abbreviated URNs and `Cite2Urn`s
 

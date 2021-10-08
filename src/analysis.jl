@@ -30,6 +30,21 @@ function cex(a::Analysis, delim = "|"; registry = nothing)
     end
 end
 
+
+
+"""Serialize a Vector of `Analysis` objects as delimited text.
+
+$(SIGNATURES)
+"""
+function cex(v::AbstractVector{Analysis}, delim = "|"; registry = nothing)
+    lines = []
+    for analysis in v
+        push!(lines, cex(analysis, delim; registry = registry))
+    end
+    join(lines, "\n")
+end
+
+
 """Serialize an `Analysis` using abbreviated URNs as identifiers.
 
 $(SIGNATURES)
