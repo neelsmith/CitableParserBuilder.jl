@@ -44,14 +44,6 @@ CitableParserBuilder.inflectiontype
 
 ## Reading FST output from a file
 
-
 ```@docs
 readfst
-```
-
-
-## Serialization
-
-```@docs
-cex
 ```
