@@ -2,18 +2,26 @@
 
 The `CitableParserBuilder` module offers common functions and data structures for working with citable morphological analyses of citable texts.  
 
+At the center of the module are the abstract `CitableParser`, and the concrete `Analysis` and `AnalyzedToken` types. Parsing functions use a `CitableParser` to operate either on string values for individual tokens, or on passages of text citable with CTS URNs at the token level.  Parsing a string value returns a (possibly empty) list of `Analysis` objects.  Parsing a citable passage returns an `AnalyzedToken`, which pairs the citable passage with the analyses resulting from parsing the passage's text content.
 
-At the center of the module are the abstract `CitableParser`, and the concrete `Analysis` type. Functions for morphological parsing use a `CitableParser` to operate either on string values for individual tokens, or on passages of text citable with CTS URNs at the token level.  Parsing a token returns a (possibly empty) list of `Analysis` objects, which express the results of the parse with URN values.
+
+!!! tip
+    You can use an `OrthographicSystem` to create a complete tokenized edition from a citable edition. See the documentation for [the `Orthography` module](https://hcmid.github.io/Orthography.jl/stable/guide/corpora/).
 
 
-## Shared structures: the `Analysis`
+## Shared structures: the `Analysis` and the `AnalyzedToken` 
 
-Every analysis of a token identifies a valid pairing of a *lexeme* and a *form* for the token.  The `Analysis` further supports a typical model of computational morphological analysis that crosses a lexicon of stems with a set of inflectional patterns to create a comprehensive set of recognized forms. The stem and rule of an Analysis explain how the analysis' lexeme and form were arrived at.  The structure of the `Analysis` therefore consists of four URN values:
+Every analysis of a string value identifies a valid pairing of a *lexeme* and a *form* for the token.  The `Analysis` further supports a typical model of computational morphological analysis that crosses a lexicon of stems with a set of inflectional patterns to create a comprehensive set of recognized forms. The stem and rule of an Analysis explain how the analysis' lexeme and form were arrived at.  The structure of the `Analysis` therefore consists of four URN values:
 
-1. the lexeme
-2. the morphological form
-3. the stem used to arrive at the analysis
-4. the inflectional rule used to arrive at the analysis
+1. the *lexeme*
+2. the *morphological form*
+3. the *stem* used to arrive at the analysis
+4. the *inflectional rule* used to arrive at the analysis
+
+The `AnalyzedToken` 
+
+type associates a Vector of `Analysis` objects with a citable token.
+
 
 
 ## Shared functions for parsing: the `CitableParser` abstraction
@@ -34,27 +42,16 @@ Types implementing the `CitableParser` abstraction must have a member function n
 
 
 
-## Utilities
+## Contents
 
-
-### Abbreviated URN values
-
-The `AbbreviatedUrn` is an abstract type supporting an abbreviated notation for `Cite2Urn`s. It allows you to work with objects uniquely identified by collection identifier and object identifier, when the collection is registered in a dictionary that can expand the collection identifier to a full `Cite2Urn`.
-
-The modules implements the `AbbrevatedUrn` for each uniquely identified component of an `Analysis`:
-
-1. `LexemeUrn`
-2. `FormUrn`
-3. `StemUrn`
-4. `RuleUrn`
-
-
-
-### SFST utilities
-
-`Kanones` and `Tabulae` are Julia packages for building ancient Greek and Latin morphological parsers, respectively.  Both `Kanones` and `Tabulae` do their parsing behind the scenes using finite state transducers built with the [Stuttgart Finite State Transducer](https://github.com/santhoshtr/sfst) toolkit.  To facilitate this work, `CitableParserBuilder` includes utilities for transcoding string values to and from URN values and expressions in SFST-PL, the programmning language of the Stuttgart Finite State Transducer tooolkit.
-
-
-### CEX utilities
-
-The module supports export of parsing results in CEX format.
+```@contents
+Pages = [
+    "guide/parser.md",
+    "guide/analyses.md",
+    "guide/abbrurns.md",
+    "guide/utils.md",
+    "guide/parsers.md",
+    "guide/gburg.md",
+    "man/index.md"
+]
+```
