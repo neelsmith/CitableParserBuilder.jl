@@ -42,8 +42,9 @@ CitableParserBuilder.id
 CitableParserBuilder.inflectiontype
 ```
 
-## Reading FST output from a file
+## Serialization
 
 ```@docs
 readfst
+analyses_relationsblock
 ```
