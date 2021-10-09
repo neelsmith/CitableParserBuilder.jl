@@ -41,9 +41,24 @@ function cex(v::AbstractVector{Analysis}, delim = "|"; registry = nothing)
     for analysis in v
         push!(lines, cex(analysis, delim; registry = registry))
     end
+
     join(lines, "\n")
 end
 
+"""Compose a CEX `relationset` block for a set of analyses.
+
+$(SIGNATURES)
+"""
+function analyses_relationsblock(urn::Cite2Urn, label::AbstractString, v::AbstractVector{Analysis}, delim = "|"; registry = nothing)
+    headerlines = [
+        "#!citerelationset",
+        join(["urn", urn],  delim),
+        join(["label", label], delim),
+        join(["token", "lexeme", "form", "stem", "rule"], delim)
+    ]
+    cexlines = cex(v, delim, registry = registry)
+    join(headerlines, "\n") * cexlines
+end
 
 """Serialize an `Analysis` using abbreviated URNs as identifiers.
 
