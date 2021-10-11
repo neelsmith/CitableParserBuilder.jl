@@ -2,8 +2,8 @@
 
 Any implementation of a `CitableParser` works in basically the same way.  The parsing functions all have a common pair of signatures:
 
-- `function(parser, content)`
-- `function(parser, content, parserdata)`
+- `function(textcontent, parser)`
+- `function(content, parser, parserdata)`
 
 The sample parser we will use requires the third, data parameter: check the documentation for your specific parser to see how it works.
 
@@ -18,6 +18,8 @@ typeof(parser) |> supertype
 
 # output
 
+[ Info: Loading dictionary over the internet...
+[ Info: Done loading.
 CitableParser
 ```
 
@@ -64,7 +66,7 @@ gburgform.NN
 We can also parse a list of words. Here, parsing four words produces a Vector containing four Vectors of `Analysis` objects.
 
 ```jldoctest parsing
-wordsparsed = parsewordlist(parser, split("Four score and seven"), parser.data)
+wordsparsed = parsewordlist(split("Four score and seven"), parser, parser.data)
 length(wordsparsed)
 
 # output
