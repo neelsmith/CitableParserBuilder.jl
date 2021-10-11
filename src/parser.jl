@@ -22,15 +22,15 @@ Define delegation for the required function of the CitableParser: parsetoken
 
 $(SIGNATURES)
 """
-function parsetoken(s::AbstractString, x::T) where {T} 
-    parsetoken(CitableTrait(T), s, x)
+function parsetoken(s::AbstractString, x::T, data = nothing) where {T} 
+    parsetoken(CitableTrait(T), s, x, data)
 end
 
 """It is an error to invoke the `parsetoken` using types that are not a parser.
 
 $(SIGNATURES)
 """
-function parsetoken(::NotCitable, s, x)
+function parsetoken(::NotCitable, s, x, data = nothing)
     throw(DomainError(x, string("Objects of type ", typeof(x), " are not citable.")))
 end
 
@@ -39,6 +39,6 @@ end
 
 $(SIGNATURES)
 """
-function parsetoken(::CitableByCtsUrn, s, x)
+function parsetoken(::CitableByCtsUrn, s, x, data = nothing)
     throw(DomainError(x, string("Please implement the urn function for type ", typeof(x))))
 end
