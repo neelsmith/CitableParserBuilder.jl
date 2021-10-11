@@ -26,7 +26,7 @@ CitableParser
 When we parse a string token, the result is a Vector of `Analysis` objects. Our parser produces only one analysis for *score*.
 
 ```jldoctest parsing
-scoreparses = parsetoken(parser, "score", parser.data)
+scoreparses = parsetoken("score", parser,  parser.data)
 length(scoreparses)
 
 # output
@@ -88,7 +88,7 @@ You can also parse citable text structures: passages, documents and corpora.  He
 using CitableText, CitableCorpus
 urn = CtsUrn("urn:cts:demo:gburg.hays.v2:1.2")
 psg = CitablePassage(urn, "score")
-psg_analysis = parsepassage(parser, psg, parser.data)
+psg_analysis = parsepassage(psg, parser, parser.data)
 typeof(psg_analysis)
 
 # output
