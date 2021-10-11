@@ -6,7 +6,7 @@
     parser = CitableParserBuilder.gettysburgParser()
     wdlist = tokenvalues(c, ortho)
     tokenized = tokenizedcorpus(c, ortho)
-    analyses = parsecorpus(parser, tokenized, parser.data)
+    analyses = parsecorpus(tokenized, parser, parser.data)
 end
 
 @testset "Test serializing an analysis list" begin

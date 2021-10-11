@@ -19,6 +19,9 @@ export urn, label, cex, print
 export print, show
 export ==
 
+
+export ParserTrait
+
 export Analysis, AnalyzedToken, CitableParser
 export Stem, Rule
 
@@ -47,5 +50,6 @@ include("types.jl")
 include("fstreader.jl")
 include("gettysburg.jl")
 include("corpus_analyses.jl")
+include("generic.jl")
 
 end # module

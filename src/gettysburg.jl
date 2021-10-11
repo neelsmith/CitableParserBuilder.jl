@@ -13,22 +13,25 @@ using CSV, HTTP
 - `data` is a dictionary of tokens to form POS tag.
 """
 struct GettysburgParser <: CitableParser
-    stringparser
     data
 end
+# parsegburgstring
+
 
 GETTYSBURG_DICT_URL = "https://raw.githubusercontent.com/neelsmith/CitableCorpusAnalysis.jl/main/test/data/posdict.csv"
 
 """Instantiate a `GettysburgParser`.
 """
 function gettysburgParser() 
+    @info("Loading dictionary over the internet...")
     dict = CSV.File(HTTP.get(CitableParserBuilder.GETTYSBURG_DICT_URL).body) |> Dict
-    GettysburgParser(parsegburgstring, dict)
+    @info("Done loading.")
+    GettysburgParser(dict)
 end
 
 """Parse String `s` by looking it up in a given dictionary.
 """
-function parsegburgstring(s::AbstractString, data = nothing)
+function parsetoken(s::AbstractString, parser::GettysburgParser, data = nothing)
     if isnothing(data) 
         throw(ArgumentError("The GettysburgParser type requires the CitableParser's data parameter in addition to a string token."))
     end
