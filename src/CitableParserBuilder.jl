@@ -9,6 +9,7 @@ import Base: show
 import Base: ==
 
 using CitableBase
+import CitableBase: CitableTrait
 import CitableBase: cex
 import CitableBase: urn
 import CitableBase: label

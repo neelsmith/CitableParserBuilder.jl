@@ -4,8 +4,8 @@
     c = read(f, String) |> corpus_fromcex
     ortho = simpleAscii()
     parser = CitableParserBuilder.gettysburgParser()
-    wdlist = tokenvalues(ortho, c)
-    tokenized = tokenizedcorpus(ortho,c)
+    wdlist = tokenvalues(c, ortho)
+    tokenized = tokenizedcorpus(c, ortho)
     analyses = parsecorpus(parser, tokenized, parser.data)
 end
 
