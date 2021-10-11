@@ -5,6 +5,11 @@ struct AnalyzedToken <: Citable
     analyses::Vector{Analysis}
 end
 
+"""Assign value for `CitableTrait`."""
+CitableTrait(::Type{AnalyzedToken}) = CitableByCtsUrn()
+
+
+
 """Label for `AnalyzedToken` (required for `Citable` interface).
 $(SIGNATURES)
 """

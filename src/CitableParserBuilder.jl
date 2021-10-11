@@ -9,6 +9,7 @@ import Base: show
 import Base: ==
 
 using CitableBase
+import CitableBase: CitableTrait
 import CitableBase: cex
 import CitableBase: urn
 import CitableBase: label
@@ -17,6 +18,9 @@ import CitableBase: label
 export urn, label, cex, print
 export print, show
 export ==
+
+
+export ParserTrait
 
 export Analysis, AnalyzedToken, CitableParser
 export Stem, Rule
@@ -46,5 +50,6 @@ include("types.jl")
 include("fstreader.jl")
 include("gettysburg.jl")
 include("corpus_analyses.jl")
+include("generic.jl")
 
 end # module

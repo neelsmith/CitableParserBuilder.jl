@@ -2,8 +2,8 @@
 
 Any implementation of a `CitableParser` works in basically the same way.  The parsing functions all have a common pair of signatures:
 
-- `function(parser, content)`
-- `function(parser, content, parserdata)`
+- `function(textcontent, parser)`
+- `function(content, parser, parserdata)`
 
 The sample parser we will use requires the third, data parameter: check the documentation for your specific parser to see how it works.
 
@@ -18,6 +18,8 @@ typeof(parser) |> supertype
 
 # output
 
+[ Info: Loading dictionary over the internet...
+[ Info: Done loading.
 CitableParser
 ```
 
@@ -26,7 +28,7 @@ CitableParser
 When we parse a string token, the result is a Vector of `Analysis` objects. Our parser produces only one analysis for *score*.
 
 ```jldoctest parsing
-scoreparses = parsetoken(parser, "score", parser.data)
+scoreparses = parsetoken("score", parser,  parser.data)
 length(scoreparses)
 
 # output
@@ -64,7 +66,7 @@ gburgform.NN
 We can also parse a list of words. Here, parsing four words produces a Vector containing four Vectors of `Analysis` objects.
 
 ```jldoctest parsing
-wordsparsed = parsewordlist(parser, split("Four score and seven"), parser.data)
+wordsparsed = parsewordlist(split("Four score and seven"), parser, parser.data)
 length(wordsparsed)
 
 # output
@@ -88,7 +90,7 @@ You can also parse citable text structures: passages, documents and corpora.  He
 using CitableText, CitableCorpus
 urn = CtsUrn("urn:cts:demo:gburg.hays.v2:1.2")
 psg = CitablePassage(urn, "score")
-psg_analysis = parsepassage(parser, psg, parser.data)
+psg_analysis = parsepassage(psg, parser, parser.data)
 typeof(psg_analysis)
 
 # output

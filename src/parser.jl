@@ -1,76 +1,44 @@
 abstract type CitableParser end
 
-"""Required function to parse a single token with a `CitableParser`.
+"""The parser trait."""
+abstract type ParserTrait end
+
+"""Value for the ParserTrait for compliant parsers."""
+struct CanParseCitable <: ParserTrait end
+
+"""Default value for the ParserTrait."""
+struct NotAParser <: ParserTrait end
+
+"""Assign default value of ParserTrait to all types."""
+ParserTrait(::Type) = NotAParser() 
+
+"""All subtypes of CitableParser must implement this interface."""
+ParserTrait(::Type{<: CitableParser}) = CanParseCitable() 
+
+#=
+Define delegation for the required function of the CitableParser: parsetoken
+=#
+"""Delegate to specific functions based on type's citable trait value.
 
 $(SIGNATURES)
-
-Should return a (possibly empty) Vector of Analyses.
 """
-function parsetoken(p::T, t::AbstractString, data = nothing) where {T <: CitableParser}
-    #@info("Parsetoken: passing data as a ", typeof(data))
-    p.stringparser(t, data)
+function parsetoken(s::AbstractString, x::T, data = nothing) where {T} 
+    parsetoken(CitableTrait(T), s, x, data)
+end
+
+"""It is an error to invoke the `parsetoken` using types that are not a parser.
+
+$(SIGNATURES)
+"""
+function parsetoken(::NotCitable, s, x, data = nothing)
+    throw(DomainError(x, string("Objects of type ", typeof(x), " are not citable.")))
 end
 
 
-"""Parse a list of tokens with a `CitableParser`.
+"""Citable parsers must implement parsetoken.
 
 $(SIGNATURES)
-
-Should return a (possibly empty) Vector of Vectors Analysis objects.
-Each outer Vector corresponds to one vocabulary item.
 """
-function parsewordlist(p::T, vocablist, data = nothing) where {T <: CitableParser}
-    parses = []
-    for vocab in vocablist
-        push!(parses, parsetoken(p,vocab,data))
-    end
-    parses
-end
-
-
-"""Parse a list of tokens in a file with a `CitableParser`.
-
-$(SIGNATURES)
-
-Should return pairings of tokens with a (possibly empty) Vector of Analyses.
-"""
-function parselistfromfile(p::T, f, delim = '|', data = nothing) where {T <: CitableParser}
-    words = readdlm(f, delim)
-    parsewordlist(p, words, data)
-end
-
-"""Parse a list of tokens at a given url with a `CitableParser`.
-
-$(SIGNATURES)
-
-Should return pairings of tokens with a (possibly empty) Vector of Analyses.
-"""
-function parselistfromurl(p::T, u, data = nothing) where {T <: CitableParser}
-    words = split(String(HTTP.get(u).body) , "\n")
-    parsewordlist(p,words, data)
-end
-
-
-"""Parse a `CitablePassage` with text for a single token with a `CitableParser`.
-
-$(SIGNATURES)
-
-Should return an AnalyzedToken.
-"""
-function parsepassage(p::T, cn::CitablePassage, data = nothing) where {T <: CitableParser}
-    AnalyzedToken(cn, p.stringparser(cn.text, data))
-end
-
-"""Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token.
-
-$(SIGNATURES)
-
-Should return a list of `AnalyzedToken`s.
-"""
-function parsecorpus(p::T, c::CitableTextCorpus, data = nothing) where {T <: CitableParser}
-    results = []
-    for cn in c.passages
-        push!(results, AnalyzedToken(cn, p.stringparser(cn.text, data)))
-    end
-    results
+function parsetoken(::CitableByCtsUrn, s, x, data = nothing)
+    throw(DomainError(x, string("Please implement the urn function for type ", typeof(x))))
 end

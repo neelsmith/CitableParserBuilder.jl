@@ -82,7 +82,7 @@ $(SIGNATURES)
 This could be useful for serializing analyzes for a list
 of unique tokens in a corpus.    
 """
-function cex(prs)::Tuple{ String, Vector{Analysis} }
+function tokenmap_cex(prs)::Tuple{ String, Vector{Analysis} }
     cexlines = []
     for pr in prs
         if isempty(pr[2])

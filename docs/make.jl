@@ -24,6 +24,7 @@ makedocs(
             "guide/analyses.md",
             "guide/abbrurns.md",
             "guide/utils.md",
+            "guide/buildone.md",
             "guide/parsers.md",
             "guide/gburg.md"
         ],
