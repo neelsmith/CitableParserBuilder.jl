@@ -60,10 +60,11 @@ $(SIGNATURES)
 
 Should return a list of `AnalyzedToken`s.
 """
-function parsecorpus( c::CitableTextCorpus, p::T, data = nothing) where {T <: CitableParser}
+function parsecorpus( c::CitableTextCorpus, p::T; tokentype = LexicalToken(),  data = nothing) where {T <: CitableParser}
     results = []
     for cn in c.passages
         push!(results, AnalyzedToken(cn, parsetoken(cn.text, p, data)))
     end
+    #isnothing(tokentype) ? results : filter( results)
     results
 end

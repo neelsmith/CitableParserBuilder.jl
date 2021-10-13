@@ -7,6 +7,7 @@
     wdlist = tokenvalues(c, ortho)
     tokenized = tokenizedcorpus(c, ortho)
     analyses = parsecorpus(tokenized, parser, parser.data)
+    @test length(analyses) == 1506
 end
 
 @testset "Test serializing an analysis list" begin
