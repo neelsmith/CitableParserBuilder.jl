@@ -8,7 +8,7 @@ Each outer Vector corresponds to one vocabulary item.
 function parsewordlist(vocablist, p::T; data = nothing) where {T <: CitableParser}
     parses = []
     for vocab in vocablist
-        push!(parses, parsetoken(vocab, p, data))
+        push!(parses, parsetoken(vocab, p; data))
     end
     parses
 end
