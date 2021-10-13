@@ -37,3 +37,12 @@ length(parsed)
 
 1313
 ```
+
+How good is your coverage?
+```jldoctest
+ coverage(tc, parser; data = parser.data)
+
+# output
+
+0.9847677075399848
+```
