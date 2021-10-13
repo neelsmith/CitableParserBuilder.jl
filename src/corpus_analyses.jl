@@ -16,6 +16,9 @@ function coverage(vocablist, p::CitableParser; data = nothing)
     resultcount / length(vocablist)
 end
 
+
+
+
 """True if `atkn` can be analyzed to more than one lexeme.
 $(SIGNATURES)
 """
@@ -45,7 +48,7 @@ end
 $(SIGNATURES)
 """
 function lexical_ambiguity(c::CitableTextCorpus, p::CitableParser; data)
-    parses = parsecorpus(p, c; data = data)
+    parses = parsecorpus(c, p; data = data)
     ambiguous = filter(p -> lexically_ambiguous(p), parses)
     length(ambiguous) / length(c.passages)
 end
@@ -54,7 +57,7 @@ end
 $(SIGNATURES)
 """
 function lexical_ambiguity(vocablist, p::CitableParser; data)
-    parses = parsewordlist(p, vocablist, data)
+    parses = parsewordlist(vocablist, p; data = data)
     ambiguous = filter(p -> lexically_ambiguous(p), parses)
     length(ambiguous) / length(vocablist)
 end
@@ -91,7 +94,7 @@ end
 $(SIGNATURES)
 """
 function formal_ambiguity(c::CitableTextCorpus, p::CitableParser; data = nothing)
-    parses = parsecorpus(p, c; data = data)
+    parses = parsecorpus(c, p; data = data)
     ambiguous = filter(p -> formally_ambiguous(p), parses)
     length(ambiguous) / length(c.passages)
 end

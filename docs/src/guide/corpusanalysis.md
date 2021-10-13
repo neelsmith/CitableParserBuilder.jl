@@ -24,7 +24,7 @@ tc = tokenizedcorpus(corpus, simpleAscii())
 
 # output
 
-Corpus with 1506 citable passages in 5 documents.
+Corpus with 1313 citable passages in 5 documents.
 ```
 
 ```jldoctest corpus
@@ -39,10 +39,30 @@ length(parsed)
 ```
 
 How good is your coverage?
-```jldoctest
+```jldoctest corpus
  coverage(tc, parser; data = parser.data)
 
 # output
 
 0.9847677075399848
+```
+
+
+With that in mind, let's take some standard measures
+
+```jldoctest corpus
+ lexical_ambiguity(tc, parser; data = parser.data)
+
+ # output
+
+ 0.0
+```
+
+
+```jldoctest corpus
+ formal_ambiguity(tc, parser; data = parser.data)
+
+ # output
+
+ 0.0
 ```
