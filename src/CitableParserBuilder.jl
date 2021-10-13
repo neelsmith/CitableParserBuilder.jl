@@ -41,7 +41,11 @@ export coverage, lexical_ambiguity, formal_ambiguity, lexical_frequencies, forma
 export analyses_relationsblock
 
 
+export TextCounts
+export profile_analyses
+
 include("parser.jl")
+include("profile.jl")
 include("abbrurn.jl")
 include("analysis.jl")
 include("analyzed_token.jl")

@@ -11,7 +11,7 @@ end
 $(SIGNATURES)
 """
 function coverage(vocablist, p::CitableParser; data = nothing)
-    parses = parsewordlist(vocablist, p, data)
+    parses = parsewordlist(vocablist, p; data)
     resultcount = filter(a -> ! isempty(a), parses) |> length
     resultcount / length(vocablist)
 end
