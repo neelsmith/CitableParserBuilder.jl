@@ -10,7 +10,7 @@ struct TextCounts
     lex_ambiguous::Int
 end
 
-"""Summarize a Vector of `AnalyzedToken`s with a `TextCounts`.
+"""Summarize a Vector of `AnalyzedToken`s with basic observations summarized as a `TextCounts` object.
 
 $(SIGNATURES)
 """
@@ -57,15 +57,32 @@ function profile_analyses(v)
     )
 end
 
+
+
+"""Profile a citable corpus.
+
+$(SIGNATURES)
+"""
 function profile(c::CitableTextCorpus, p::CitableParser;  data = nothing)
     analyses = parsecorpus(c, p; data = data)
+    profile_analyses(analyses)
 end
 
 
-#=
-- proportions....
+"""Profile a citable doocument.
 
+$(SIGNATURES)
+"""
+function profile(d::CitableDocument, p::CitableParser;  data = nothing)
+    analyses = parsedocument(d, p; data = data)
+    profile_analyses(analyses)
+end
 
-- lexical_ambiguity
-- formal_ambiguity
-=#
+"""Profile a citable passage.
+
+$(SIGNATURES)
+"""
+function profile(psg::CitablePassage, p::CitableParser;  data = nothing)
+    analyses = parsepassage(psg, p; data = data)
+    profile_analyses(analyses)
+end

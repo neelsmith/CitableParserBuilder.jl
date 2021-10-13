@@ -42,7 +42,7 @@ export analyses_relationsblock
 
 
 export TextCounts
-export profile_analyses
+export profile, profile_analyses
 
 include("parser.jl")
 include("profile.jl")

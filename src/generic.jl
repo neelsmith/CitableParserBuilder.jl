@@ -67,3 +67,17 @@ function parsecorpus(c::CitableTextCorpus, p::T; data = nothing) where {T <: Cit
     end
     results
 end
+
+"""Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token.
+
+$(SIGNATURES)
+
+Should return a list of `AnalyzedToken`s.
+"""
+function parsedocument(doc::CitableDocument, p::T; data = nothing) where {T <: CitableParser}
+    results = []
+    for cn in doc.passages
+        push!(results, AnalyzedToken(cn, parsetoken(cn.text, p; data = data)))
+    end
+    results
+end
