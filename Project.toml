@@ -20,7 +20,7 @@ TypedTables = "9d95f2ec-7b3d-5a63-8d20-e2491e220bb9"
 [compat]
 CSV = "0.9"
 CitableBase = "4"
-CitableCorpus = "0.6"
+CitableCorpus = "0.7"
 CitableObject = "0.8"
 CitableText = "0.11"
 DataStructures = "0.18"
