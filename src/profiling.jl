@@ -7,7 +7,7 @@
 $(SIGNATURES)
 """
 function formal_ambiguity(tc::TextCounts)
-    tc.morphologically_ambiguous / tc.parsed_tokens
+    tc.m_ambiguous / tc.parsed_tokens
 end
 
 
@@ -16,7 +16,7 @@ end
 $(SIGNATURES)
 """
 function lexical_ambiguity(tc::TextCounts)
-    tc.lexically_ambiguous / tc.parsed_tokens
+    tc.l_ambiguous  / tc.parsed_tokens
 end
 
 
@@ -51,7 +51,7 @@ end
 $(SIGNATURES)
 """
 function vocabulary_density(tc::TextCounts)
-    tc.vocabulary_size / tc.corpus_size
+    tc.corpus_size / tc.vocabulary_size 
 end
 
 
@@ -60,7 +60,7 @@ end
 $(SIGNATURES)
 """
 function lexical_density(tc::TextCounts)
-    tc.lexicon_size / tc.parsed_tokens
+    tc.parsed_tokens / tc.lexicon_size
 end
 
 
@@ -82,15 +82,14 @@ end
 
 
 
-
-
 """Profile a citable corpus.
 
 $(SIGNATURES)
 """
 function profile(c::CitableTextCorpus, p::CitableParser;  data = nothing)
     analyses = parsecorpus(c, p; data = data)
-    count_analyses(analyses) |> profile
+    counts = count_analyses(analyses) 
+    profile(counts, "Profile for " * string(c))
 end
 
 
@@ -100,7 +99,8 @@ $(SIGNATURES)
 """
 function profile(d::CitableDocument, p::CitableParser;  data = nothing)
     analyses = parsedocument(d, p; data = data)
-    count_analyses(analyses)  |> profile
+    counts = count_analyses(analyses)
+    profile(counts, "Profile for " * string(d))
 end
 
 """Profile a citable passage.
@@ -109,5 +109,6 @@ $(SIGNATURES)
 """
 function profile(psg::CitablePassage, p::CitableParser;  data = nothing)
     analyses = parsepassage(psg, p; data = data)
-    count_analyses(analyses)  |> profile
+    counts = count_analyses(analyses)
+    profile(counts, "Profile for " * string(psg))
 end
