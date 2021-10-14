@@ -10,6 +10,19 @@ struct TextCounts
     lexically_ambiguous::Int
 end
 
+function pretty_print(tc::TextCounts)
+"""
+tokens: $(tc.corpus_size)
+tokens parsed: $(tc.parsed_tokens)
+vocabulary items: $(tc.vocabulary_size)
+vocabulary parsed: $(tc.parsed_vocabulary)
+lexicon: $(tc.lexicon_size)
+forms: $(tc.forms)
+ambiguous tokens: $(tc.ambiguous_tokens)
+morphologically ambiguous: $(tc.morphologically_ambiguous)
+lexically ambiguous: $(tc.lexically_ambiguous)
+"""
+end
 """Summarize a Vector of `AnalyzedToken`s with basic observations summarized as a `TextCounts` object.
 
 $(SIGNATURES)
