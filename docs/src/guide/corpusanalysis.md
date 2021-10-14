@@ -2,7 +2,7 @@
 
 
 
-## Analyizng a corpus
+## Analyzing a corpus
 
 The `CitableParserBuilder` defines a number of functions that draw on a concrete implementation of the `parsetoken` function to analyze a citable corpus.
 
@@ -72,7 +72,7 @@ profile1 = profile(tc, parser; data = parser.data)
 Alternatively, we can reuse our existing Vector of `AnalyticalToken`s like this.
 ```@example corpus
 counts = count_analyses(parsed)
-label = "Profile of " * string(corpus)
+label = "Profile for " * string(tc)
 profile2 = profile(counts, label)
 ```
 
