@@ -10,6 +10,11 @@ struct TextCounts
     lexically_ambiguous::Int
 end
 
+
+"""Format a verbose display of `TextCounts`.
+
+$(SIGNATURES)
+"""
 function pretty_print(tc::TextCounts)
 """
 tokens: $(tc.corpus_size)
