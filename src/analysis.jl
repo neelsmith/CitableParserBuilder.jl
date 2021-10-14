@@ -17,7 +17,7 @@ using `registry` as the expansion dictionary.
 
 $(SIGNATURES)
 """
-function cex(a::Analysis, delim = "|"; registry = nothing)
+function delimited(a::Analysis, delim = "|"; registry = nothing)
     if isnothing(registry)
         abbrcex(a, delim)
     else
@@ -36,10 +36,10 @@ end
 
 $(SIGNATURES)
 """
-function cex(v::AbstractVector{Analysis}, delim = "|"; registry = nothing)
+function delimited(v::AbstractVector{Analysis}, delim = "|"; registry = nothing)
     lines = []
     for analysis in v
-        push!(lines, cex(analysis, delim; registry = registry))
+        push!(lines, delimited(analysis, delim; registry = registry))
     end
 
     join(lines, "\n")
@@ -56,8 +56,8 @@ function analyses_relationsblock(urn::Cite2Urn, label::AbstractString, v::Abstra
         join(["label", label], delim),
         join(["token", "lexeme", "form", "stem", "rule"], delim)
     ]
-    cexlines = cex(v, delim, registry = registry)
-    join(headerlines, "\n") * cexlines
+    lines = delimited(v, delim, registry = registry)
+    join(headerlines, "\n") * lines
 end
 
 """Serialize an `Analysis` using abbreviated URNs as identifiers.
@@ -100,7 +100,7 @@ end
 
 $(SIGNATURES)
 """
-function analysis_fromcex(s, delim = ",")::Analysis
+function analysis_fromdelimited(s, delim = ",")::Analysis
     parts = split(s, delim)
     Analysis(
         parts[1],

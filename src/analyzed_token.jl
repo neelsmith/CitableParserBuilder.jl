@@ -33,7 +33,7 @@ function abbrcex(at::AnalyzedToken, delim = "|")
     for analysis in at.analyses
         str = join([
             cex(at.passage, delim), 
-            cex(analysis, delim)
+            delimited(analysis, delim)
             ], delim)
         push!(lines, str)
     end
@@ -111,11 +111,12 @@ end
 
 
 
-"""Parse a Vector of lines of delimited-text into a Vector of `AnalyzedToken`s. 
+"""Parse a string of delimited-text into a Vector of `AnalyzedToken`s. 
 
 $(SIGNATURES)
 """
-function analyzedtokens_fromabbrcex(cexlines, delim = "|")
+function analyzedtokens_fromabbrcex(cexsrc, delim = "|")
+    cexlines = split(cexsrc, "\n")
     analyses = [] 
     currentPassage = nothing
     currentAnalyses = []
@@ -141,8 +142,12 @@ function analyzedtokens_fromabbrcex(cexlines, delim = "|")
 end
 
 
+"""Parse a string of delimited-text into a Vector of `AnalyzedToken`s. 
 
-function analyzedtokens_fromcex(cexlines, delim = "|")
+$(SIGNATURES)
+"""
+function analyzedtokens_fromcex(cexsrc, delim = "|")
+    cexlines = split(cexsrc,"\n")
     analyses = [] 
     currentPassage = nothing
     currentAnalyses = []

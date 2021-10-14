@@ -28,7 +28,7 @@ CitableParser
 When we parse a string token, the result is a Vector of `Analysis` objects. Our parser produces only one analysis for *score*.
 
 ```jldoctest parsing
-scoreparses = parsetoken("score", parser,  parser.data)
+scoreparses = parsetoken("score", parser; data = parser.data)
 length(scoreparses)
 
 # output
@@ -66,7 +66,7 @@ gburgform.NN
 We can also parse a list of words. Here, parsing four words produces a Vector containing four Vectors of `Analysis` objects.
 
 ```jldoctest parsing
-wordsparsed = parsewordlist(split("Four score and seven"), parser, parser.data)
+wordsparsed = parsewordlist(split("Four score and seven"), parser; data =  parser.data)
 length(wordsparsed)
 
 # output
@@ -90,7 +90,7 @@ You can also parse citable text structures: passages, documents and corpora.  He
 using CitableText, CitableCorpus
 urn = CtsUrn("urn:cts:demo:gburg.hays.v2:1.2")
 psg = CitablePassage(urn, "score")
-psg_analysis = parsepassage(psg, parser, parser.data)
+psg_analysis = parsepassage(psg, parser; data = parser.data)
 typeof(psg_analysis)
 
 # output

@@ -1,8 +1,8 @@
 """Compute pct of tokens in corpus analyzed by parser.
 $(SIGNATURES)
 """
-function coverage(tokencorpus::CitableTextCorpus, p::CitableParser, data = nothing)
-    parses = parsecorpus(tokencorpus, p, data)
+function coverage(tokencorpus::CitableTextCorpus, p::CitableParser; data = nothing)
+    parses = parsecorpus(tokencorpus, p; data = data)
     resultcount = filter(a -> ! isempty(a.analyses), parses) |> length
     resultcount / length(tokencorpus.passages)
 end
@@ -10,11 +10,14 @@ end
 """Compute pct of words in list of words analyzed by parser.
 $(SIGNATURES)
 """
-function coverage(vocablist, p::CitableParser, data = nothing)
-    parses = parsewordlist(vocablist, p, data)
+function coverage(vocablist, p::CitableParser; data = nothing)
+    parses = parsewordlist(vocablist, p; data)
     resultcount = filter(a -> ! isempty(a), parses) |> length
     resultcount / length(vocablist)
 end
+
+
+
 
 """True if `atkn` can be analyzed to more than one lexeme.
 $(SIGNATURES)
@@ -44,8 +47,8 @@ end
 """Compute lexical ambiguity in corpus analyzed by parser.
 $(SIGNATURES)
 """
-function lexical_ambiguity(c::CitableTextCorpus, p::CitableParser, data)
-    parses = parsecorpus(p, c, data)
+function lexical_ambiguity(c::CitableTextCorpus, p::CitableParser; data)
+    parses = parsecorpus(c, p; data = data)
     ambiguous = filter(p -> lexically_ambiguous(p), parses)
     length(ambiguous) / length(c.passages)
 end
@@ -53,8 +56,8 @@ end
 """Compute lexical ambiguity in list of words analyzed by parser.
 $(SIGNATURES)
 """
-function lexical_ambiguity(vocablist, p::CitableParser, data)
-    parses = parsewordlist(p, vocablist, data)
+function lexical_ambiguity(vocablist, p::CitableParser; data)
+    parses = parsewordlist(vocablist, p; data = data)
     ambiguous = filter(p -> lexically_ambiguous(p), parses)
     length(ambiguous) / length(vocablist)
 end
@@ -90,8 +93,8 @@ end
 """Compute morphological ambiguity in corpus analyzed by parser.
 $(SIGNATURES)
 """
-function formal_ambiguity(c::CitableTextCorpus, p::CitableParser, data = nothing)
-    parses = parsecorpus(p, c, data)
+function formal_ambiguity(c::CitableTextCorpus, p::CitableParser; data = nothing)
+    parses = parsecorpus(c, p; data = data)
     ambiguous = filter(p -> formally_ambiguous(p), parses)
     length(ambiguous) / length(c.passages)
 end
@@ -100,8 +103,8 @@ end
 """Compute morphological ambiguity in list of words analyzed by parser.
 $(SIGNATURES)
 """
-function formal_ambiguity(vocablist, p::CitableParser, data = nothing)
-    parses = parsewordlist(p, vocablist, data)
+function formal_ambiguity(vocablist, p::CitableParser; data = nothing)
+    parses = parsewordlist(p, vocablist; data = data)
     ambiguous = filter(p -> formally_ambiguous(p), parses)
     length(ambiguous) / length(vocablist)
 end
@@ -109,7 +112,7 @@ end
 """Compute frequencies of lexemes in corpus analyzed by parser.
 $(SIGNATURES)
 """
-function lexical_frequencies(c::CitableTextCorpus, p::CitableParser, data = nothing)
+function lexical_frequencies(c::CitableTextCorpus, p::CitableParser; data = nothing)
     @warn("Not yet implemented")
     nothing
 end
@@ -117,7 +120,7 @@ end
 """Compute frequencies of forms in corpus analyzed by parser.
 $(SIGNATURES)
 """
-function formal_frequencies(c::CitableTextCorpus, p::CitableParser, data = nothing)
+function formal_frequencies(c::CitableTextCorpus, p::CitableParser; data = nothing)
     @warn("Not yet implemented")
     nothing
 end

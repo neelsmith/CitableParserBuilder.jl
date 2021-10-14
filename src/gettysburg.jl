@@ -22,22 +22,26 @@ GETTYSBURG_DICT_URL = "https://raw.githubusercontent.com/neelsmith/CitableCorpus
 
 """Instantiate a `GettysburgParser`.
 """
-function gettysburgParser() 
-    @info("Loading dictionary over the internet...")
-    dict = CSV.File(HTTP.get(CitableParserBuilder.GETTYSBURG_DICT_URL).body) |> Dict
-    @info("Done loading.")
-    GettysburgParser(dict)
+function gettysburgParser(; dict = nothing) 
+    if isnothing(dict)
+        @info("Loading dictionary over the internet...")
+        downloaded = CSV.File(HTTP.get(CitableParserBuilder.GETTYSBURG_DICT_URL).body) |> Dict
+        @info("Done loading.")
+        GettysburgParser(downloaded)
+    else
+        GettysburgParser(dict)
+    end
 end
 
 """Parse String `s` by looking it up in a given dictionary.
 """
-function parsetoken(s::AbstractString, parser::GettysburgParser, data = nothing)
+function parsetoken(s::AbstractString, parser::GettysburgParser; data = nothing)
     if isnothing(data) 
         throw(ArgumentError("The GettysburgParser type requires the CitableParser's data parameter in addition to a string token."))
     end
     objid = s in keys(data) ? data[s] : "UNANALYZED"
     if objid == "UNANALYZED"
-        @warn("String $s not parsed by Gettysburg parser.") # in $(typeof(data))")
+        @warn("String \"$s\" not parsed by Gettysburg parser.") # in $(typeof(data))")
         []
     else
         #@info("Objid ", objid)
