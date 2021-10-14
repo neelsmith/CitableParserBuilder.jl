@@ -15,7 +15,7 @@ struct TextCounts
     l_ambiguous::Int
 end
 
-"""Compute `TextCounts` for a Vector of `AnalyzedToken`s.
+"""Summarize a Vector of `AnalyzedToken`s with basic observations summarized as a `TextCounts` object.
 
 $(SIGNATURES)
 """
@@ -80,9 +80,6 @@ morphologically ambiguous: $(tc.morphologically_ambiguous)
 lexically ambiguous: $(tc.lexically_ambiguous)
 """
 end
-"""Summarize a Vector of `AnalyzedToken`s with basic observations summarized as a `TextCounts` object.
 
-$(SIGNATURES)
-"""
 
 

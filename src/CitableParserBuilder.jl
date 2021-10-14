@@ -53,7 +53,7 @@ export  vocabulary_density, token_coverage, vocabulary_coverage, lexical_density
 include("parser.jl")
 include("textcounts.jl")
 include("textprofile.jl")
-include("profile.jl")
+include("profiling.jl")
 include("abbrurn.jl")
 include("analysis.jl")
 include("analyzed_token.jl")

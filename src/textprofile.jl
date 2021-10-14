@@ -34,36 +34,76 @@ function profile(tc::TextCounts, summary::AbstractString)
     )
 end
 
+
+"""Percentage of all tokens parsed.
+
+$(SIGNATURES)
+"""
+function token_coverage(tp::TextProfile)
+    tp.token_coverage
+end
+
+"""Ratio of lexically ambiguous tokens  to all parsed tokens.
+
+$(SIGNATURES)
+"""
 function lexical_ambiguity(tp::TextProfile)
     tp.l_ambiguity
 end
 
+"""Ratio of distinct forms to all tokens parsed.
+
+$(SIGNATURES)
+"""
 function formal_ambiguity(tp::TextProfile)
     tp.m_ambiguity
 end
 
+"""Ratio of lexicon to distinct forms.
+
+$(SIGNATURES)
+"""
 function form_density_inlexicon(tp::TextProfile)
     tp.form_density_lex
 end
 
+"""Ratio of vocabulary items to distinct forms.
 
+$(SIGNATURES)
+"""
 function form_density_invocabulary(tp::TextProfile)
     tp.form_density_vocab
 end
 
+
+"""Ratio of tokens to distinct forms.
+
+$(SIGNATURES)
+"""
 function form_density_incorpus(tp::TextProfile)
     tp.form_density_corpus
 end
 
+"""Ratio of lexicon size to number of tokens parsed.
+
+$(SIGNATURES)
+"""
 function lexical_density(tp::TextProfile)
     tp.lex_density
 end
 
+"""Ratio of distinct tokens to size of corpus.
 
+$(SIGNATURES)
+"""
 function vocabulary_density(tp::TextProfile)
     tp.vocab_density
 end
 
+"""Percentage of unique tokens parsed.
+
+$(SIGNATURES)
+"""
 function vocabulary_coverage(tp::TextProfile)
     tp.vocab_coverage
 end
