@@ -62,7 +62,7 @@ end
 
 $(SIGNATURES)
 """
-function cex(v::AbstractVector{AnalyzedToken}, delim = "|"; registry = nothing)
+function delimited(v::AbstractVector{AnalyzedToken}, delim = "|"; registry = nothing)
     lines = []
     for at in v
         push!(lines, cex(at, delim; registry = registry))
@@ -117,9 +117,9 @@ $(SIGNATURES)
 """
 function analyzedtokens_fromabbrcex(cexsrc, delim = "|")
     cexlines = split(cexsrc, "\n")
-    analyses = [] 
+    analyses = AnalyzedToken[] 
     currentPassage = nothing
-    currentAnalyses = []
+    currentAnalyses = AnalyzedToken[]
     for ln in filter(l -> ! isempty(l), cexlines)
         tkn = analyzedtoken_fromabbrcex(ln, delim)
         if tkn.passage == currentPassage
@@ -150,7 +150,7 @@ function analyzedtokens_fromcex(cexsrc, delim = "|")
     cexlines = split(cexsrc,"\n")
     analyses = [] 
     currentPassage = nothing
-    currentAnalyses = []
+    currentAnalyses = AnalyzedToken[]
     for ln in filter(l -> ! isempty(l), cexlines)
         tkn = analyzedtoken_fromcex(ln, delim)
         if tkn.passage == currentPassage
