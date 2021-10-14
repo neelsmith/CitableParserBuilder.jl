@@ -61,7 +61,7 @@ $(SIGNATURES)
 Should return a list of `AnalyzedToken`s.
 """
 function parsecorpus(c::CitableTextCorpus, p::T; data = nothing) where {T <: CitableParser}
-    results = []
+    results = AnalyzedToken[]
     for cn in c.passages
         push!(results, AnalyzedToken(cn, parsetoken(cn.text, p; data = data)))
     end
@@ -75,7 +75,7 @@ $(SIGNATURES)
 Should return a list of `AnalyzedToken`s.
 """
 function parsedocument(doc::CitableDocument, p::T; data = nothing) where {T <: CitableParser}
-    results = []
+    results = AnalyzedToken[]
     for cn in doc.passages
         push!(results, AnalyzedToken(cn, parsetoken(cn.text, p; data = data)))
     end
