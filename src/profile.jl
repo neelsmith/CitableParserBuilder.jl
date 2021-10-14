@@ -1,20 +1,20 @@
 struct TextCounts
-    tokens::Int
-    distinct_tokens::Int
+    corpus_size::Int
+    vocabulary_size::Int
     parsed_tokens::Int
-    parsed_vocab::Int
-    lexemes::Int
+    parsed_vocabulary::Int
+    lexicon_size::Int
     forms::Int
-    ambiguous::Int
-    morph_ambiguous::Int
-    lex_ambiguous::Int
+    ambiguous_tokens::Int
+    morphologically_ambiguous::Int
+    lexically_ambiguous::Int
 end
 
 """Summarize a Vector of `AnalyzedToken`s with basic observations summarized as a `TextCounts` object.
 
 $(SIGNATURES)
 """
-function profile_analyses(v)
+function count_analyses(v)
     tokencount = length(v)
     vocabsize = map(tkn -> tkn.passage.text, v) |> unique |> length
 
@@ -65,7 +65,7 @@ $(SIGNATURES)
 """
 function profile(c::CitableTextCorpus, p::CitableParser;  data = nothing)
     analyses = parsecorpus(c, p; data = data)
-    profile_analyses(analyses)
+    count_analyses(analyses)
 end
 
 
@@ -75,7 +75,7 @@ $(SIGNATURES)
 """
 function profile(d::CitableDocument, p::CitableParser;  data = nothing)
     analyses = parsedocument(d, p; data = data)
-    profile_analyses(analyses)
+    count_analyses(analyses)
 end
 
 """Profile a citable passage.
@@ -84,5 +84,5 @@ $(SIGNATURES)
 """
 function profile(psg::CitablePassage, p::CitableParser;  data = nothing)
     analyses = parsepassage(psg, p; data = data)
-    profile_analyses(analyses)
+    count_analyses(analyses)
 end

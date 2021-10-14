@@ -62,6 +62,8 @@ end
 
 @testset "Test parsing multiple analyses" begin
     f = "data/ambiganalysis.cex"
-    cexabbrsrc = read(f, String)
-
+    cexsrc = read(f, String)
+    atokens = analyzedtokens_fromcex(cexsrc)
+    @test length(atokens) == 2
+    @test length(atokens[2].analyses) == 3
 end

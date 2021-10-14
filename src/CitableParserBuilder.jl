@@ -31,7 +31,7 @@ export LexemeUrn, FormUrn, StemUrn, RuleUrn
 
 export fstsafe, expand, abbreviate
 export readfst
-export analyzedtoken_fromcex
+export analyzedtokens_fromcex
 
 
 export parsetoken, parsewordlist, parselistfromfile, parselistfromurl
@@ -40,9 +40,10 @@ export coverage, lexical_ambiguity, formal_ambiguity, lexical_frequencies, forma
 
 export analyses_relationsblock
 
+export delimited
 
 export TextCounts
-export profile, profile_analyses
+export profile, count_analyses
 
 include("parser.jl")
 include("profile.jl")
