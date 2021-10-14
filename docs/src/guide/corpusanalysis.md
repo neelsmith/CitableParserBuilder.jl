@@ -36,7 +36,31 @@ parsed =  parsecorpus(tc, parser; data = parser.data)
 length(parsed)
 ```
 
+The vector of analyses can be formatted as delimited text with the `delimited` function.  If you include an optional `registry` mapping collection names to full CITE2 collection strings, abbreviated URNs will be expanded in the resulting text.
 
+```@example corpus
+urndict = Dict(
+    "gburglex" => "urn:cite2:citedemo:gburglex.v1:",
+    "gburgform" => "urn:cite2:citedemo:gburgform.v1:",
+    "gburgrule" => "urn:cite2:citedemo:gburgrule.v1:",
+    "gburgstem" => "urn:cite2:citedemo:gburgstem.v1:"
+)
+f = tempname()
+open(f, "w") do io
+    write(io, delimited(parsed; registry = urndict))
+end
+```
+
+We can read the file with `analyzedtokens_fromcex` to create a new Vector
+of analyses.
+
+```@example corpus
+analyzedTokens = read(f, String) |> analyzedtokens_fromcex
+```
+(We'll be tidy and remove the temporary file.) 
+```@example corpus
+rm(f)
+```
 ## Profiling a corpus
 
 We can get a summary profile of the corpus in a couple of different ways.  At the cost of reparsing the corpus, we can simply use the `profile` function

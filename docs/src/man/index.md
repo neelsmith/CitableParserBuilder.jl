@@ -60,4 +60,6 @@ CitableParserBuilder.inflectiontype
 ```@docs
 readfst
 analyses_relationsblock
+delimited
+cex
 ```

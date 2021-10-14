@@ -5,10 +5,10 @@ struct AnalyzedToken <: Citable
     analyses::Vector{Analysis}
 end
 
-"""Assign value for `CitableTrait`."""
+"""Assign value for `CitableTrait`.
+NB: required cex() function is implemented in file serialization.jl.
+"""
 CitableTrait(::Type{AnalyzedToken}) = CitableByCtsUrn()
-
-
 
 """Label for `AnalyzedToken` (required for `Citable` interface).
 $(SIGNATURES)
@@ -24,54 +24,10 @@ function urn(at::AnalyzedToken)
     at.passage.urn
 end
 
-"""Serialize an `AnalyzedToken` as delimited text with abbreviated URN values.
 
-$(SIGNATURES)
-"""
-function abbrcex(at::AnalyzedToken, delim = "|")
-    lines = []
-    for analysis in at.analyses
-        str = join([
-            cex(at.passage, delim), 
-            delimited(analysis, delim)
-            ], delim)
-        push!(lines, str)
-    end
-    lines
-end
+## Functions to instantiate AnalyzedTokens from delimited text source.
 
-"""Serialize an `AnalyzedToken` as delimited text (required for `Citable` interface).
-
-$(SIGNATURES)
-"""
-function cex(at::AnalyzedToken, delim = "|"; registry = nothing)
-    if isnothing(registry)
-        @warn("No registry defined:  serializing with abbreviated URN values.")
-        abbrcex(at, delim)
-    else
-        lines = []
-        for analysis in at.analyses
-            push!(lines, cex(at.passage, delim), cex(analysis, delim; registry = registry))
-        end
-        join(lines, "\n")
-    end
-end
-
-
-"""Serialize a Vector of `AnalyzedToken`s as delimited text.
-
-$(SIGNATURES)
-"""
-function delimited(v::AbstractVector{AnalyzedToken}, delim = "|"; registry = nothing)
-    lines = []
-    for at in v
-        push!(lines, cex(at, delim; registry = registry))
-    end
-    join(lines, "\n")
-end
-
-
-"""Parse a one-line delimited-text representation into an `AnalyzedToken`, using abbreviated URNs for identifiers.  Note that for a single CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
+"""Parse a one-line delimited-text representation intno an `AnalyzedToken`, using abbreviated URNs for identifiers.  Note that for a sigle CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
 
 $(SIGNATURES)
 """
@@ -108,7 +64,6 @@ function analyzedtoken_fromcex(s, delim = "|")
         )]
     )
 end
-
 
 
 """Parse a string of delimited-text into a Vector of `AnalyzedToken`s. 
