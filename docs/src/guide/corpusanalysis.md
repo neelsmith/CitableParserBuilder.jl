@@ -4,65 +4,44 @@ The `CitableParserBuilder` defines a number of functions that draw on a concrete
 
 We'll load a citable corpus from a file in this repository's `test/data` directory.
 
-```jldoctest corpus
+```@example corpus
 using CitableCorpus
-repo = dirname(pwd())
-f = joinpath(repo,"test","data","gettysburgcorpus.cex")
+repo = dirname(pwd()) # hide
+f = joinpath(repo,"test","data","gettysburgcorpus.cex") # hide
 corpus = read(f) |> corpus_fromcex
-
-# output
-
-Corpus with 20 citable passages in 5 documents.
 ```
 
 We'll use an orthography to prepare a tokenized corpus.
 
 
-```jldoctest corpus
+```@example corpus
 using Orthography
 tc = tokenizedcorpus(corpus, simpleAscii())
-
-# output
-
-Corpus with 1313 citable passages in 5 documents.
 ```
 
-```jldoctest corpus
+```@example corpus
+dictcsv = joinpath(repo, "test", "data", "posdict.csv") # hide
+using CSV # hide
+morphdict = CSV.File(dictcsv) |> Dict
 using CitableParserBuilder
-parser = CitableParserBuilder.gettysburgParser()
+parser = CitableParserBuilder.gettysburgParser(dict = morphdict)
 parsed =  parsecorpus(tc, parser; data = parser.data)
 length(parsed)
-
-# output
-
-1313
 ```
 
 How good is your coverage?
-```jldoctest corpus
+```@example corpus
  coverage(tc, parser; data = parser.data)
-
-# output
-
-0.9847677075399848
 ```
 
 
 With that in mind, let's take some standard measures
 
-```jldoctest corpus
+```@example corpus
  lexical_ambiguity(tc, parser; data = parser.data)
-
- # output
-
- 0.0
 ```
 
 
-```jldoctest corpus
+```@example corpus
  formal_ambiguity(tc, parser; data = parser.data)
-
- # output
-
- 0.0
 ```
