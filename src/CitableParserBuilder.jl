@@ -42,10 +42,17 @@ export analyses_relationsblock
 
 export delimited
 
-export TextCounts
-export profile, count_analyses
+export TextCounts, count_analyses
+export TextProfile, profile
+
+
+export  vocabulary_density, token_coverage, vocabulary_coverage, lexical_density, form_density_incorpus, form_density_invocabulary, form_density_inlexicon, formal_ambiguity, lexical_ambiguity
+
+
 
 include("parser.jl")
+include("textcounts.jl")
+include("textprofile.jl")
 include("profile.jl")
 include("abbrurn.jl")
 include("analysis.jl")

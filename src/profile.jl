@@ -1,79 +1,86 @@
-struct TextCounts
-    corpus_size::Int
-    vocabulary_size::Int
-    parsed_tokens::Int
-    parsed_vocabulary::Int
-    lexicon_size::Int
-    forms::Int
-    ambiguous_tokens::Int
-    morphologically_ambiguous::Int
-    lexically_ambiguous::Int
-end
 
 
-"""Format a verbose display of `TextCounts`.
+# Computations on TextCounts
+
+"""Compute ratio of distinct forms to all tokens parsed.
 
 $(SIGNATURES)
 """
-function pretty_print(tc::TextCounts)
-"""
-tokens: $(tc.corpus_size)
-tokens parsed: $(tc.parsed_tokens)
-vocabulary items: $(tc.vocabulary_size)
-vocabulary parsed: $(tc.parsed_vocabulary)
-lexicon: $(tc.lexicon_size)
-forms: $(tc.forms)
-ambiguous tokens: $(tc.ambiguous_tokens)
-morphologically ambiguous: $(tc.morphologically_ambiguous)
-lexically ambiguous: $(tc.lexically_ambiguous)
-"""
+function formal_ambiguity(tc::TextCounts)
+    tc.morphologically_ambiguous / tc.parsed_tokens
 end
-"""Summarize a Vector of `AnalyzedToken`s with basic observations summarized as a `TextCounts` object.
+
+
+"""Compute ratio of lexically ambiguous tokens  to all parsed tokens.
 
 $(SIGNATURES)
 """
-function count_analyses(v)
-    tokencount = length(v)
-    vocabsize = map(tkn -> tkn.passage.text, v) |> unique |> length
-
-    has_analysis = filter(tkn -> ! isempty(tkn.analyses), v)
-    parsed = length(has_analysis)
-    parsed_vocab = map(tkn -> tkn.passage.text, has_analysis) |> unique |> length
-
-    analyses =  map(tkn -> tkn.analyses, v) |> Iterators.flatten |> collect
-    lexemes = map(a -> a.lexeme, analyses) |> unique |> length
-    forms = map(a -> a.form, analyses) |> unique |> length
-    
-    ambiguous = filter(t -> length(t.analyses) > 1, v) |> length
-
-    morphlists = []
-    for at in v
-        morphlist = map(a -> a.form, at.analyses) |> unique
-        push!(morphlists, morphlist)
-    end
-    morph_ambig = filter(l -> length(l) > 1, morphlists) |> length
-
-
-    lexlists = []
-    for at in v
-        lexlist = map(a -> a.lexeme, at.analyses) |> unique
-        push!(lexlists, lexlist)
-    end
-    lex_ambig = filter(l -> length(l) > 1, lexlists) |> length
-
-    
-    TextCounts(
-        tokencount,
-        vocabsize,
-        parsed,
-        parsed_vocab,
-        lexemes,
-        forms,
-        ambiguous,
-        morph_ambig,
-        lex_ambig
-    )
+function lexical_ambiguity(tc::TextCounts)
+    tc.lexically_ambiguous / tc.parsed_tokens
 end
+
+
+"""Compute ratio of lexicon to distinct forms.
+
+$(SIGNATURES)
+"""
+function form_density_inlexicon(tc::TextCounts)
+    tc.lexicon_size / tc.forms
+end
+
+"""Compute ratio of tokens to distinct forms.
+
+$(SIGNATURES)
+"""
+function form_density_incorpus(tc::TextCounts)
+    tc.corpus_size / tc.forms
+end
+
+
+"""Compute ratio of vocabulary items to distinct forms.
+
+$(SIGNATURES)
+"""
+function form_density_invocabulary(tc::TextCounts)
+    tc.vocabulary_size / tc.forms
+end
+
+
+"""Compute ratio of distinct tokens to size of corpus.
+
+$(SIGNATURES)
+"""
+function vocabulary_density(tc::TextCounts)
+    tc.vocabulary_size / tc.corpus_size
+end
+
+
+"""Compute ratio of lexicon size to number of tokens parsed.
+
+$(SIGNATURES)
+"""
+function lexical_density(tc::TextCounts)
+    tc.lexicon_size / tc.parsed_tokens
+end
+
+
+"""Compute percentage of all tokens parsed.
+
+$(SIGNATURES)
+"""
+function token_coverage(tc::TextCounts)
+    tc.parsed_tokens / tc.corpus_size
+end
+
+"""Compute percentage unique tokens parsed.
+
+$(SIGNATURES)
+"""
+function vocabulary_coverage(tc::TextCounts)
+    tc.parsed_vocabulary / tc.vocabulary_size
+end
+
+
 
 
 
@@ -83,7 +90,7 @@ $(SIGNATURES)
 """
 function profile(c::CitableTextCorpus, p::CitableParser;  data = nothing)
     analyses = parsecorpus(c, p; data = data)
-    count_analyses(analyses)
+    count_analyses(analyses) |> profile
 end
 
 
@@ -93,7 +100,7 @@ $(SIGNATURES)
 """
 function profile(d::CitableDocument, p::CitableParser;  data = nothing)
     analyses = parsedocument(d, p; data = data)
-    count_analyses(analyses)
+    count_analyses(analyses)  |> profile
 end
 
 """Profile a citable passage.
@@ -102,5 +109,5 @@ $(SIGNATURES)
 """
 function profile(psg::CitablePassage, p::CitableParser;  data = nothing)
     analyses = parsepassage(psg, p; data = data)
-    count_analyses(analyses)
+    count_analyses(analyses)  |> profile
 end
