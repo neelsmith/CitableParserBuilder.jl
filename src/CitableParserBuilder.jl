@@ -63,5 +63,6 @@ include("fstreader.jl")
 include("gettysburg.jl")
 include("corpus_analyses.jl")
 include("generic.jl")
+include("serialization.jl")
 
 end # module

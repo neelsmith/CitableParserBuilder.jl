@@ -11,11 +11,11 @@
     tkn = AnalyzedToken(cn, [a]) 
     # Note that this 
     expected = "urn:cts:demo:latin.sample:1|Et|et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1"
-    @test cex(tkn)[1] == expected
+    @test cex(tkn) == expected
 end
 
 @testset "Test serializing analyzed token with a registry" begin
-    dict = Dict(
+    abbrdict = Dict(
       "ls" => "urn:cite2:citedemo:ls.v1:",
       "morphforms" => "urn:cite2:citedemo:morphforms.v1:",
       "stems" => "urn:cite2:citedemo:stems.v1:",
@@ -31,6 +31,9 @@ end
     u = CtsUrn("urn:cts:demo:latin.sample:1")
     cn = CitablePassage(u, "Et")
     tkn = AnalyzedToken(cn, [a]) 
+
+    expected = "urn:cts:demo:latin.sample:1|Et|et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1"
+    @test delimited(tkn; registry = abbrdict) == expected
 end
 
 @testset "Test parsing a serialized AnalyzedToken with abbreviated URNs" begin
@@ -56,9 +59,6 @@ end
     @test a.stem == StemUrn("stems.example1")
     @test a.rule == RuleUrn("rules.example1")
 end
-
-
-
 
 @testset "Test parsing multiple analyses" begin
     f = "data/ambiganalysis.cex"
