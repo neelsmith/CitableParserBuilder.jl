@@ -2,22 +2,19 @@
 
 $(SIGNATURES)
 
-Should return a (possibly empty) Vector of Vectors Analysis objects.
-Each outer Vector corresponds to one vocabulary item.
+Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects.
 """
 function parsewordlist(vocablist, p::T; data = nothing) where {T <: CitableParser}
     parses = []
     for vocab in vocablist
-        push!(parses, parsetoken(vocab, p; data))
+        push!(parses, (vocab, parsetoken(vocab, p; data)))
     end
-    parses
+    parses |> Dict
 end
 
 """Parse a list of tokens in a file with a `CitableParser`.
 
 $(SIGNATURES)
-
-Should return pairings of tokens with a (possibly empty) Vector of Analyses.
 """
 function parselistfromfile(f, p::T, delim = '|'; data = nothing) where {T <: CitableParser}
     words = readdlm(f, delim)
@@ -30,8 +27,6 @@ end
 """Parse a list of tokens at a given url with a `CitableParser`.
 
 $(SIGNATURES)
-
-Should return pairings of tokens with a (possibly empty) Vector of Analyses.
 """
 function parselistfromurl(u, p::T, data = nothing) where {T <: CitableParser}
     words = split(String(HTTP.get(u).body) , "\n")
@@ -60,9 +55,49 @@ $(SIGNATURES)
 
 Should return a list of `AnalyzedToken`s.
 """
-function parsecorpus(c::CitableTextCorpus, p::T; data = nothing) where {T <: CitableParser}
+function parsecorpus_brute(c::CitableTextCorpus, p::T; data = nothing) where {T <: CitableParser}
     results = AnalyzedToken[]
     for cn in c.passages
+        push!(results, AnalyzedToken(cn, parsetoken(cn.text, p; data = data)))
+    end
+    results
+end
+
+
+
+"""Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token.
+
+$(SIGNATURES)
+
+Should return a list of `AnalyzedToken`s.
+"""
+function parsecorpus(c::CitableTextCorpus, p::T; data = nothing) where {T <: CitableParser}
+    wordlist = map(psg -> psg.text, c.passages) |> unique
+    parsedict = parsewordlist(wordlist, p; data = data)
+    keylist = keys(parsedict)
+
+    results = AnalyzedToken[]
+    for psg in c.passages
+        if psg.text in keylist
+            at = AnalyzedToken(psg, parsedict[psg.text])
+            push!(results, at)
+        else
+            at = AnalyzedToken(psg, AnalyzedToken[])
+            push!(results, at)
+        end
+    end
+    results
+end
+
+"""Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token.
+
+$(SIGNATURES)
+
+Should return a list of `AnalyzedToken`s.
+"""
+function parsedocument_brute(doc::CitableDocument, p::T; data = nothing) where {T <: CitableParser}
+    results = AnalyzedToken[]
+    for cn in doc.passages
         push!(results, AnalyzedToken(cn, parsetoken(cn.text, p; data = data)))
     end
     results
@@ -75,9 +110,19 @@ $(SIGNATURES)
 Should return a list of `AnalyzedToken`s.
 """
 function parsedocument(doc::CitableDocument, p::T; data = nothing) where {T <: CitableParser}
+    wordlist = map(psg -> psg.text, doc.passages) |> unique
+    parsedict = parsewordlist(wordlist, p; data = data)
+    keylist = keys(parsedict)
+
     results = AnalyzedToken[]
-    for cn in doc.passages
-        push!(results, AnalyzedToken(cn, parsetoken(cn.text, p; data = data)))
+    for psg in doc.passages
+        if psg.text in keylist
+            at = AnalyzedToken(psg, parsedict[psg.text])
+            push!(results, at)
+        else
+            at = AnalyzedToken(psg, AnalyzedToken[])
+            push!(results, at)
+        end
     end
     results
 end

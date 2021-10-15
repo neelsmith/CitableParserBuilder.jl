@@ -35,7 +35,7 @@ export analyzedtokens_fromcex
 
 
 export parsetoken, parsewordlist, parselistfromfile, parselistfromurl
-export parsepassage, parsecorpus
+export parsepassage, parsecorpus, parsedocument
 export coverage, lexical_ambiguity, formal_ambiguity, lexical_frequencies, formal_frequencies
 
 export analyses_relationsblock
