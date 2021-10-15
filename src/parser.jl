@@ -30,7 +30,7 @@ end
 
 $(SIGNATURES)
 """
-function parsetoken(::NotCitable, s, x; data = nothing)
+function parsetoken(::NotAParser, s, x; data = nothing)
     throw(DomainError(x, string("Objects of type ", typeof(x), " are not parsers.")))
 end
 
@@ -39,6 +39,6 @@ end
 
 $(SIGNATURES)
 """
-function parsetoken(::CitableByCtsUrn, s, x; data = nothing)
+function parsetoken(::CanParseCitable, s, x; data = nothing)
     throw(DomainError(x, string("Please implement the urn function for type ", typeof(x))))
 end
