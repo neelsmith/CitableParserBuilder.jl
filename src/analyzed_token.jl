@@ -33,9 +33,9 @@ $(SIGNATURES)
 """
 function analyzedtoken_fromabbrcex(s, delim = "|")::AnalyzedToken
     parts = split(s, delim)
-    cn = CitablePassage(CtsUrn(parts[1]), parts[2])
-    AnalyzedToken(
-        cn,
+    psg = CitablePassage(CtsUrn(parts[1]), parts[2])
+    isempty(parts[3]) ? AnalyzedToken(psg, Analysis[]) : AnalyzedToken(
+        psg,
         [Analysis( 
             parts[3],
             LexemeUrn(parts[4]),
@@ -52,9 +52,10 @@ $(SIGNATURES)
 """
 function analyzedtoken_fromcex(s, delim = "|")
     parts = split(s, delim)
-    cn = CitablePassage(CtsUrn(parts[1]), parts[2])
+    psg = CitablePassage(CtsUrn(parts[1]), parts[2])
+    isempty(parts[3]) ? AnalyzedToken(psg, Analysis[]) :
     AnalyzedToken(
-        cn,
+        psg,
         [Analysis( 
             parts[3],
             Cite2Urn(parts[4]) |> abbreviate |> LexemeUrn,
@@ -103,7 +104,7 @@ $(SIGNATURES)
 """
 function analyzedtokens_fromcex(cexsrc, delim = "|")
     cexlines = split(cexsrc,"\n")
-    analyses = [] 
+    analyses = AnalyzedToken[] 
     currentPassage = nothing
     currentAnalyses = AnalyzedToken[]
     for ln in filter(l -> ! isempty(l), cexlines)
