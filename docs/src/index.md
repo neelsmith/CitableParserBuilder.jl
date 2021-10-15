@@ -56,6 +56,7 @@ The following sections illustrate parsing with a sample implementation of a `Cit
 Pages = [
     "guide/parser.md",
     "guide/analyses.md",
+    "guide/corpusanalysis.md",
     "guide/abbrurns.md",
     "guide/utils.md",
     "guide/parsers.md",

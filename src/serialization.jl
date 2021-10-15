@@ -6,14 +6,19 @@ These can be expanded to full CITE2 URNs when read back with a URN registry,
 or the `delimited` function can be used with a URN registry to write full CITE2 URNs.
 """
 function cex(at::AnalyzedToken, delim = "|")
-    lines = []
-    for analysis in at.analyses
-        push!(lines, join([
-            cex(at.passage, delim), 
-            delimited(analysis, delim)
-            ], delim))
+    if isempty(at.analyses)
+        noanalysis = "|||||"
+        cex(at.passage, delim) * noanalysis
+    else
+        lines = []
+        for analysis in at.analyses
+            push!(lines, join([
+                cex(at.passage, delim), 
+                delimited(analysis, delim)
+                ], delim))
+        end
+        join(lines, "\n")
     end
-    join(lines, "\n")
 end
 
 
@@ -25,15 +30,20 @@ function delimited(at::AnalyzedToken, delim = "|"; registry = nothing)
     if isnothing(registry)
         @warn("No registry defined:  serializing AnalyzedToken with abbreviated URN values.")
     end
-    lines = []
-    for analysis in at.analyses
-        push!(lines, 
-        join([
-            cex(at.passage, delim), 
-            delimited(analysis, delim; registry = registry)
-            ], delim))
+    if isempty(at.analyses)
+        noanalysis = "|||||"
+        cex(at.passage, delim) * noanalysis
+    else
+        lines = []
+        for analysis in at.analyses
+            push!(lines, 
+            join([
+                cex(at.passage, delim), 
+                delimited(analysis, delim; registry = registry)
+                ], delim))
+        end
+        join(lines, "\n")
     end
-    join(lines, "\n")
 end
 
 """Serialize a Vector of `AnalyzedToken`s as delimited text.

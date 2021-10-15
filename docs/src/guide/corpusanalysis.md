@@ -11,7 +11,7 @@ We'll load a citable corpus from a file in this repository's `test/data` directo
 ```@example corpus
 using CitableCorpus
 repo = dirname(pwd()) |> dirname |> dirname # hide
-f = joinpath(repo,"test","data","gettysburgcorpus.cex") # hide
+f = joinpath(repo,"test","data","gettysburgcorpus.cex") 
 corpus = read(f) |> corpus_fromcex
 ```
 
@@ -27,8 +27,8 @@ We'll build a `GettysburgParser`, a demo parser for the English text of the Gett
 
 The result of parsing the corpus is a Vector of `AnalyzedToken`s.  There is one entry for each token in the corpus.
 ```@example corpus
-dictcsv = joinpath(repo, "test", "data", "posdict.csv") # hide
-using CSV # hide
+dictcsv = joinpath(repo, "test", "data", "posdict.csv") 
+using CSV
 morphdict = CSV.File(dictcsv) |> Dict
 using CitableParserBuilder
 parser = CitableParserBuilder.gettysburgParser(dict = morphdict)
