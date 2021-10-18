@@ -66,4 +66,10 @@ end
     atokens = analyzedtokens_fromcex(cexsrc)
     @test length(atokens) == 2
     @test length(atokens[2].analyses) == 3
+
+    expectedlexemes =  ["ls.n16278", "ls.x", "ls.y", "ls.z"]
+    @test lexemes(atokens) == expectedlexemes
+    @test stringsforlexeme(atokens, "ls.n16278") == "Et"
+
+    # @test lexemedictionary ....
 end

@@ -127,3 +127,51 @@ function analyzedtokens_fromcex(cexsrc, delim = "|")
 
     analyses
 end
+
+
+"""Extract a list of lexeme values from a Vector of `AnalyzedToken`s.
+
+$(SIGNATURES)
+"""
+function lexemes(v::AbstractVector{AnalyzedToken})
+    analyses = map(p -> p.analyses, v) |> Iterators.flatten |> collect
+    map(a -> string(a.lexeme), analyses) |> unique
+end
+
+
+"""Flatten a Vector of `AnalyzedToken`s into passage+anlaysis pairs.
+
+$(SIGNATURES)
+"""
+function flatpairs(v::AbstractVector{AnalyzedToken})
+    pairlist = []
+    for ta in v
+        for a in ta.analyses
+            push!(pairlist, (ta.passage, a))
+        end
+    end
+    pairlist
+end
+
+
+"""Find token string values for all tokens in a vector of `AnalyzedToken`s.
+
+$(SIGNATURES)
+"""
+function stringsforlexeme(v::AbstractVector{AnalyzedToken}, l::AbstractString)
+    paired = flatpairs(v)
+    matches = filter(pr -> string(pr[2].lexeme) == l, paired)
+    map(pr -> pr[1].text, matches) |> unique
+end
+
+function lexemedictionary(parses, tokenindex)
+    lexformdict = Dict()
+    for l in lexemes(parses)
+        singlelexdict = Dict()   
+        formlist = formsforlexeme(parses, l)
+        for f in formlist
+            singlelexdict[f] = tokenindex[f]
+        end
+        lexformdict[l] = singlelexdict
+    end
+end
