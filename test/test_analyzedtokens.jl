@@ -69,7 +69,28 @@ end
 
     expectedlexemes =  ["ls.n16278", "ls.x", "ls.y", "ls.z"]
     @test lexemes(atokens) == expectedlexemes
-    @test stringsforlexeme(atokens, "ls.n16278") == "Et"
+    @test stringsforlexeme(atokens, "ls.n16278")[1] == "Et"
 
     # @test lexemedictionary ....
+end
+
+
+@testset "Test lexeme dictionary" begin
+    f = joinpath("data", "gettysburgcorpus.cex")
+    c = read(f, String) |> corpus_fromcex
+    tknindex =  corpusindex(c, simpleAscii())
+    tokenized = tokenizedcorpus(c, simpleAscii())
+
+    dictfile = joinpath("data", "posdict.csv")
+    dict  = CSV.File(dictfile) |> Dict
+    parser = CitableParserBuilder.gettysburgParser(dict = dict)
+    parses = parsecorpus(tokenized,parser; data = parser.data)
+    
+    lexdict = lexemedictionary(parses, tknindex)
+    formsoflexeme = lexdict["gburglex.or"]
+    # Only one form: "or"
+    @test length(formsoflexeme)  == 1
+    @test collect(keys(formsoflexeme))[1]  == "or"
+    psgs  = formsoflexeme["or"]
+    @test length(psgs) == 10
 end

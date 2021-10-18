@@ -25,9 +25,11 @@ function urn(at::AnalyzedToken)
 end
 
 
-## Functions to instantiate AnalyzedTokens from delimited text source.
 
-"""Parse a one-line delimited-text representation intno an `AnalyzedToken`, using abbreviated URNs for identifiers.  Note that for a sigle CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
+
+
+"""Parse a one-line delimited-text representation into an `AnalyzedToken`,
+using abbreviated URNs for identifiers.  Note that for a sigle CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
 
 $(SIGNATURES)
 """
@@ -168,10 +170,11 @@ function lexemedictionary(parses, tokenindex)
     lexformdict = Dict()
     for l in lexemes(parses)
         singlelexdict = Dict()   
-        formlist = formsforlexeme(parses, l)
+        formlist = stringsforlexeme(parses, l)
         for f in formlist
             singlelexdict[f] = tokenindex[f]
         end
         lexformdict[l] = singlelexdict
     end
+    lexformdict
 end
