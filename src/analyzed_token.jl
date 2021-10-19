@@ -166,6 +166,14 @@ function stringsforlexeme(v::AbstractVector{AnalyzedToken}, l::AbstractString)
     map(pr -> pr[1].text, matches) |> unique
 end
 
+
+
+"""From a vector `AnalyzedToken`s and an index of tokens in a corpus,
+construct a dictionary keyed by lexemes, mapping to a further dictionary
+of surface forms to passages.
+
+$(SIGNATURES)
+"""
 function lexemedictionary(parses, tokenindex)
     lexformdict = Dict()
     for l in lexemes(parses)

@@ -11,8 +11,8 @@ We'll load a citable corpus from a file in this repository's `test/data` directo
 ```@example corpus
 using CitableCorpus
 repo = dirname(pwd()) |> dirname |> dirname # hide
-f = joinpath(repo,"test","data","gettysburgcorpus.cex") 
-corpus = read(f) |> corpus_fromcex
+corpuscexfile = joinpath(repo,"test","data","gettysburgcorpus.cex") 
+corpus = read(corpuscexfile) |> corpus_fromcex
 ```
 
 We'll use the `SimpleAscii` orthography from the `Orthography` package to prepare a tokenized corpus.
@@ -45,8 +45,8 @@ urndict = Dict(
     "gburgrule" => "urn:cite2:citedemo:gburgrule.v1:",
     "gburgstem" => "urn:cite2:citedemo:gburgstem.v1:"
 )
-f = tempname()
-open(f, "w") do io
+delimited_output = tempname()
+open(delimited_output, "w") do io
     write(io, delimited(parsed; registry = urndict))
 end
 ```
@@ -55,11 +55,11 @@ We can read the file with `analyzedtokens_fromcex` to create a new Vector
 of analyses.
 
 ```@example corpus
-analyzedTokens = read(f, String) |> analyzedtokens_fromcex
+analyzedTokens = read(delimited_output, String) |> analyzedtokens_fromcex
 ```
 (We'll be tidy and remove the temporary file.) 
 ```@example corpus
-rm(f)
+rm(delimited_output)
 ```
 ## Profiling a corpus
 
