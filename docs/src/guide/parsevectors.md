@@ -54,5 +54,5 @@ length(lexdict)
 Each entry in the dictionary is a further dictionary mapping surface forms to passages.
 
 ```@example vectors
-lexdict["and"]
+lexdict["gburglex.and"]
 ```
