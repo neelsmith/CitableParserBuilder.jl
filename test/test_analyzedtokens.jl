@@ -70,6 +70,7 @@ end
     expectedlexemes =  ["ls.n16278", "ls.x", "ls.y", "ls.z"]
     @test lexemes(atokens) == expectedlexemes
     @test stringsforlexeme(atokens, "ls.n16278")[1] == "Et"
+    @test passagesforlexeme(atokens, "ls.n16278")[1] == CtsUrn("urn:cts:demo:latin.sample:1")
 
     # @test lexemedictionary ....
 end

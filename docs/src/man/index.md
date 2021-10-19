@@ -39,6 +39,15 @@ formal_ambiguity
 lexical_ambiguity
 ```
 
+
+## Working with vectors of `AnalyzedToken`s
+
+```@docs
+lexemes
+stringsforlexeme
+lexemedictionary
+```
+
 ## Working with `AbbreviatedUrn`s
 
 ```@docs

@@ -32,7 +32,7 @@ export LexemeUrn, FormUrn, StemUrn, RuleUrn
 export fstsafe, expand, abbreviate
 export readfst
 export analyzedtokens_fromcex
-export lexemes, stringsforlexeme, lexemedictionary
+export lexemes, stringsforlexeme, lexemedictionary, passagesforlexeme
 
 
 export parsetoken, parsewordlist, parselistfromfile, parselistfromurl

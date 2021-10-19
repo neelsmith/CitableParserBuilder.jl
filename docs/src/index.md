@@ -45,6 +45,12 @@ Every analysis of a string value identifies a valid pairing of a *lexeme* and a 
 The `AnalyzedToken` type associates a Vector of `Analysis` objects with a citable token.
 
 
+## Shared functions for working with results of parsing
+
+1. `lexemes` 
+1. `stringsforlexeme` 
+1. `lexemedictionary`
+
 ## Examples
 
 The following sections illustrate parsing with a sample implementation of a `CitableParser` designed to parse a corpus of all the known versions of Lincoln's Gettysburg Address, and to identify the form of tokens with the [part of speech code used by the Penn treebank project](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html).
@@ -57,6 +63,7 @@ Pages = [
     "guide/parser.md",
     "guide/analyses.md",
     "guide/corpusanalysis.md",
+    "guide/parsevectors.md",
     "guide/abbrurns.md",
     "guide/utils.md",
     "guide/parsers.md",

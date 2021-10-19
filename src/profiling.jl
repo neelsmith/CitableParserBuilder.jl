@@ -60,7 +60,7 @@ end
 $(SIGNATURES)
 """
 function lexical_density(tc::TextCounts)
-    tc.parsed_tokens / tc.lexicon_size
+     tc.lexicon_size / tc.parsed_tokens
 end
 
 

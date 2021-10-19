@@ -1,0 +1,58 @@
+# Working with vectors of `AnalyzedToken`s
+
+
+Same set up as before: read corpus, tokenize, parse.
+
+```@setup vectors
+using CitableCorpus
+repo = dirname(pwd()) |> dirname |> dirname # hide
+f = joinpath(repo,"test","data","gettysburgcorpus.cex") 
+corpus = read(f) |> corpus_fromcex
+
+using Orthography
+tc = tokenizedcorpus(corpus, simpleAscii())
+
+dictcsv = joinpath(repo, "test", "data", "posdict.csv") 
+using CSV
+morphdict = CSV.File(dictcsv) |> Dict
+using CitableParserBuilder
+parser = CitableParserBuilder.gettysburgParser(dict = morphdict)
+```
+
+
+```@example vectors
+parsed =  parsecorpus(tc, parser; data = parser.data)
+length(parsed)
+```
+
+
+## Lexemes
+
+Get a list of unique lexeme identifiers for all parsed tokens.
+
+```@example vectors
+lexemelist = lexemes(parsed)
+length(lexemelist)
+```
+
+For a given lexeme, find all surface forms appearing in the corpus.  The lexeme "gburglex.and" appears in only one form, *and*.
+```@example vectors
+stringsforlexeme(parsed, "gburglex.and" )
+```
+
+Get a dictionary keyed by lexeme that can be used to find all forms, and all passages
+for a given lexeme.  It will have the same length as the list of lexemes, which are its keys.
+
+
+```@example vectors
+ortho = simpleAscii() # hide
+tokenindex = corpusindex(corpus, ortho)
+lexdict = lexemedictionary(parsed, tokenindex)
+length(lexdict)
+```
+
+Each entry in the dictionary is a further dictionary mapping surface forms to passages.
+
+```@example vectors
+lexdict["gburglex.and"]
+```
