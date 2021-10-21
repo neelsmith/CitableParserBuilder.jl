@@ -4,9 +4,15 @@ $(SIGNATURES)
 
 Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects.
 """
-function parsewordlist(vocablist, p::T; data = nothing) where {T <: CitableParser}
+function parsewordlist(vocablist, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
+    @info("Vocabulary size: ", length(vocablist))
+    counter = 0
     parses = []
     for vocab in vocablist
+        counter = counter + 1
+        if mod(counter, countinterval) == 0
+            @info("Parsing ", counter)
+        end
         push!(parses, (vocab, parsetoken(vocab, p; data)))
     end
     parses |> Dict
@@ -71,11 +77,11 @@ $(SIGNATURES)
 
 Should return a list of `AnalyzedToken`s.
 """
-function parsecorpus(c::CitableTextCorpus, p::T; data = nothing) where {T <: CitableParser}
+function parsecorpus(c::CitableTextCorpus, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
     wordlist = map(psg -> psg.text, c.passages) |> unique
-    parsedict = parsewordlist(wordlist, p; data = data)
+    @info("Corpus size (tokens): ", length(c.passages))
+    parsedict = parsewordlist(wordlist, p; data = data, countinterval = countinterval)
     keylist = keys(parsedict)
-
     results = AnalyzedToken[]
     for psg in c.passages
         if psg.text in keylist
