@@ -71,13 +71,20 @@ $(SIGNATURES)
 
 Should return a list of `AnalyzedToken`s.
 """
-function parsecorpus(c::CitableTextCorpus, p::T; data = nothing) where {T <: CitableParser}
+function parsecorpus(c::CitableTextCorpus, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
     wordlist = map(psg -> psg.text, c.passages) |> unique
+    @info("Corpus size (tokens): ", length(c.passages))
+    @info("Distinct tokens to parse: ", length(wordlist))
     parsedict = parsewordlist(wordlist, p; data = data)
     keylist = keys(parsedict)
-
+    @info("Unique tokens to parse: ", length(keylist))
+    counter = 0
     results = AnalyzedToken[]
     for psg in c.passages
+        counter = counter + 1
+        if mod(counter, countinterval) == 0
+            @info(counter)
+        end
         if psg.text in keylist
             at = AnalyzedToken(psg, parsedict[psg.text])
             push!(results, at)
