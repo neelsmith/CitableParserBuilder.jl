@@ -71,6 +71,8 @@ length(wordsparsed)
 
 # output
 
+┌ Info: Vocabulary size:
+└   length(vocablist) = 4
 4
 ```
 
