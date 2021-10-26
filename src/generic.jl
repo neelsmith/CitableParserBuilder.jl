@@ -101,9 +101,14 @@ $(SIGNATURES)
 
 Should return a list of `AnalyzedToken`s.
 """
-function parsedocument_brute(doc::CitableDocument, p::T; data = nothing) where {T <: CitableParser}
+function parsedocument_brute(doc::CitableDocument, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
+    counter = 0
     results = AnalyzedToken[]
     for cn in doc.passages
+        counter = counter + 1
+        if mod(counter, countinterval) == 0
+            @info(counter)
+        end
         push!(results, AnalyzedToken(cn, parsetoken(cn.text, p; data = data)))
     end
     results
@@ -115,9 +120,9 @@ $(SIGNATURES)
 
 Should return a list of `AnalyzedToken`s.
 """
-function parsedocument(doc::CitableDocument, p::T; data = nothing) where {T <: CitableParser}
+function parsedocument(doc::CitableDocument, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
     wordlist = map(psg -> psg.text, doc.passages) |> unique
-    parsedict = parsewordlist(wordlist, p; data = data)
+    parsedict = parsewordlist(wordlist, p; data = data, countinterval = countinterval)
     keylist = keys(parsedict)
 
     results = AnalyzedToken[]
