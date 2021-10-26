@@ -50,6 +50,7 @@ export TextProfile, profile
 export  vocabulary_density, token_coverage, vocabulary_coverage, lexical_density, form_density_incorpus, form_density_invocabulary, form_density_inlexicon, formal_ambiguity, lexical_ambiguity
 
 
+include("testsimpleinheritance.jl")
 
 include("parser.jl")
 include("textcounts.jl")

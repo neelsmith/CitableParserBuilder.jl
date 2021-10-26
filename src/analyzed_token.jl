@@ -173,7 +173,8 @@ $(SIGNATURES)
 function passagesforlexeme(v::AbstractVector{AnalyzedToken}, l::AbstractString)
     paired = flatpairs(v)
     matches = filter(pr -> string(pr[2].lexeme) == l, paired)
-    map(pr -> pr[1].urn, matches) |> unique
+    urnstrings = map(pr -> pr[1].urn.urn, matches) |> unique
+    map(u -> CtsUrn(u), urnstrings)
 end
 
 """From a vector `AnalyzedToken`s and an index of tokens in a corpus,
