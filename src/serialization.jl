@@ -5,17 +5,17 @@ Uses abbreviated URNs.
 These can be expanded to full CITE2 URNs when read back with a URN registry,
 or the `delimited` function can be used with a URN registry to write full CITE2 URNs.
 """
-function cex(at::AnalyzedToken, delim = "|")
+function cex(at::AnalyzedToken; delimiter = "|")
     if isempty(at.analyses)
         noanalysis = "|||||"
-        cex(at.passage, delim) * noanalysis
+        cex(at.passage; delimiter = delimiter) * noanalysis
     else
         lines = []
         for analysis in at.analyses
             push!(lines, join([
-                cex(at.passage, delim), 
-                delimited(analysis, delim)
-                ], delim))
+                cex(at.passage; delimiter = delimiter), 
+                delimited(analysis, delimiter)
+                ], delimiter))
         end
         join(lines, "\n")
     end
@@ -32,13 +32,13 @@ function delimited(at::AnalyzedToken, delim = "|"; registry = nothing)
     end
     if isempty(at.analyses)
         noanalysis = "|||||"
-        cex(at.passage, delim) * noanalysis
+        cex(at.passage; delimiter = delim) * noanalysis
     else
         lines = []
         for analysis in at.analyses
             push!(lines, 
             join([
-                cex(at.passage, delim), 
+                cex(at.passage; delimiter = delim), 
                 delimited(analysis, delim; registry = registry)
                 ], delim))
         end
