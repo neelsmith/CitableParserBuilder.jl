@@ -35,14 +35,16 @@ julia> LexemeUrn("lexicon.lex123") |> fstsafe
 ```
 """
 function fstsafe(au::AbbreviatedUrn)
-    string("<u>", protectunderscore(au.collection), raw"\.", protectunderscore(au.objectid), "</u>")
+    string("<u>", protectreserved(au.collection), raw"\.", protectreserved(au.objectid), "</u>")
 end
 
-"""Escape underscore character for SFST syntax.
+"""Escape characters reserved for SFST syntax.
 
 
 $(SIGNATURES)
 """
-function protectunderscore(s)
-    replace(s, "_" => raw"\_")
+function protectreserved(s)
+    underscores = replace(s, "_" => raw"\_")
+    periods = replace(underscores,"." => raw"\.")
+    periods
 end
