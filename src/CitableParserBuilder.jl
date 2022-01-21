@@ -1,4 +1,5 @@
 module CitableParserBuilder
+using CitableBase
 using CitableObject, CitableText, CitableCorpus
 using Orthography
 

@@ -4,10 +4,10 @@
 Same set up as before: read corpus, tokenize, parse.
 
 ```@setup vectors
-using CitableCorpus
+using CitableCorpus, CitableBase
 repo = dirname(pwd()) |> dirname |> dirname # hide
 f = joinpath(repo,"test","data","gettysburgcorpus.cex") 
-corpus = read(f) |> corpus_fromcex
+corpus = fromcex(f, CitableTextCorpus, FileReader)
 
 using Orthography
 tc = tokenizedcorpus(corpus, simpleAscii())
