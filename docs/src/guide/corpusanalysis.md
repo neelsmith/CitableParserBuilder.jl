@@ -9,10 +9,10 @@ The `CitableParserBuilder` defines a number of functions that draw on a concrete
 We'll load a citable corpus from a file in this repository's `test/data` directory (referred to here as `f`).
 
 ```@example corpus
-using CitableCorpus
+using CitableCorpus, CitableBase
 repo = dirname(pwd()) |> dirname |> dirname # hide
 corpuscexfile = joinpath(repo,"test","data","gettysburgcorpus.cex") 
-corpus = read(corpuscexfile) |> corpus_fromcex
+corpus = fromcex(corpuscexfile, CitableTextCorpus, FileReader)
 ```
 
 We'll use the `SimpleAscii` orthography from the `Orthography` package to prepare a tokenized corpus.
