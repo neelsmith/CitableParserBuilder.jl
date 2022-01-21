@@ -1,7 +1,7 @@
 
 @testset "Test analyzing a corpus" begin
     f = "data/gettysburgcorpus.cex"
-    c = read(f, String) |> corpus_fromcex
+    c = fromcex(f, CitableTextCorpus, FileReader)
     ortho = simpleAscii()
     parser = CitableParserBuilder.gettysburgParser()
     wdlist = tokenvalues(c, ortho)
@@ -12,7 +12,7 @@ end
 
 @testset "Test serializing an analysis list" begin
     f = "data/gettysburgcorpus.cex"
-    c = read(f, String) |> corpus_fromcex
+    c = fromcex(f, CitableTextCorpus, FileReader)
     ortho = simpleAscii()
     parser = CitableParserBuilder.gettysburgParser()
   

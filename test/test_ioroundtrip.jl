@@ -1,6 +1,6 @@
 @testset "Test roundtripping serializing of analyses" begin
     f = joinpath(pwd(), "data","gburgerrors.cex")
-    corpus = read(f) |> corpus_fromcex
+    corpus = fromcex(f, CitableTextCorpus, FileReader)
     tc = tokenizedcorpus(corpus, simpleAscii())
 
     dictcsv = joinpath(pwd(),"data", "posdict.csv")

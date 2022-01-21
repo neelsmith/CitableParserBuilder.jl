@@ -1,4 +1,5 @@
 using CitableParserBuilder
+using CitableBase
 using CitableObject, CitableText, CitableCorpus
 using Orthography
 using CSV

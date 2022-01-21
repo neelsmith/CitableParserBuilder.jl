@@ -78,7 +78,7 @@ end
 
 @testset "Test lexeme dictionary" begin
     f = joinpath("data", "gettysburgcorpus.cex")
-    c = read(f, String) |> corpus_fromcex
+    c = fromcex(f, CitableTextCorpus, FileReader)
     tknindex =  corpusindex(c, simpleAscii())
     tokenized = tokenizedcorpus(c, simpleAscii())
 

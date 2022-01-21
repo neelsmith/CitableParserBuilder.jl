@@ -1,7 +1,7 @@
 name = "CitableParserBuilder"
 uuid = "c834cb9d-35b9-419a-8ff8-ecaeea9e2a2a"
 authors = ["Neel Smith <dnsmith.neel@gmail.com>"]
-version = "0.21.1"
+version = "0.21.2"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -19,10 +19,10 @@ TypedTables = "9d95f2ec-7b3d-5a63-8d20-e2491e220bb9"
 
 [compat]
 CSV = "0.9"
-CitableBase = "5"
-CitableCorpus = "0.8"
-CitableObject = "0.8"
-CitableText = "0.11"
+CitableBase = "10"
+CitableCorpus = "0.12"
+CitableObject = "0.11"
+CitableText = "0.14"
 DataStructures = "0.18"
 DocStringExtensions = "0.8"
 Documenter = "0.27"
