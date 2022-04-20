@@ -40,3 +40,15 @@ end
   a2 = Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2010003100"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i13"))
   a1 == a2
 end
+
+
+
+@testset "Test listing tokens from list of Analysis objects" begin
+  a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"))
+  a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"))
+
+  resultlist = [a1, a2]
+
+  expected = "donorum, donum"
+  @test CitableParserBuilder.tokens(resultlist) == expected
+end
