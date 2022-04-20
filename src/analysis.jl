@@ -11,6 +11,18 @@ struct Analysis
     rule::RuleUrn
 end
 
+"""Override `Base.==` for `AbbreviatedUrn`.
+
+$(SIGNATURES)
+"""
+function ==(a1::Analysis, a2::Analysis)
+    a1.token == a2.token && 
+    a1.lexeme == a2.lexeme &&
+    a1.form == a2.form &&
+    a1.stem == a2.stem && 
+    a1.rule == a2.rule
+end
+
 """Serialize an `Analysis` to delimited text.
 Abbreviated URNs are expanded to full CITE2 URNs
 using `registry` as the expansion dictionary.
