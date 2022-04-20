@@ -11,6 +11,14 @@ struct Analysis
     rule::RuleUrn
 end
 
+
+"""Compose a string listing tokens from a list ov `Analysis` objects
+"""
+function tokens(v::Vector{Analysis})::AbstractString
+    strvals = map(a -> a.token, v)
+    join(strvals, ", ")
+end
+
 """Override `Base.==` for `AbbreviatedUrn`.
 
 $(SIGNATURES)
