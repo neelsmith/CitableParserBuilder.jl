@@ -41,7 +41,7 @@ function parsetoken(s::AbstractString, parser::GettysburgParser; data = nothing)
         @warn("String \"$s\" not parsed by Gettysburg parser.") # in $(typeof(data))")
         []
     else
-        #@info("Objid ", objid)
+        @debug("Objid ", objid)
         formurn = objid == "." ? FormUrn("gburgform.dot") : FormUrn("gburgform.$objid")
         lexurn = s == "." ? LexemeUrn("gburglex.period") : LexemeUrn("gburglex.$s")
         ruleurn = RuleUrn("gburgrule.all")

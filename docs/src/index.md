@@ -16,20 +16,17 @@ Parsing a string value returns a (possibly empty) list of `Analysis` objects.  P
 
 ## Shared functions for parsing: the `CitableParser` abstraction
 
-Types implementing the `CitableParser` abstraction must have a implement the abstract `parsetoken` function.  This enables the `CitableParserBuilder` module to include concrete implementations of:
+Subtypes of the `CitableParser` abstraction must implement the `parsetoken` function.  This enables the `CitableParserBuilder` module to include concrete implementations of:
 
 - `parsewordlist`: parse a list of string values
-- `parselistfromfile`: parse a list of string values in a local file
-- `parselistfromurl`: parse a list of string values from the contents of a URL
 - `parsepassage`: parse the text component of a `CitablePassage` as a single token
 - `parsecorpus`: parse the text components of all nodes in a `CitableCorpus` as individual tokens
 
 
 
-
 ## Shared structures: the `Analysis` and the `AnalyzedToken` 
 
-Every analysis of a string value identifies a valid pairing of a *lexeme* and a *form* for the token.  The `Analysis` further supports a typical model of computational morphological analysis that crosses a lexicon of stems with a set of inflectional patterns to create a comprehensive set of recognized forms. The stem and rule of an Analysis explain how the analysis' lexeme and form were arrived at.  The structure of the `Analysis` therefore consists of four URN values:
+Every analysis of a string value identifies a valid pairing of a *lexeme* and a *form* for the token.  The `Analysis` also includes a stem and rule that explain how the analysis' lexeme and form were arrived at.  The structure of an `Analysis` therefore consists of a string value (the token) and four URN values:
 
 1. the *lexeme*
 2. the *morphological form*
@@ -50,18 +47,3 @@ The `AnalyzedToken` type associates a Vector of `Analysis` objects with a citabl
 The following sections illustrate parsing with a sample implementation of a `CitableParser` designed to parse a corpus of all the known versions of Lincoln's Gettysburg Address, and to identify the form of tokens with the [part of speech code used by the Penn treebank project](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html).
 
 
-## Contents
-
-```@contents
-Pages = [
-    "guide/parser.md",
-    "guide/analyses.md",
-    "guide/corpusanalysis.md",
-    "guide/parsevectors.md",
-    "guide/abbrurns.md",
-    "guide/utils.md",
-    "guide/parsers.md",
-    "guide/gburg.md",
-    "man/index.md"
-]
-```

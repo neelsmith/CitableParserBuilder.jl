@@ -2,13 +2,13 @@
 
 $(SIGNATURES)
 
-Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects.
+Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects. Blank lines in input are silently ignored.
 """
 function parselist(vocablist::Vector{S}, p::P; data = nothing, countinterval = 100) where {P <: CitableParser, S <: AbstractString}
-    @info("Vocabulary size: ", length(vocablist))
+    @debug("Vocabulary size: ", length(vocablist))
     counter = 0
     parses = []
-    for vocab in vocablist
+    for vocab in filter(s -> !isempty(s), vocablist)
         counter = counter + 1
         if mod(counter, countinterval) == 0
             @info("Parsing ", counter)

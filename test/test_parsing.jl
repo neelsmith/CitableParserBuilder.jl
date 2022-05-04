@@ -14,5 +14,8 @@
     fileresults = parselist(f, parser, FileReader, data = dict)
     @test length(fileresults) == 4
 
-    
+    url = "https://raw.githubusercontent.com/neelsmith/CitableParserBuilder.jl/dev/test/data/wordlist.txt"
+    urlresults = parselist(url, parser, UrlReader, data = dict)
+    @test length(urlresults) == 4
+
 end

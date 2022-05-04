@@ -19,41 +19,34 @@ import CitableBase: label
 export urn, label, cex, print
 export print, show
 export ==
-export protectreserved
 
 export ParserTrait
 
-export Analysis, AnalyzedToken, CitableParser
+export Analysis
+export token, lexemeurn, formurn, stemurn, ruleurn
+export tokens
+export AnalyzedToken
+export CitableParser
 export Stem, Rule
 
 export AbbreviatedUrn
 export objectid, collection
 export LexemeUrn, FormUrn, StemUrn, RuleUrn
 
-export fstsafe, expand, abbreviate
-export readfst
+export expand, abbreviate
+export fstsafe, readfst
 export analyzedtokens_fromcex
 export lexemes, stringsforlexeme, lexemedictionary, passagesforlexeme
 
-
 export parsetoken, parselist
-export parsepassage, parsecorpus #, parsedocument
-export coverage, lexical_ambiguity, formal_ambiguity, lexical_frequencies, formal_frequencies
+export parsepassage, parsecorpus
 
-export analyses_relationsblock
+export relationsblock
 
 export delimited
 
-export TextCounts, count_analyses
-export TextProfile, profile
-
-
-export  vocabulary_density, token_coverage, vocabulary_coverage, lexical_density, form_density_incorpus, form_density_invocabulary, form_density_inlexicon, formal_ambiguity, lexical_ambiguity
 
 include("parser.jl")
-include("textcounts.jl")
-include("textprofile.jl")
-include("profiling.jl")
 include("abbrurn.jl")
 include("analysis.jl")
 include("analyzed_token.jl")
