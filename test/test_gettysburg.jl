@@ -1,13 +1,13 @@
 
 @testset "Test analyzing a corpus" begin
-    f = "data/gettysburgcorpus.cex"
+    f = joinpath("data","gettysburgcorpus.cex")
     c = fromcex(f, CitableTextCorpus, FileReader)
     ortho = simpleAscii()
     parser = CitableParserBuilder.gettysburgParser()
     wdlist = tokenvalues(c, ortho)
     tokenized = tokenizedcorpus(c, ortho)
     analyses = parsecorpus(tokenized, parser; data = parser.data)
-    @test length(analyses) == 1506
+    @test length(analyses) == 1313
 end
 
 @testset "Test serializing an analysis list" begin
