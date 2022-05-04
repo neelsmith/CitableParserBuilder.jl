@@ -123,6 +123,7 @@ function abbrcex(a::Analysis, delim = "|")
 end
 
 
+#=
 """Compose delimited text representation for a 
 map of tokens to a vector of analyses.
 
@@ -144,6 +145,7 @@ function tokenmap_cex(prs)::Tuple{ String, Vector{Analysis} }
     end
     join(cexlines,"\n")
 end
+=#
 
 """Parse delimited-text representaiton into an `Analysis`.
 

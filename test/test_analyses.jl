@@ -56,4 +56,8 @@ end
   a = Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2010003100"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i13"))  
   
   @test token(a) == "donum"
+  @test lexemeurn(a) ==  LexemeUrn("ls.n14736")
+  @test formurn(a) == FormUrn("forms.2010003100")
+  @test stemurn(a) == StemUrn("latcommon.nounn14736")
+  @test ruleurn(a) ==  RuleUrn("nouninfl.us_i13")
 end
