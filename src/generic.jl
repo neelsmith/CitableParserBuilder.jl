@@ -4,7 +4,7 @@ $(SIGNATURES)
 
 Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects.
 """
-function parsewordlist(vocablist, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
+function parselist(vocablist::Vector{S}, p::P; data = nothing, countinterval = 100) where {P <: CitableParser, S <: AbstractString}
     @info("Vocabulary size: ", length(vocablist))
     counter = 0
     parses = []
@@ -18,35 +18,37 @@ function parsewordlist(vocablist, p::T; data = nothing, countinterval = 100) whe
     parses |> Dict
 end
 
-"""Parse a list of tokens in a file with a `CitableParser`.
+"""Read a list of tokens from file `f` and parse with `p`.
 
 $(SIGNATURES)
+
+Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects.
 """
-function parselistfromfile(f, p::T, delim = '|'; data = nothing) where {T <: CitableParser}
-    words = readdlm(f, delim)
-    parsewordlist(words, p; data = data)
+function parselist(f, p::T, reader::Type{FileReader}; 
+    data = nothing, countinterval = 100) where {T <: CitableParser}
+    wordlist = readlines(f) 
+    parselist(wordlist, p, data = data, countinterval = countinterval)
 end
 
 
-
-
-"""Parse a list of tokens at a given url with a `CitableParser`.
+"""Read a list of tokens from URL `u` and parse with `p`.
 
 $(SIGNATURES)
+
+Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects.
 """
-function parselistfromurl(u, p::T, data = nothing) where {T <: CitableParser}
-    words = split(String(HTTP.get(u).body) , "\n")
-    parsewordlist(words, p; data)
+function parselist(u, p::T, reader::Type{UrlReader}; 
+    data = nothing, countinterval = 100) where {T <: CitableParser}
+    wordlist = split(String(HTTP.get(u).body) , "\n")
+    parselist(wordlist, p; data = data, countinterval = countinterval)
 end
-
-
 
 
 """Parse a `CitablePassage` with text for a single token with a `CitableParser`.
 
 $(SIGNATURES)
 
-Should return an AnalyzedToken.
+Returns a single `AnalyzedToken`.
 """
 function parsepassage(cn::CitablePassage, p::T;  data = nothing) where {T <: CitableParser}
     AnalyzedToken(cn, parsetoken(cn.text, p; data))
@@ -55,7 +57,7 @@ end
 
 
 
-"""Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token.
+"""Parse a `CitableTextCorpus` with each citable node containing containg a single token using `p`.
 
 $(SIGNATURES)
 
@@ -80,7 +82,7 @@ Should return a list of `AnalyzedToken`s.
 function parsecorpus(c::CitableTextCorpus, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
     wordlist = map(psg -> psg.text, c.passages) |> unique
     @info("Corpus size (tokens): ", length(c.passages))
-    parsedict = parsewordlist(wordlist, p; data = data, countinterval = countinterval)
+    parsedict = parselist(wordlist, p; data = data, countinterval = countinterval)
     keylist = keys(parsedict)
     results = AnalyzedToken[]
     for psg in c.passages
@@ -95,6 +97,9 @@ function parsecorpus(c::CitableTextCorpus, p::T; data = nothing, countinterval =
     results
 end
 
+
+
+#=
 """Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token.
 
 $(SIGNATURES)
@@ -113,7 +118,10 @@ function parsedocument_brute(doc::CitableDocument, p::T; data = nothing, countin
     end
     results
 end
+=#
 
+
+#=
 """Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token.
 
 $(SIGNATURES)
@@ -122,7 +130,7 @@ Should return a list of `AnalyzedToken`s.
 """
 function parsedocument(doc::CitableDocument, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
     wordlist = map(psg -> psg.text, doc.passages) |> unique
-    parsedict = parsewordlist(wordlist, p; data = data, countinterval = countinterval)
+    parsedict = parselist(wordlist, p; data = data, countinterval = countinterval)
     keylist = keys(parsedict)
 
     results = AnalyzedToken[]
@@ -137,3 +145,4 @@ function parsedocument(doc::CitableDocument, p::T; data = nothing, countinterval
     end
     results
 end
+=#

@@ -3,7 +3,11 @@
     f = joinpath("data","gettysburgcorpus.cex")
     c = fromcex(f, CitableTextCorpus, FileReader)
     ortho = simpleAscii()
-    parser = CitableParserBuilder.gettysburgParser()
+
+    dictfile = joinpath("data", "posdict.csv")
+    dict  = CSV.File(dictfile) |> Dict
+    parser = CitableParserBuilder.gettysburgParser(dict = dict)
+
     wdlist = tokenvalues(c, ortho)
     tokenized = tokenizedcorpus(c, ortho)
     analyses = parsecorpus(tokenized, parser; data = parser.data)
@@ -14,7 +18,12 @@ end
     f = "data/gettysburgcorpus.cex"
     c = fromcex(f, CitableTextCorpus, FileReader)
     ortho = simpleAscii()
-    parser = CitableParserBuilder.gettysburgParser()
+
+    dictfile = joinpath("data", "posdict.csv")
+    dict  = CSV.File(dictfile) |> Dict
+    parser = CitableParserBuilder.gettysburgParser(dict = dict)
+
+    
   
 
     registry = Dict(

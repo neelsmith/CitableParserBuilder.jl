@@ -7,10 +7,7 @@
 #
 using CSV, HTTP
 
-"""POS tagger keyed to the text of the Gettysburg address.
-
-- `stringparser` is the parsing function required by the `CitableParser` interface.
-- `data` is a dictionary of tokens to form POS tag.
+"""POS tagger keyed to the text of the Gettysburg address. `data` is a dictionary of tokens to form POS tag.
 """
 struct GettysburgParser <: CitableParser
     data

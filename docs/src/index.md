@@ -16,14 +16,8 @@ Parsing a string value returns a (possibly empty) list of `Analysis` objects.  P
 
 ## Shared functions for parsing: the `CitableParser` abstraction
 
-Types implementing the `CitableParser` abstraction must have a member function named `stringparser(tkn::AbstractString)` that returns a list of `Analysis` objects.  That makes possible a `parsetoken` function with the following signature:
+Types implementing the `CitableParser` abstraction must have a implement the abstract `parsetoken` function.  This enables the `CitableParserBuilder` module to include concrete implementations of:
 
-
-    parsetoken(p::T, t::AbstractString) where {T <: CitableParser}
-
-`parsetoken` simply invokes `p.stringparser(t)` to parse the string value for a single token.  With this in place, the `CitableParserBuilder` can include concrete implementations of the following functions:
-
-- `parsetoken`: parse a string value
 - `parsewordlist`: parse a list of string values
 - `parselistfromfile`: parse a list of string values in a local file
 - `parselistfromurl`: parse a list of string values from the contents of a URL
