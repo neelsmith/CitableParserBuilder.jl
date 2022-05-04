@@ -18,26 +18,10 @@ AnalyzedToken
 
 ```@docs
 parsetoken
-parsewordlist
-parselistfromfile
-parselistfromurl
 parsepassage
 parsecorpus
 ```
 
-## Profiling parsed results
-
-```@docs
-vocabulary_density
-token_coverage
-vocabulary_coverage
-lexical_density
-form_density_incorpus
-form_density_invocabulary
-form_density_inlexicon
-formal_ambiguity
-lexical_ambiguity
-```
 
 
 ## Working with vectors of `AnalyzedToken`s
@@ -68,7 +52,7 @@ CitableParserBuilder.inflectiontype
 
 ```@docs
 readfst
-analyses_relationsblock
+relationsblock
 delimited
 cex
 ```
