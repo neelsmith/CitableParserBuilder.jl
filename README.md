@@ -1,6 +1,7 @@
 ![build](https://github.com/HCMID/Orthography.jl/actions/workflows/Documentation.yml/badge.svg)
 
 
+
 # CitableParserBuilder.jl
 
 Common infrastructure for managing citable analytical parsers. Includes utilities for compiling parsers with the Stuttgart FST toolkit.
