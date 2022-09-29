@@ -30,7 +30,7 @@ end
   piped  = "et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1"
   @test delimited(a; registry = dict) == piped
 
-  relationblock = analyses_relationsblock(Cite2Urn("urn:cite2:citedemo:citableparser.v1:analyses1"), "Vector of 1 analysis to test with", [a], registry=dict)
+  relationblock = relationsblock(Cite2Urn("urn:cite2:citedemo:citableparser.v1:analyses1"), "Vector of 1 analysis to test with", [a], registry=dict)
   length(split(relationblock, "\n")) == 4
 end
 
@@ -42,8 +42,7 @@ end
 end
 
 
-
-@testset "Test listing tokens from list of Analysis objects" begin
+@testset "Test formatting string list of tokens from list of Analysis objects" begin
   a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"))
   a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"))
 
@@ -51,4 +50,14 @@ end
 
   expected = "donorum, donum"
   @test CitableParserBuilder.tokens(resultlist) == expected
+end
+
+@testset "Test member accessor functions" begin
+  a = Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2010003100"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i13"))  
+  
+  @test token(a) == "donum"
+  @test lexemeurn(a) ==  LexemeUrn("ls.n14736")
+  @test formurn(a) == FormUrn("forms.2010003100")
+  @test stemurn(a) == StemUrn("latcommon.nounn14736")
+  @test ruleurn(a) ==  RuleUrn("nouninfl.us_i13")
 end

@@ -7,10 +7,7 @@
 #
 using CSV, HTTP
 
-"""POS tagger keyed to the text of the Gettysburg address.
-
-- `stringparser` is the parsing function required by the `CitableParser` interface.
-- `data` is a dictionary of tokens to form POS tag.
+"""POS tagger keyed to the text of the Gettysburg address. `data` is a dictionary of tokens to form POS tag.
 """
 struct GettysburgParser <: CitableParser
     data
@@ -44,7 +41,7 @@ function parsetoken(s::AbstractString, parser::GettysburgParser; data = nothing)
         @warn("String \"$s\" not parsed by Gettysburg parser.") # in $(typeof(data))")
         []
     else
-        #@info("Objid ", objid)
+        @debug("Objid ", objid)
         formurn = objid == "." ? FormUrn("gburgform.dot") : FormUrn("gburgform.$objid")
         lexurn = s == "." ? LexemeUrn("gburglex.period") : LexemeUrn("gburglex.$s")
         ruleurn = RuleUrn("gburgrule.all")

@@ -11,15 +11,44 @@ struct Analysis
     rule::RuleUrn
 end
 
-
-"""Compose a string listing tokens from a list ov `Analysis` objects
+"""Identify token in `a`.
+$(SIGNATURES)
 """
-function tokens(v::Vector{Analysis})::AbstractString
-    strvals = map(a -> a.token, v)
-    join(strvals, ", ")
+function token(a::Analysis)
+    a.token
 end
 
-"""Override `Base.==` for `AbbreviatedUrn`.
+
+"""Identify lexeme in `a`.
+$(SIGNATURES)
+"""
+function lexemeurn(a::Analysis)
+    a.lexeme
+end
+
+"""Identify morphlogical form in `a`.
+$(SIGNATURES)
+"""
+function formurn(a::Analysis)
+    a.form
+end
+
+"""Identify lexical stem in `a`.
+$(SIGNATURES)
+"""
+function stemurn(a::Analysis)
+    a.stem
+end
+
+"""Identify inflectional rule in `a`.
+$(SIGNATURES)
+"""
+function ruleurn(a::Analysis)
+    a.rule
+end
+
+
+"""Override `Base.==` for `Analysis`.
 
 $(SIGNATURES)
 """
@@ -69,7 +98,7 @@ end
 
 $(SIGNATURES)
 """
-function analyses_relationsblock(urn::Cite2Urn, label::AbstractString, v::AbstractVector{Analysis}, delim = "|"; registry = nothing)
+function relationsblock(urn::Cite2Urn, label::AbstractString, v::AbstractVector{Analysis}, delim = "|"; registry = nothing)
     headerlines = [
         "#!citerelationset",
         join(["urn", urn],  delim),
@@ -94,6 +123,7 @@ function abbrcex(a::Analysis, delim = "|")
 end
 
 
+#=
 """Compose delimited text representation for a 
 map of tokens to a vector of analyses.
 
@@ -115,6 +145,7 @@ function tokenmap_cex(prs)::Tuple{ String, Vector{Analysis} }
     end
     join(cexlines,"\n")
 end
+=#
 
 """Parse delimited-text representaiton into an `Analysis`.
 
@@ -131,3 +162,11 @@ function analysis_fromdelimited(s, delim = ",")::Analysis
     )
 end
 
+
+
+"""Compose a string listing tokens from a list of `Analysis` objects
+"""
+function tokens(v::Vector{Analysis})::AbstractString
+    strvals = map(a -> a.token, v)
+    join(strvals, ", ")
+end
