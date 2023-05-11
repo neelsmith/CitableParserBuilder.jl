@@ -46,7 +46,7 @@ tokenparses[1].token
 
 ```doctest buildone
 wordlist = split("More than one word")
-listparses = parsewordlist(wordlist, fakeParser)
+listparses = parselist(wordlist, fakeParser)
 length(listparses)
 
 # output
