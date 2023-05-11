@@ -18,7 +18,7 @@ Parsing a string value returns a (possibly empty) list of `Analysis` objects.  P
 
 Subtypes of the `CitableParser` abstraction must implement the `parsetoken` function.  This enables the `CitableParserBuilder` module to include concrete implementations of:
 
-- `parsewordlist`: parse a list of string values
+- `parselist`: parse a list of string values
 - `parsepassage`: parse the text component of a `CitablePassage` as a single token
 - `parsecorpus`: parse the text components of all nodes in a `CitableCorpus` as individual tokens
 

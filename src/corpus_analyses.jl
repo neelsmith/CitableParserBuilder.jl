@@ -11,7 +11,7 @@ end
 $(SIGNATURES)
 """
 function coverage(vocablist, p::CitableParser; data = nothing)
-    parses = parsewordlist(vocablist, p; data)
+    parses = parselist(vocablist, p; data)
     resultcount = filter(a -> ! isempty(a), parses) |> length
     resultcount / length(vocablist)
 end
@@ -57,7 +57,7 @@ end
 $(SIGNATURES)
 """
 function lexical_ambiguity(vocablist, p::CitableParser; data)
-    parses = parsewordlist(vocablist, p; data = data)
+    parses = parselist(vocablist, p; data = data)
     ambiguous = filter(p -> lexically_ambiguous(p), parses)
     length(ambiguous) / length(vocablist)
 end
@@ -104,7 +104,7 @@ end
 $(SIGNATURES)
 """
 function formal_ambiguity(vocablist, p::CitableParser; data = nothing)
-    parses = parsewordlist(p, vocablist; data = data)
+    parses = parselist(p, vocablist; data = data)
     ambiguous = filter(p -> formally_ambiguous(p), parses)
     length(ambiguous) / length(vocablist)
 end
