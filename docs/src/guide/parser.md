@@ -94,10 +94,10 @@ registry = Dict(
 length(registry)
 ```
 
-Include the dictionary along with your list of analyses as parameters to the `cex` function to expand abbreviated URNs to their full form.  You can use normal Julia IO to write the results to a file, for example.
+Use the `cex` function (from `CitableBase`) to format your analyzes as delimited text.  To expand abbreviated URNs to full CTS and CITE2 URNs while formatting as deliimted text, use the `delimited` function. You can use normal Julia IO to write the results to a file, for example.
 
 ```@example parsing
-cex_output = cex(psg_analysis, registry = registry)
+cex_output = delimited(psg_analysis, registry = registry)
 open("outfile.cex", "w") do io
     write(io, cex_output)
 end
