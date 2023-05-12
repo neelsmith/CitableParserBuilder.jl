@@ -1,7 +1,7 @@
 """Morphological analyses for a token identified by CTS URN.
 """
 struct AnalyzedToken <: Citable
-    passage::CitablePassage
+    ctoken::CitableToken
     analyses::Vector{Analysis}
 end
 
