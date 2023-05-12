@@ -12,9 +12,11 @@ function cex(at::AnalyzedToken; delimiter = "|")
     else
         lines = []
         for analysis in at.analyses
+
             push!(lines, join([
-                cex(at.passage; delimiter = delimiter), 
-                delimited(analysis, delimiter)
+                cex(at.ctoken.passage; delimiter = delimiter), 
+                delimited(analysis, delimiter),
+                at.ctoken.tokentype
                 ], delimiter))
         end
         join(lines, "\n")
@@ -38,8 +40,9 @@ function delimited(at::AnalyzedToken, delim = "|"; registry = nothing)
         for analysis in at.analyses
             push!(lines, 
             join([
-                cex(at.passage; delimiter = delim), 
-                delimited(analysis, delim; registry = registry)
+                cex(at.ctoken.passage; delimiter = delim), 
+                delimited(analysis, delim; registry = registry),
+                at.ctoken.tokentype
                 ], delim))
         end
         join(lines, "\n")
