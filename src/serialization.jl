@@ -1,3 +1,15 @@
+
+"Value for CexTrait"
+struct CexAnalyzedToken <: CexTrait end
+"""Define`CexTrait` value for `CitableToken`.
+$(SIGNATURES)
+"""
+function cextrait(::Type{AnalyzedToken})  
+    CexAnalyzedToken()
+end
+
+
+
 """Serialize an `AnalyzedToken` as delimited text (required for `Citable` interface).
 
 $(SIGNATURES)
@@ -16,7 +28,7 @@ function cex(at::AnalyzedToken; delimiter = "|")
             push!(lines, join([
                 cex(at.ctoken.passage; delimiter = delimiter), 
                 delimited(analysis, delimiter),
-                at.ctoken.tokentype
+                typeof(at.ctoken.tokentype)
                 ], delimiter))
         end
         join(lines, "\n")
