@@ -5,27 +5,69 @@ struct AnalyzedToken <: Citable
     analyses::Vector{Analysis}
 end
 
-"""Assign value for `CitableTrait`.
-NB: required cex() function is implemented in file serialization.jl.
-"""
-CitableTrait(::Type{AnalyzedToken}) = CitableByCtsUrn()
 
-"""Label for `AnalyzedToken` (required for `Citable` interface).
+"""Override Base.show for `AnalyzedToken`.
 $(SIGNATURES)
 """
-function label(at::AnalyzedToken)
-    string("Analysis of ", at.passage, ": $(length(at.analyses)) possible forms.")
+function show(io::IO, atoken::AnalyzedToken)
+    print(io, atoken.ctoken, ": ", length(atoken.analyses), " analyses")
+end
+
+
+"""Override `Base.==` for `AnalyzedToken`.
+$(SIGNATURES)
+"""
+function ==(atoken1::AnalyzedToken, atoken2::AnalyzedToken)
+    atoken1.ctoken == atoken2.ctoken && 
+    atoken1.analyses == atoken2.analyses
+end
+
+
+
+
+"Value for CitableTrait."
+struct CitableByAnalysis <: CitableTrait end
+
+"""Define`CitableTrait` value for `CitableToken`.
+$(SIGNATURES)
+"""
+function citabletrait(::Type{AnalyzedToken})
+    CitableByAnalysis()
 end
 
 """Unique identifier for `AnalyzedToken` (required for `Citable` interface).
 $(SIGNATURES)
 """
 function urn(at::AnalyzedToken)
-    at.passage.urn
+    urn(at.ctoken)
+end
+
+
+"""Identify URN type for an `AnalyzedToken` as `CtsUrn`.
+$(SIGNATURES)
+Required function for `Citable` abstraction.
+"""
+function urntype(at::AnalyzedToken)
+    CtsUrn
+end
+
+#"""Assign value for `CitableTrait`.
+#NB: required cex() function is implemented in file serialization.jl.
+#"""
+#CitableTrait(::Type{AnalyzedToken}) = CitableByCtsUrn()
+
+"""Label for `AnalyzedToken` (required for `Citable` interface).
+$(SIGNATURES)
+"""
+function label(at::AnalyzedToken)
+    length(at.analyses) == 1 ? string("$(at.ctoken): 1 analysis.") :
+    string("$(at.ctoken): $(length(at.analyses)) analyses.")
 end
 
 
 
+
+#=
 """Parse a one-line delimited-text representation into an `AnalyzedToken`,
 using abbreviated URNs for identifiers.  Note that for a sigle CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
 
@@ -127,7 +169,7 @@ function analyzedtokens_fromcex(cexsrc, delim = "|")
 
     analyses
 end
-
+=#
 
 """Extract a list of lexeme values from a Vector of `AnalyzedToken`s.
 

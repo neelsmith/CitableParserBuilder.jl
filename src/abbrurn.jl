@@ -37,11 +37,11 @@ function objectid(au::T) where {T <: AbbreviatedUrn}
     au.objectid
 end
 
-"""Override `Base.print` for `AbbreviatedUrn`.
+"""Override `Base.show` for `AbbreviatedUrn`.
 
 $(SIGNATURES)
 """
-function print(io::IO, au::T) where {T <: AbbreviatedUrn}
+function show(io::IO, au::T) where {T <: AbbreviatedUrn}
     print(io, join([collection(au), objectid(au)], "."))
 end
 
