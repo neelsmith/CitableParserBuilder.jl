@@ -8,8 +8,6 @@ function cextrait(::Type{AnalyzedToken})
     CexAnalyzedToken()
 end
 
-
-
 """Serialize an `AnalyzedToken` as delimited text (required for `Citable` interface).
 
 $(SIGNATURES)
@@ -73,10 +71,6 @@ function delimited(v::AbstractVector{AnalyzedToken}, delim = "|"; registry = not
     join(lines, "\n")
 end
 
-
-
-
-### TEST FOR FULL URNS OR ABBR URNS:
 
 """Parse a one-line delimited-text representation into an `AnalyzedToken`,
 using abbreviated URNs for identifiers.  Note that for a sigle CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.

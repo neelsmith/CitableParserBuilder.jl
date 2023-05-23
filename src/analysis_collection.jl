@@ -59,8 +59,11 @@ Required function for `Citable` abstraction.
 """
 function cex(analyses::AnalyzedTokens; delimiter = "|")
     header = "#!ctsdata\n"
-    #strings = map(ref -> cex(ref, delimiter=delimiter), reading.publications)
-    #header * join(strings, "\n")
+
+
+
+    strings = map(atoken -> cex(atoken, delimiter=delimiter), analyses)
+    header * join(strings, "\n")
 end
 
 
@@ -68,7 +71,41 @@ end
 $(SIGNATURES)
 """
 function fromcex(s::AbstractString, ::Type{AnalyzedTokens}; delimiter = "|", configuration = nothing, strict = true)
+    datalines = split(s, "\n")[2:end]
+    prevcitable = nothing
+    curranalyses = []
+    tokens = AnalyzedToken[]
+    
+    for ln in datalines
+        parts = split(ln, delimiter)
+        
+        currpsg = CitablePassage(CtsUrn(parts[1]), parts[2])
+        ttype = parts[8] * "()" |> Meta.parse |> eval
+        currcitable = CitableToken(currpsg, ttype)
+        @debug("CURRCITALBBE", currcitable)
+        analysisstring = join([parts[1], parts[4], parts[5], parts[6], parts[7]], delimiter)
+        currentanalysis = analysis(analysisstring, delimiter)
 
+        if isnothing(prevcitable)
+            prevcitable = currcitable
+            @debug("SET PREV", prevcitable)
+            curranalyses = [currentanalysis]
+
+        elseif urn(currcitable) != urn(prevcitable)
+            push!(tokens, AnalyzedToken(prevcitable, curranalyses))
+            prevcitable = currcitable
+            @debug("SET PREV", prevcitable)
+            curranalyses = [currentanalysis]
+            
+        else
+            push!(curranalyses, currentanalysis)
+        end
+        
+    end
+    @debug("PREVCITABLE: " , prevcitable)
+    push!(tokens, AnalyzedToken(prevcitable, curranalyses))
+    
+    AnalyzedTokens(tokens)
 end
 
 """Implement iteration for `AnalyzedTokens`.
@@ -91,4 +128,8 @@ $(SIGNATURES)
 """
 function eltype(analyses::AnalyzedTokens)
     AnalyzedToken
+end
+
+function length(analyses::AnalyzedTokens)
+    length(analyses.analyses)
 end

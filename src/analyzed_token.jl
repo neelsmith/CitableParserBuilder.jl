@@ -9,7 +9,7 @@ end
 $(SIGNATURES)
 """
 function show(io::IO, atoken::AnalyzedToken)
-    print(io, atoken.ctoken, ": ", length(atoken.analyses), " analyses")
+    length(atoken.analyses) == 1 ? print(io, atoken.ctoken, ": 1 analysis" ) : print(io, atoken.ctoken, ": ", length(atoken.analyses), " analyses")
 end
 
 
@@ -20,8 +20,6 @@ function ==(atoken1::AnalyzedToken, atoken2::AnalyzedToken)
     atoken1.ctoken == atoken2.ctoken && 
     atoken1.analyses == atoken2.analyses
 end
-
-
 
 "Value for CitableTrait."
 struct CitableByAnalysis <: CitableTrait end
