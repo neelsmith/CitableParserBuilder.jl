@@ -7,6 +7,8 @@ using Documenter, DocStringExtensions
 
 import Base: show
 import Base: ==
+import Base: iterate
+import Base: eltype
 
 import CitableBase: citabletrait
 import CitableBase: urntype
