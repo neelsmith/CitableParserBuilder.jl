@@ -24,7 +24,6 @@ end
 
 
 
-
 "Value for CitableTrait."
 struct CitableByAnalysis <: CitableTrait end
 
@@ -51,11 +50,6 @@ function urntype(at::AnalyzedToken)
     CtsUrn
 end
 
-#"""Assign value for `CitableTrait`.
-#NB: required cex() function is implemented in file serialization.jl.
-#"""
-#CitableTrait(::Type{AnalyzedToken}) = CitableByCtsUrn()
-
 """Label for `AnalyzedToken` (required for `Citable` interface).
 $(SIGNATURES)
 """
@@ -67,46 +61,11 @@ end
 
 
 
+
+
 #=
-"""Parse a one-line delimited-text representation into an `AnalyzedToken`,
-using abbreviated URNs for identifiers.  Note that for a sigle CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
 
-$(SIGNATURES)
-"""
-function analyzedtoken_fromabbrcex(s, delim = "|")::AnalyzedToken
-    parts = split(s, delim)
-    psg = CitablePassage(CtsUrn(parts[1]), parts[2])
-    isempty(parts[3]) ? AnalyzedToken(psg, Analysis[]) : AnalyzedToken(
-        psg,
-        [Analysis( 
-            parts[3],
-            LexemeUrn(parts[4]),
-            FormUrn(parts[5]),
-            StemUrn(parts[6]),
-            RuleUrn(parts[7]))
-        ]
-    )
-end
 
-"""Parse a one-line delimited-text representation into an `AnalyzedToken`, using CITE2 URNs for identifiers.  Note that for a single CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
-
-$(SIGNATURES)
-"""
-function analyzedtoken_fromcex(s, delim = "|")
-    parts = split(s, delim)
-    psg = CitablePassage(CtsUrn(parts[1]), parts[2])
-    isempty(parts[3]) ? AnalyzedToken(psg, Analysis[]) :
-    AnalyzedToken(
-        psg,
-        [Analysis( 
-            parts[3],
-            Cite2Urn(parts[4]) |> abbreviate |> LexemeUrn,
-            Cite2Urn(parts[5]) |> abbreviate |> FormUrn,
-            Cite2Urn(parts[6]) |> abbreviate |> StemUrn,
-            Cite2Urn(parts[7]) |> abbreviate |>  RuleUrn   
-        )]
-    )
-end
 
 
 """Parse a string of delimited-text into a Vector of `AnalyzedToken`s. 

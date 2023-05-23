@@ -11,7 +11,7 @@
     ctkn = CitableToken(cn, LexicalToken())
     atkn = AnalyzedToken(ctkn, [a]) 
    
-    expected = "urn:cts:demo:latin.sample:1|Et|et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1|LexicalToken()"
+    expected = "urn:cts:demo:latin.sample:1|Et|et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1|LexicalToken"
     @test cex(atkn) == expected
 end
 
@@ -40,8 +40,8 @@ end
 end
 
 @testset "Test parsing a serialized AnalyzedToken with abbreviated URNs" begin
-    cexsrc = "urn:cts:demo:latin.sample:1|Et|et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1"
-    atkn = CitableParserBuilder.analyzedtoken_fromabbrcex(cexsrc, "|" )
+    cexsrc = "urn:cts:demo:latin.sample:1|Et|et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1|LexicalToken"
+    atkn = fromcex(cexsrc, AnalyzedToken )
     @test isa(atkn, AnalyzedToken)
     @test length(atkn.analyses) == 1
     a = atkn.analyses[1]
@@ -52,8 +52,8 @@ end
 end
 
 @testset "Test parsing a serialized AnalyzedToken using full URNs" begin
-    cexsrc =  "urn:cts:demo:latin.sample:1|Et|et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1"
-    atkn = CitableParserBuilder.analyzedtoken_fromcex(cexsrc, "|" )
+    cexsrc =  "urn:cts:demo:latin.sample:1|Et|et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1|LexicalToken"
+    atkn = fromcex(cexsrc, AnalyzedToken)
     @test isa(atkn, AnalyzedToken)
     @test length(atkn.analyses) == 1
     a = atkn.analyses[1]

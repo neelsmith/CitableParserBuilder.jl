@@ -12,15 +12,11 @@ import CitableBase: citabletrait
 import CitableBase: urntype
 import CitableBase: urn
 import CitableBase: label
+import CitableBase: objectid
 
 import CitableBase: cextrait
 import CitableBase: cex
 import CitableBase: fromcex
-
-# Citable functions from CitableBase 3.x
-#export urn, label, cex, print
-#export print, show
-#export ==
 
 export ParserTrait
 

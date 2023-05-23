@@ -70,6 +70,32 @@ function delimited(v::AbstractVector{AnalyzedToken}, delim = "|"; registry = not
     for at in v
         push!(lines, delimited(at, delim; registry = registry))
     end
-    #flattened = lines |> Iterators.flatten |> collect
     join(lines, "\n")
+end
+
+
+
+
+### TEST FOR FULL URNS OR ABBR URNS:
+
+"""Parse a one-line delimited-text representation into an `AnalyzedToken`,
+using abbreviated URNs for identifiers.  Note that for a sigle CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
+
+$(SIGNATURES)
+"""
+function fromcex(s::AbstractString, ::Type{AnalyzedToken}; delim = "|", configuration = nothing, strict = true)::AnalyzedToken
+    parts = split(s, delim)
+    cp = CitablePassage(CtsUrn(parts[1]), parts[2])
+    tokentype = parts[8] * "()" |> Meta.parse |> eval
+    ctoken = CitableToken(cp, tokentype)
+    isempty(parts[3]) ? AnalyzedToken(ctoken, Analysis[]) : AnalyzedToken(
+        ctoken,
+        [Analysis( 
+            parts[3],
+            LexemeUrn(parts[4]),
+            FormUrn(parts[5]),
+            StemUrn(parts[6]),
+            RuleUrn(parts[7]))
+        ]
+    )
 end
