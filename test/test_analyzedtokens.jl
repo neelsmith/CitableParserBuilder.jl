@@ -64,7 +64,7 @@ end
 end
 
 @testset "Test parsing multiple analyses" begin
-    f = "data/ambiganalysis.cex"
+    f = joinpath(pwd(), "data", "ambiganalysis.cex")
     
     
     atokens = analyzedtokens_fromcex(cexsrc)

@@ -1,3 +1,4 @@
+#!ctsdata
 urn:cts:demo:latin.sample:1|Et|et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1|LexicalToken
 urn:cts:demo:latin.sample:2|abducere|abducere|urn:cite2:citedemo:ls.v1:x|urn:cite2:citedemo:morphforms.v1:x|urn:cite2:citedemo:stems.v1:x|urn:cite2:citedemo:rules.v1:x|LexicalToken
 urn:cts:demo:latin.sample:2|abducere|abducere|urn:cite2:citedemo:ls.v1:y|urn:cite2:citedemo:morphforms.v1:y|urn:cite2:citedemo:stems.v1:y|urn:cite2:citedemo:rules.v1:y|LexicalToken

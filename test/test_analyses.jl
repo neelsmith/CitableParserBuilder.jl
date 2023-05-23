@@ -48,8 +48,8 @@ end
 
   resultlist = [a1, a2]
 
-  expected = "donorum, donum"
-  @test CitableParserBuilder.tokens(resultlist) == expected
+  expected = ["donorum", "donum"]
+  @test tokens(resultlist) == expected
 end
 
 @testset "Test member accessor functions" begin
