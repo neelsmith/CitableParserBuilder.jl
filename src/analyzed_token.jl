@@ -5,7 +5,6 @@ struct AnalyzedToken <: Citable
     analyses::Vector{Analysis}
 end
 
-
 """Override Base.show for `AnalyzedToken`.
 $(SIGNATURES)
 """

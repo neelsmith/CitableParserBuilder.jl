@@ -83,19 +83,13 @@ using abbreviated URNs for identifiers.  Note that for a sigle CEX line, the `An
 
 $(SIGNATURES)
 """
-function fromcex(s::AbstractString, ::Type{AnalyzedToken}; delim = "|", configuration = nothing, strict = true)::AnalyzedToken
-    parts = split(s, delim)
+function fromcex(s::AbstractString, ::Type{AnalyzedToken}; delimiter = "|", configuration = nothing, strict = true)
+    parts = split(s, delimiter)
     cp = CitablePassage(CtsUrn(parts[1]), parts[2])
     tokentype = parts[8] * "()" |> Meta.parse |> eval
     ctoken = CitableToken(cp, tokentype)
-    isempty(parts[3]) ? AnalyzedToken(ctoken, Analysis[]) : AnalyzedToken(
-        ctoken,
-        [Analysis( 
-            parts[3],
-            LexemeUrn(parts[4]),
-            FormUrn(parts[5]),
-            StemUrn(parts[6]),
-            RuleUrn(parts[7]))
-        ]
-    )
+    alist =  isempty(parts[3]) ? [] : [analysis(join(parts[3:7], "|"))]
+
+    AnalyzedToken(ctoken, alist) 
 end
+

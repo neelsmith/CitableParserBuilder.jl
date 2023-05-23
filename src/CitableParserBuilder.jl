@@ -18,12 +18,15 @@ import CitableBase: cextrait
 import CitableBase: cex
 import CitableBase: fromcex
 
+import CitableBase: citablecollectiontrait
+
+
 export ParserTrait
 
-export Analysis
+export Analysis, analysis
 export token, lexemeurn, formurn, stemurn, ruleurn
 export tokens
-export AnalyzedToken
+export AnalyzedToken, AnalyzedTokens
 
 export CitableParser
 export Stem, Rule
@@ -58,5 +61,8 @@ include("gettysburg.jl")
 include("corpus_analyses.jl")
 include("generic.jl")
 include("serialization.jl")
+include("analysis_collection.jl")
+
+
 
 end # module
