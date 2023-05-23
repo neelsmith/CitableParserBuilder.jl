@@ -67,7 +67,6 @@ end
     f = "data/ambiganalysis.cex"
     
     
-    
     atokens = analyzedtokens_fromcex(cexsrc)
     @test length(atokens) == 2
     @test length(atokens[2].analyses) == 3
@@ -76,7 +75,7 @@ end
     @test lexemes(atokens) == expectedlexemes
     @test stringsforlexeme(atokens, "ls.n16278")[1] == "Et"
     @test passagesforlexeme(atokens, "ls.n16278")[1] == CtsUrn("urn:cts:demo:latin.sample:1")
-=#
+
     # @test lexemedictionary ....
 end
 

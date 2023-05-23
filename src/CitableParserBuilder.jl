@@ -9,6 +9,7 @@ import Base: show
 import Base: ==
 import Base: iterate
 import Base: eltype
+import Base: length
 
 import CitableBase: citabletrait
 import CitableBase: urntype
@@ -64,6 +65,7 @@ include("corpus_analyses.jl")
 include("generic.jl")
 include("serialization.jl")
 include("analysis_collection.jl")
+include("extractors.jl")
 
 
 
