@@ -67,6 +67,7 @@ include("generic.jl")
 include("serialization.jl")
 include("analysis_collection.jl")
 include("extractors.jl")
+include("summarizers.jl")
 
 
 

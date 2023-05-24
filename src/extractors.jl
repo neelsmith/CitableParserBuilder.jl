@@ -1,28 +1,61 @@
-"""Extract a list of lexeme values from a Vector of `Analysis` objects.
+"""Extract a list of string token values from a Vector of `Analysis` objects.
 $(SIGNATURES)
 """
 function tokens(v::AbstractVector{Analysis})
     map(a -> string(a.token), v) |> unique
 end
 
-"""Extract a list of lexeme values from a Vector of `AnalyzedToken` objects.
+"""Extract a list of string token values from a Vector of `AnalyzedToken` objects.
 $(SIGNATURES)
 """
 function tokens(v::AbstractVector{AnalyzedToken})
     analyses = map(p -> p.analyses, v) |> Iterators.flatten |> collect
-    map(a -> string(a.token), analyses) |> unique
+    tokens(analyses)
 end
 
-"""Extract a list of lexeme values from an `AnalyzedTokens` object.
+"""Extract a list of string token values from an `AnalyzedTokens` object.
 $(SIGNATURES)
 """
 function tokens(atokens::AnalyzedTokens)
-    #analyses = map(p -> p.analyses, atokens.analyses) |> Iterators.flatten |> collect
-    #map(a -> string(a.token), analyses) |> unique
     tokens(atokens.analyses)
 end
 
 
+
+
+"""Extract a list of lexemes from a Vector of `Analysis` objects.
+$(SIGNATURES)
+"""
+function lexemes(v::AbstractVector{Analysis})
+    map(a -> a.lexeme, v) .|> string |> unique .|> LexemeUrn
+end
+
+"""Extract a list of lexemes from a Vector of `AnalyzedToken` objects.
+$(SIGNATURES)
+"""
+function lexemes(v::AbstractVector{AnalyzedToken})
+    analyses = map(p -> p.analyses, v) |> Iterators.flatten |> collect
+    lexemes(analyses)
+end
+
+"""Extract a list of lexemes from an `AnalyzedTokens` object.
+$(SIGNATURES)
+"""
+function lexemes(atokens::AnalyzedTokens)
+    lexemes(atokens.analyses)
+end
+
+
+
+
+
+
+
+
+
+
+
+#=
 """Extract a list of lexeme values from a Vector of `AnalyzedToken`s.
 $(SIGNATURES)
 """
@@ -31,58 +64,6 @@ function lexemes(v::AbstractVector{Analysis})
     map(a -> string(a.token), analyses) |> unique
 end
 
-
-"""Flatten a Vector of `AnalyzedToken`s into passage+anlaysis pairs.
-
-$(SIGNATURES)
-"""
-function flatpairs(v::AbstractVector{AnalyzedToken})
-    pairlist = []
-    for ta in v
-        for a in ta.analyses
-            push!(pairlist, (ta.passage, a))
-        end
-    end
-    pairlist
-end
+=#
 
 
-"""Find token string values for all tokens in a vector of `AnalyzedToken`s parsed to a given lexeme.
-
-$(SIGNATURES)
-"""
-function stringsforlexeme(v::AbstractVector{AnalyzedToken}, l::AbstractString)
-    paired = flatpairs(v)
-    matches = filter(pr -> string(pr[2].lexeme) == l, paired)
-    map(pr -> pr[1].text, matches) |> unique
-end
-
-"""Find URNs for all tokens in a vector of `AnalyzedToken`s parsed to a given lexeme.
-
-$(SIGNATURES)
-"""
-function passagesforlexeme(v::AbstractVector{AnalyzedToken}, l::AbstractString)
-    paired = flatpairs(v)
-    matches = filter(pr -> string(pr[2].lexeme) == l, paired)
-    urnstrings = map(pr -> pr[1].urn.urn, matches) |> unique
-    map(u -> CtsUrn(u), urnstrings)
-end
-
-"""From a vector `AnalyzedToken`s and an index of tokens in a corpus,
-construct a dictionary keyed by lexemes, mapping to a further dictionary
-of surface forms to passages.
-
-$(SIGNATURES)
-"""
-function lexemedictionary(parses, tokenindex)
-    lexformdict = Dict()
-    for l in lexemes(parses)
-        singlelexdict = Dict()   
-        formlist = stringsforlexeme(parses, l)
-        for f in formlist
-            singlelexdict[f] = tokenindex[f]
-        end
-        lexformdict[l] = singlelexdict
-    end
-    lexformdict
-end
