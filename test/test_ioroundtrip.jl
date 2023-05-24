@@ -8,14 +8,14 @@
     parser = CitableParserBuilder.gettysburgParser(dict = dictdata)
 
     parsed =  parsecorpus(tc, parser; data = parser.data)
-    @test isa(parsed, Vector{AnalyzedToken})
-    @test length(parsed) == 54
+    @test isa(parsed, AnalyzedTokens)
+    @test length(parsed) == 64
 
     abbrcexfile = mktemp()[1]
     open(abbrcexfile,"w") do io
-        write(io, delimited(parsed))
+        write(io, cex(parsed))
     end
-    roundtripped = read(abbrcexfile, String) |>  CitableParserBuilder.analyzedtokens_fromabbrcex
+    roundtripped = fromcex(abbrcexfile, AnalyzedTokens, FileReader) #read(abbrcexfile, String) |>  CitableParserBuilder.analyzedtokens_fromabbrcex
     @test typeof(roundtripped) == typeof(parsed)
     @test length(roundtripped) == length(parsed)
     rm(abbrcexfile)

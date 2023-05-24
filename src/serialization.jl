@@ -18,7 +18,7 @@ or the `delimited` function can be used with a URN registry to write full CITE2 
 function cex(at::AnalyzedToken; delimiter = "|")
     if isempty(at.analyses)
         noanalysis = "|||||"
-        cex(at.passage; delimiter = delimiter) * noanalysis
+        cex(at.ctoken; delimiter = delimiter) * noanalysis
     else
         lines = []
         for analysis in at.analyses
