@@ -5,6 +5,8 @@ using Orthography
 
 using Documenter, DocStringExtensions
 
+using OrderedCollections, StatsBase
+
 import Base: show
 import Base: ==
 import Base: iterate
@@ -44,6 +46,7 @@ export expand, abbreviate
 export fstsafe, readfst
 
 export tokens, lexemes, forms, stems, rules
+export lexemehisto
 export stringsforlexeme, lexemedictionary, passagesforlexeme
 
 export parsetoken, parselist

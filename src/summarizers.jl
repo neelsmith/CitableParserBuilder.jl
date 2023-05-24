@@ -8,20 +8,23 @@ function flatpairs(v::AbstractVector{AnalyzedToken})
     pairlist = []
     for ta in v
         for a in ta.analyses
-            push!(pairlist, (ta.passage, a))
+            push!(pairlist, (ta.ctoken.passage, a))
         end
     end
     pairlist
 end
 
+function stringsforlexeme(atcollection::AnalyzedTokens, lexstr::AbstractString)
+    stringsforlexeme(atcollection.analyses, lexstr)
+end
 
 """Find token string values for all tokens in a vector of `AnalyzedToken`s parsed to a given lexeme.
 
 $(SIGNATURES)
 """
-function stringsforlexeme(v::AbstractVector{AnalyzedToken}, l::AbstractString)
+function stringsforlexeme(v::AbstractVector{AnalyzedToken}, lexstr::AbstractString)::Vector{AbstractString}
     paired = flatpairs(v)
-    matches = filter(pr -> string(pr[2].lexeme) == l, paired)
+    matches = filter(pr -> string(pr[2].lexeme) == lexstr, paired)
     map(pr -> pr[1].text, matches) |> unique
 end
 
@@ -29,28 +32,44 @@ end
 
 $(SIGNATURES)
 """
-function passagesforlexeme(v::AbstractVector{AnalyzedToken}, l::AbstractString)
+function passagesforlexeme(v::AbstractVector{AnalyzedToken}, lexstr::AbstractString)::Vector{CtsUrn}
     paired = flatpairs(v)
-    matches = filter(pr -> string(pr[2].lexeme) == l, paired)
-    urnstrings = map(pr -> pr[1].urn.urn, matches) |> unique
+    matches = filter(pr -> string(pr[2].lexeme) == lexstr, paired)
+    urnstrings = map(pr -> pr[1].urn.urn, matches) |> unique 
     map(u -> CtsUrn(u), urnstrings)
 end
 
-"""From a vector `AnalyzedToken`s and an index of tokens in a corpus,
+"""From a vector of `AnalyzedToken`s and an index of tokens in a corpus,
 construct a dictionary keyed by lexemes, mapping to a further dictionary
 of surface forms to passages.
 
 $(SIGNATURES)
 """
-function lexemedictionary(parses, tokenindex)
+function lexemedictionary(parses::Vector{AnalyzedToken}, tokenindex)
     lexformdict = Dict()
     for l in lexemes(parses)
+        lexstr = string(l)
         singlelexdict = Dict()   
-        formlist = stringsforlexeme(parses, l)
+        formlist = stringsforlexeme(parses, lexstr)
         for f in formlist
-            singlelexdict[f] = tokenindex[f]
+            if haskey(tokenindex, f)
+                singlelexdict[f] = tokenindex[f]
+            else
+                @warn("Token $(l) not found in token index.")
+            end
         end
-        lexformdict[l] = singlelexdict
+        lexformdict[lexstr] = singlelexdict
     end
     lexformdict
+end
+
+
+"""Compute histogram of lexemes in `AnalyzedTokens`.
+$(SIGNATURES)
+All distinct lexemes for a token are counted; there is no weighting of counts for 
+lexically ambiguous tokens.
+"""
+function lexemehisto(parses::AnalyzedTokens)
+    counts = map(a -> lexemes(a.analyses), parses.analyses) |> Iterators.flatten |> collect .|> string |> countmap
+    sort!(OrderedDict(counts); byvalue=true, rev=true)
 end
