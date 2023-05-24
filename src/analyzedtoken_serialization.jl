@@ -42,6 +42,7 @@ function delimited(at::AnalyzedToken; delim = "|", registry = nothing)
     if isnothing(registry)
         @warn("No registry defined:  serializing AnalyzedToken with abbreviated URN values.")
     end
+    @info("Delimited for analyzedtoken ", at)
     if isempty(at.analyses)
         noanalysis = "|||||"
         cex(at.ctoken.passage; delimiter = delim) * noanalysis

@@ -15,10 +15,15 @@
     open(abbrcexfile,"w") do io
         write(io, cex(parsed))
     end
-    roundtripped = fromcex(abbrcexfile, AnalyzedTokens, FileReader) #read(abbrcexfile, String) |>  CitableParserBuilder.analyzedtokens_fromabbrcex
+    roundtripped = fromcex(abbrcexfile, AnalyzedTokens, FileReader)
     @test typeof(roundtripped) == typeof(parsed)
     @test length(roundtripped) == length(parsed)
     rm(abbrcexfile)
+
+
+
+
+    # This part is broken:
     urndict = Dict(
     "gburglex" => "urn:cite2:citedemo:gburglex.v1:",
     "gburgform" => "urn:cite2:citedemo:gburgform.v1:",
