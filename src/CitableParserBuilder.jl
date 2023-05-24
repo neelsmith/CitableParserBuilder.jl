@@ -43,7 +43,7 @@ export LexemeUrn, FormUrn, StemUrn, RuleUrn
 export expand, abbreviate
 export fstsafe, readfst
 
-export lexemes, tokens
+export tokens, lexemes, forms, stems, rules
 export stringsforlexeme, lexemedictionary, passagesforlexeme
 
 export parsetoken, parselist

@@ -46,7 +46,75 @@ function lexemes(atokens::AnalyzedTokens)
 end
 
 
+"""Extract a list of rules from a Vector of `Analysis` objects.
+$(SIGNATURES)
+"""
+function rules(v::AbstractVector{Analysis})
+    map(a -> a.rule, v) .|> string |> unique .|> RuleUrn
+end
 
+"""Extract a list of rules from a Vector of `AnalyzedToken` objects.
+$(SIGNATURES)
+"""
+function rules(v::AbstractVector{AnalyzedToken})
+    analyses = map(p -> p.analyses, v) |> Iterators.flatten |> collect
+    rules(analyses)
+end
+
+"""Extract a list of rules from an `AnalyzedTokens` object.
+$(SIGNATURES)
+"""
+function rules(atokens::AnalyzedTokens)
+    rules(atokens.analyses)
+end
+
+
+
+"""Extract a list of stems from a Vector of `Analysis` objects.
+$(SIGNATURES)
+"""
+function stems(v::AbstractVector{Analysis})
+    map(a -> a.stem, v) .|> string |> unique .|> StemUrn
+end
+
+"""Extract a list of stems from a Vector of `AnalyzedToken` objects.
+$(SIGNATURES)
+"""
+function stems(v::AbstractVector{AnalyzedToken})
+    analyses = map(p -> p.analyses, v) |> Iterators.flatten |> collect
+    stems(analyses)
+end
+
+"""Extract a list of stems from an `AnalyzedTokens` object.
+$(SIGNATURES)
+"""
+function stems(atokens::AnalyzedTokens)
+    stems(atokens.analyses)
+end
+
+
+
+"""Extract a list of forms from a Vector of `Analysis` objects.
+$(SIGNATURES)
+"""
+function forms(v::AbstractVector{Analysis})
+    map(a -> a.form, v) .|> string |> unique .|> FormUrn
+end
+
+"""Extract a list of forms from a Vector of `AnalyzedToken` objects.
+$(SIGNATURES)
+"""
+function forms(v::AbstractVector{AnalyzedToken})
+    analyses = map(p -> p.analyses, v) |> Iterators.flatten |> collect
+    forms(analyses)
+end
+
+"""Extract a list of forms from an `AnalyzedTokens` object.
+$(SIGNATURES)
+"""
+function forms(atokens::AnalyzedTokens)
+    forms(atokens.analyses)
+end
 
 
 
