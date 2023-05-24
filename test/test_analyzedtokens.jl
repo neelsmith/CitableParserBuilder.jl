@@ -13,6 +13,8 @@
    
     expected = "urn:cts:demo:latin.sample:1|Et|et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1|LexicalToken"
     @test cex(atkn) == expected
+    # roundtrip:
+    @test fromcex(cex(atkn), AnalyzedToken) == atkn
 end
 
 
@@ -35,7 +37,7 @@ end
     ctkn = CitableToken(cn, LexicalToken())
     atkn = AnalyzedToken(ctkn, [a]) 
 
-    expected = "urn:cts:demo:latin.sample:1|Et|et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1|LexicalToken()"
+    expected = "urn:cts:demo:latin.sample:1|Et|et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1|LexicalToken"
     @test delimited(atkn; registry = abbrdict) == expected
 end
 

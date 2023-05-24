@@ -108,7 +108,7 @@ function fromcex(trait::AnalysesCex, s::AbstractString,  ::Type{AnalyzedTokens};
             curranalyses = isnothing(currentanalysis) ? Analysis[] : [currentanalysis]
             
         else
-            if ! isnothing(curranlaysis)
+            if ! isnothing(currentanalysis)
                 push!(curranalyses, currentanalysis)
             end
         end
