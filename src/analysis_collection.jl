@@ -3,15 +3,12 @@ struct AnalyzedTokens
     analyses::Vector{AnalyzedToken}
 end
 
-
 """Override Base.show for `AnalyzedTokens`.
 $(SIGNATURES)
 """
 function show(io::IO, analyses::AnalyzedTokens)
     length(analyses.analyses) == 1 ? print(io, "Collection of  1 analysis") : print(io, "Collection of ", length(analyses.analyses), " analyzed tokens.")
 end
-
-
 
 "Value for CitableTrait."
 struct CitableAnalyses <: CitableCollectionTrait end
@@ -41,7 +38,6 @@ function label(analyses::AnalyzedTokens)
 end
 
 
-
 "Value for CexTrait"
 struct AnalysesCex <: CexTrait end
 
@@ -60,8 +56,6 @@ Required function for `Citable` abstraction.
 function cex(analyses::AnalyzedTokens; delimiter = "|")
     header = "#!ctsdata\n"
 
-
-
     strings = map(atoken -> cex(atoken, delimiter=delimiter), analyses)
     header * join(strings, "\n")
 end
@@ -70,20 +64,21 @@ end
 """Parse a delimited-text string into an `AnalyzedTokens` collection.
 $(SIGNATURES)
 """
-function fromcex(s::AbstractString, ::Type{AnalyzedTokens}; delimiter = "|", configuration = nothing, strict = true)
-    datalines = split(s, "\n")[2:end]
+function fromcex(trait::AnalysesCex, s::AbstractString,  ::Type{AnalyzedTokens}; delimiter = "|", configuration = nothing, strict = true)
+    rawlines = split(s, "\n")[2:end]
+    datalines = filter(ln -> ! isempty(ln), rawlines)
     prevcitable = nothing
     curranalyses = []
     tokens = AnalyzedToken[]
     
     for ln in datalines
         parts = split(ln, delimiter)
-        
+        @debug("LINEL: ", ln)
         currpsg = CitablePassage(CtsUrn(parts[1]), parts[2])
         ttype = parts[8] * "()" |> Meta.parse |> eval
         currcitable = CitableToken(currpsg, ttype)
         @debug("CURRCITALBBE", currcitable)
-        analysisstring = join([parts[1], parts[4], parts[5], parts[6], parts[7]], delimiter)
+        analysisstring = join([parts[3], parts[4], parts[5], parts[6], parts[7]], delimiter)
         currentanalysis = analysis(analysisstring, delimiter)
 
         if isnothing(prevcitable)

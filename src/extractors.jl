@@ -1,14 +1,11 @@
 """Extract a list of lexeme values from a Vector of `Analysis` objects.
-
 $(SIGNATURES)
 """
 function tokens(v::AbstractVector{Analysis})
     map(a -> string(a.token), v) |> unique
 end
 
-
 """Extract a list of lexeme values from a Vector of `AnalyzedToken` objects.
-
 $(SIGNATURES)
 """
 function tokens(v::AbstractVector{AnalyzedToken})
@@ -17,17 +14,16 @@ function tokens(v::AbstractVector{AnalyzedToken})
 end
 
 """Extract a list of lexeme values from an `AnalyzedTokens` object.
-
 $(SIGNATURES)
 """
 function tokens(atokens::AnalyzedTokens)
-    analyses = map(p -> p.analyses, atokens.analyses) |> Iterators.flatten |> collect
-    map(a -> string(a.token), analyses) |> unique
+    #analyses = map(p -> p.analyses, atokens.analyses) |> Iterators.flatten |> collect
+    #map(a -> string(a.token), analyses) |> unique
+    tokens(atokens.analyses)
 end
 
 
 """Extract a list of lexeme values from a Vector of `AnalyzedToken`s.
-
 $(SIGNATURES)
 """
 function lexemes(v::AbstractVector{Analysis})

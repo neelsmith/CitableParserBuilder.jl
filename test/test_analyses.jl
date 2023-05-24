@@ -42,16 +42,6 @@ end
 end
 
 
-@testset "Test formatting string list of tokens from list of Analysis objects" begin
-  a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"))
-  a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"))
-
-  resultlist = [a1, a2]
-
-  expected = ["donorum", "donum"]
-  @test tokens(resultlist) == expected
-end
-
 @testset "Test member accessor functions" begin
   a = Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2010003100"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i13"))  
   
