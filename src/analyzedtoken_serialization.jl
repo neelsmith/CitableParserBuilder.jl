@@ -53,7 +53,7 @@ function delimited(at::AnalyzedToken; delim = "|", registry = nothing)
             join([
                 cex(at.ctoken.passage; delimiter = delim), 
                 delimited(analysis; delim = delim, registry = registry),
-                at.ctoken.tokentype
+                typeof(at.ctoken.tokentype) |> String
                 ], delim))
         end
         join(lines, "\n")
