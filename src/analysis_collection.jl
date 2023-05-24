@@ -38,6 +38,19 @@ function label(analyses::AnalyzedTokens)
 end
 
 
+
+"""Serialize an `AnalyzedTokens` object as delimited text (required for `Citable` interface).
+
+$(SIGNATURES)
+Uses abbreviated URNs.  
+These can be expanded to full CITE2 URNs when read back with a URN registry,
+or the `delimited` function can be used with a URN registry to write full CITE2 URNs.
+"""
+function delimited(atcollection::AnalyzedTokens; delim = "|", registry = nothing)
+    delimited(atcollection.analyses, delim = delim, registry = registry)
+end
+
+
 "Value for CexTrait"
 struct AnalysesCex <: CexTrait end
 
@@ -68,7 +81,7 @@ function fromcex(trait::AnalysesCex, s::AbstractString,  ::Type{AnalyzedTokens};
     rawlines = split(s, "\n")[2:end]
     datalines = filter(ln -> ! isempty(ln), rawlines)
     prevcitable = nothing
-    curranalyses = []
+    curranalyses = Analysis[]
     tokens = AnalyzedToken[]
     
     for ln in datalines
@@ -84,16 +97,18 @@ function fromcex(trait::AnalysesCex, s::AbstractString,  ::Type{AnalyzedTokens};
         if isnothing(prevcitable)
             prevcitable = currcitable
             @debug("SET PREV", prevcitable)
-            curranalyses = [currentanalysis]
+            curranalyses = isnothing(currentanalysis) ? Analysis[] : [currentanalysis]
 
         elseif urn(currcitable) != urn(prevcitable)
             push!(tokens, AnalyzedToken(prevcitable, curranalyses))
             prevcitable = currcitable
             @debug("SET PREV", prevcitable)
-            curranalyses = [currentanalysis]
+            curranalyses = isnothing(currentanalysis) ? Analysis[] : [currentanalysis]
             
         else
-            push!(curranalyses, currentanalysis)
+            if ! isnothing(curranlaysis)
+                push!(curranalyses, currentanalysis)
+            end
         end
         
     end

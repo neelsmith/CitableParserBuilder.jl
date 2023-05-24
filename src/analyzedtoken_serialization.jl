@@ -17,15 +17,15 @@ or the `delimited` function can be used with a URN registry to write full CITE2 
 """
 function cex(at::AnalyzedToken; delimiter = "|")
     if isempty(at.analyses)
-        noanalysis = "|||||"
-        cex(at.ctoken; delimiter = delimiter) * noanalysis
+        noanalysis = repeat(delimiter, 6)
+        cex(at.ctoken.passage; delimiter = delimiter) * noanalysis * string(typeof(at.ctoken.tokentype))
     else
         lines = []
         for analysis in at.analyses
 
             push!(lines, join([
                 cex(at.ctoken.passage; delimiter = delimiter), 
-                delimited(analysis, delimiter),
+                delimited(analysis; delim = delimiter),
                 typeof(at.ctoken.tokentype)
                 ], delimiter))
         end
@@ -38,20 +38,20 @@ end
 
 $(SIGNATURES)
 """
-function delimited(at::AnalyzedToken, delim = "|"; registry = nothing)
+function delimited(at::AnalyzedToken; delim = "|", registry = nothing)
     if isnothing(registry)
         @warn("No registry defined:  serializing AnalyzedToken with abbreviated URN values.")
     end
     if isempty(at.analyses)
         noanalysis = "|||||"
-        cex(at.passage; delimiter = delim) * noanalysis
+        cex(at.ctoken.passage; delimiter = delim) * noanalysis
     else
         lines = []
         for analysis in at.analyses
             push!(lines, 
             join([
                 cex(at.ctoken.passage; delimiter = delim), 
-                delimited(analysis, delim; registry = registry),
+                delimited(analysis; delim = delim, registry = registry),
                 at.ctoken.tokentype
                 ], delim))
         end
@@ -63,10 +63,10 @@ end
 
 $(SIGNATURES)
 """
-function delimited(v::AbstractVector{AnalyzedToken}, delim = "|"; registry = nothing)
+function delimited(v::AbstractVector{AnalyzedToken}; delim = "|", registry = nothing)
     lines = []
     for at in v
-        push!(lines, delimited(at, delim; registry = registry))
+        push!(lines, delimited(at; delim = delim, registry = registry))
     end
     join(lines, "\n")
 end

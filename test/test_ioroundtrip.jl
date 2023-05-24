@@ -29,7 +29,7 @@
     open(cexfile,"w") do io
         write(io, delimited(parsed; registry = urndict))
     end
-    roundtrippedurns = read(cexfile, String) |>  analyzedtokens_fromcex
+    roundtrippedurns = fromcex(read(cexfile, String), AnalyzedTokens)
     @test typeof(roundtrippedurns) == typeof(parsed)
     @test length(roundtrippedurns) == length(parsed)
     rm(cexfile)

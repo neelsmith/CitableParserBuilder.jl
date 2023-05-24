@@ -74,7 +74,7 @@ struct LexemeUrn <: AbbreviatedUrn
         if length(parts) == 2
             new(parts[1], parts[2])
         else
-            throw(ArgumentError("AbbreviatedUrn: invalid syntax: $(s)"))
+            throw(ArgumentError("AbbreviatedUrn: invalid syntax: '$(s)'"))
         end
     end
 end

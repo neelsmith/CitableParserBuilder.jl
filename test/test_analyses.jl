@@ -7,9 +7,9 @@
     stem = StemUrn("stems.example1")
     a = Analysis(str, lex, form, stem, rule)
     expected = "et,ls.n16278,morphforms.1000000001,stems.example1,rules.example1" 
-    @test delimited(a, ",") == expected
+    @test delimited(a; delim = ",") == expected
     piped  = "et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1"
-    @test delimited(a, "|") == piped
+    @test delimited(a; delim = "|") == piped
 end
 
 @testset "Test serializing analysis using CITE2 URNs" begin
@@ -26,7 +26,7 @@ end
   stem = StemUrn("stems.example1")
   a = Analysis(str, lex, form, stem, rule)
   expected = "et,urn:cite2:citedemo:ls.v1:n16278,urn:cite2:citedemo:morphforms.v1:1000000001,urn:cite2:citedemo:stems.v1:example1,urn:cite2:citedemo:rules.v1:example1"
-  @test delimited(a, ","; registry = dict) == expected
+  @test delimited(a; delim =  ",", registry = dict) == expected
   piped  = "et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1"
   @test delimited(a; registry = dict) == piped
 

@@ -66,7 +66,7 @@ using `registry` as the expansion dictionary.
 
 $(SIGNATURES)
 """
-function delimited(a::Analysis, delim = "|"; registry = nothing)
+function delimited(a::Analysis; delim = "|", registry = nothing)
     if isnothing(registry)
         join([ a.token,
             a.lexeme,
@@ -90,10 +90,10 @@ end
 
 $(SIGNATURES)
 """
-function delimited(v::AbstractVector{Analysis}, delim = "|"; registry = nothing)
+function delimited(v::AbstractVector{Analysis}; delim = "|", registry = nothing)
     lines = []
     for analysis in v
-        push!(lines, delimited(analysis, delim; registry = registry))
+        push!(lines, delimited(analysis; delim = delim, registry = registry))
     end
 
     join(lines, "\n")
@@ -110,32 +110,43 @@ function relationsblock(urn::Cite2Urn, label::AbstractString, v::AbstractVector{
         join(["label", label], delim),
         join(["token", "lexeme", "form", "stem", "rule"], delim)
     ]
-    lines = delimited(v, delim, registry = registry)
+    lines = delimited(v; delim = delim, registry = registry)
     join(headerlines, "\n") * lines
 end
 
+
+"""True if any element in stringlist is empty."""
+function no_id(stringlist)
+    isempty(stringlist[1]) || isempty(stringlist[2]) ||
+    isempty(stringlist[3]) || isempty(stringlist[4]) 
+end
 
 """Parse delimited-text representaiton into an `Analysis`.
 If delimited-text form uses full Cite2Urns, these are abbreviated.
 
 $(SIGNATURES)
 """
-function analysis(s, delim = "|")::Analysis
+function analysis(s, delim = "|")::Union{Analysis,Nothing}
     parts = split(s, delim)
     tokentext = parts[1]
+    
+    if no_id(parts[2:5])
+        nothing
 
-    lexu = startswith(parts[2], "urn:") ? Cite2Urn(parts[2]) |> abbreviate |> LexemeUrn : LexemeUrn(parts[2])
-    formu = startswith(parts[3], "urn:") ? Cite2Urn(parts[3]) |> abbreviate |> FormUrn : FormUrn(parts[3])
-    stemu = startswith(parts[4], "urn:") ? Cite2Urn(parts[4]) |> abbreviate |> StemUrn : StemUrn(parts[4])
-    ruleu = startswith(parts[5], "urn:") ? Cite2Urn(parts[5]) |> abbreviate |> RuleUrn : RuleUrn(parts[5])
+    else
+        lexu = startswith(parts[2], "urn:") ? Cite2Urn(parts[2]) |> abbreviate |> LexemeUrn : LexemeUrn(parts[2])
+        formu = startswith(parts[3], "urn:") ? Cite2Urn(parts[3]) |> abbreviate |> FormUrn : FormUrn(parts[3])
+        stemu = startswith(parts[4], "urn:") ? Cite2Urn(parts[4]) |> abbreviate |> StemUrn : StemUrn(parts[4])
+        ruleu = startswith(parts[5], "urn:") ? Cite2Urn(parts[5]) |> abbreviate |> RuleUrn : RuleUrn(parts[5])
 
-    Analysis(
-        tokentext,
-        lexu,
-        formu,
-        stemu,
-        ruleu
-    )
+        Analysis(
+            tokentext,
+            lexu,
+            formu,
+            stemu,
+            ruleu
+        )
+    end
 end
 
 
