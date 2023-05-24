@@ -83,16 +83,16 @@ function fromcex(trait::AnalysesCex, s::AbstractString,  ::Type{AnalyzedTokens};
     prevcitable = nothing
     curranalyses = Analysis[]
     tokens = AnalyzedToken[]
-    @info(length(datalines), " data lines")
+    @debug(length(datalines), " data lines")
     for ln in datalines
         parts = split(ln, delimiter)
-        @info("LINEL: ", ln)
+        @debug("LINEL: ", ln)
         currpsg = CitablePassage(CtsUrn(parts[1]), parts[2])
         ttypestr = parts[8] * "()"
-        @info("TTYPE $(ttypestr)")
+        @debug("TTYPE $(ttypestr)")
         ttype = parts[8] * "()" |> Meta.parse |> eval
         currcitable = CitableToken(currpsg, ttype)
-        @info("CURRCITALBBE", currcitable)
+        @debug("CURRCITALBBE", currcitable)
         analysisstring = join([parts[3], parts[4], parts[5], parts[6], parts[7]], delimiter)
         currentanalysis = analysis(analysisstring, delimiter)
 
@@ -114,7 +114,7 @@ function fromcex(trait::AnalysesCex, s::AbstractString,  ::Type{AnalyzedTokens};
         end
         
     end
-    @info("PREVCITABLE: " , prevcitable)
+    @debug("PREVCITABLE: " , prevcitable)
     if ! isnothing(prevcitable)
         push!(tokens, AnalyzedToken(prevcitable, curranalyses))
     end

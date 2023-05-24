@@ -26,7 +26,7 @@ function cex(at::AnalyzedToken; delimiter = "|")
             push!(lines, join([
                 cex(at.ctoken.passage; delimiter = delimiter), 
                 delimited(analysis; delim = delimiter),
-                typeof(at.ctoken.tokentype)
+                string(typeof(at.ctoken.tokentype))
                 ], delimiter))
         end
         join(lines, "\n")
@@ -42,7 +42,7 @@ function delimited(at::AnalyzedToken; delim = "|", registry = nothing)
     if isnothing(registry)
         @warn("No registry defined:  serializing AnalyzedToken with abbreviated URN values.")
     end
-    @info("Delimited for analyzedtoken ", at)
+    @debug("Delimited for analyzedtoken ", at)
     if isempty(at.analyses)
         noanalysis = "|||||"
         cex(at.ctoken.passage; delimiter = delim) * noanalysis
@@ -53,7 +53,7 @@ function delimited(at::AnalyzedToken; delim = "|", registry = nothing)
             join([
                 cex(at.ctoken.passage; delimiter = delim), 
                 delimited(analysis; delim = delim, registry = registry),
-                typeof(at.ctoken.tokentype) |> String
+                string(typeof(at.ctoken.tokentype))
                 ], delim))
         end
         join(lines, "\n")
