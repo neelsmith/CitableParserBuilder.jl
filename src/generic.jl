@@ -51,33 +51,26 @@ $(SIGNATURES)
 Returns a single `AnalyzedToken`.
 """
 function parsepassage(cn::CitablePassage, p::T;  data = nothing) where {T <: CitableParser}
-    AnalyzedToken(cn, parsetoken(cn.text, p; data))
+    AnalyzedToken(CitableToken(cn, LexicalToken()), parsetoken(cn.text, p; data = data))
 end
 
 
-
-
-"""Parse a `CitableTextCorpus` with each citable node containing containg a single token using `p`.
+"""Parse a `CitablePassage` with text for a single token with a `CitableParser`.
 
 $(SIGNATURES)
 
-Should return a list of `AnalyzedToken`s.
+Returns a single `AnalyzedToken`.
 """
-function parsecorpus_brute(c::CitableTextCorpus, p::T; data = nothing) where {T <: CitableParser}
-    results = AnalyzedToken[]
-    for cn in c.passages
-        push!(results, AnalyzedToken(cn, parsetoken(cn.text, p; data = data)))
-    end
-    results
+function parsepassage(ct::CitableToken, p::T;  data = nothing) where {T <: CitableParser}
+    AnalyzedToken(ct, parsetoken(ct.passage.text, p; data = data))
 end
 
 
-
-"""Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token.
+"""Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token of type `LexicalToken`.
 
 $(SIGNATURES)
 
-Should return a list of `AnalyzedToken`s.
+Returns an`AnalyzedTokens` object.
 """
 function parsecorpus(c::CitableTextCorpus, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
     wordlist = map(psg -> psg.text, c.passages) |> unique
@@ -87,62 +80,12 @@ function parsecorpus(c::CitableTextCorpus, p::T; data = nothing, countinterval =
     results = AnalyzedToken[]
     for psg in c.passages
         if psg.text in keylist
-            at = AnalyzedToken(psg, parsedict[psg.text])
+            at = AnalyzedToken(CitableToken(psg, LexicalToken()), parsedict[psg.text])
             push!(results, at)
         else
-            at = AnalyzedToken(psg, AnalyzedToken[])
+            at = AnalyzedToken(CitableToken(psg, LexicalToken()), AnalyzedToken[])
             push!(results, at)
         end
     end
-    results
+    results |> AnalyzedTokens
 end
-
-
-
-#=
-"""Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token.
-
-$(SIGNATURES)
-
-Should return a list of `AnalyzedToken`s.
-"""
-function parsedocument_brute(doc::CitableDocument, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
-    counter = 0
-    results = AnalyzedToken[]
-    for cn in doc.passages
-        counter = counter + 1
-        if mod(counter, countinterval) == 0
-            @info(counter)
-        end
-        push!(results, AnalyzedToken(cn, parsetoken(cn.text, p; data = data)))
-    end
-    results
-end
-=#
-
-
-#=
-"""Use a `CitableParser` to parse a `CitableTextCorpus` with each citable node containing containg a single token.
-
-$(SIGNATURES)
-
-Should return a list of `AnalyzedToken`s.
-"""
-function parsedocument(doc::CitableDocument, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
-    wordlist = map(psg -> psg.text, doc.passages) |> unique
-    parsedict = parselist(wordlist, p; data = data, countinterval = countinterval)
-    keylist = keys(parsedict)
-
-    results = AnalyzedToken[]
-    for psg in doc.passages
-        if psg.text in keylist
-            at = AnalyzedToken(psg, parsedict[psg.text])
-            push!(results, at)
-        else
-            at = AnalyzedToken(psg, AnalyzedToken[])
-            push!(results, at)
-        end
-    end
-    results
-end
-=#

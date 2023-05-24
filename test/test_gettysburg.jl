@@ -9,7 +9,7 @@
     parser = CitableParserBuilder.gettysburgParser(dict = dict)
 
     wdlist = tokenvalues(c, ortho)
-    tokenized = tokenizedcorpus(c, ortho)
+    tokenized = tokenizedcorpus(c, ortho, filterby = LexicalToken())
     analyses = parsecorpus(tokenized, parser; data = parser.data)
     @test length(analyses) == 1313
 end

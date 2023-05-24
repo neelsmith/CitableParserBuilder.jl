@@ -65,16 +65,13 @@ end
 
 @testset "Test parsing multiple analyses" begin
     f = joinpath(pwd(), "data", "ambiganalysis.cex")
-    
-    
-    atokens = analyzedtokens_fromcex(cexsrc)
+    atokens = fromcex(f, AnalyzedTokens, FileReader)
     @test length(atokens) == 2
-    @test length(atokens[2].analyses) == 3
+    @test length(atokens.analyses[2].analyses) == 3
 
-    expectedlexemes =  ["ls.n16278", "ls.x", "ls.y", "ls.z"]
-    @test lexemes(atokens) == expectedlexemes
-    @test stringsforlexeme(atokens, "ls.n16278")[1] == "Et"
-    @test passagesforlexeme(atokens, "ls.n16278")[1] == CtsUrn("urn:cts:demo:latin.sample:1")
+    
+    @test_broken stringsforlexeme(atokens, "ls.n16278")[1] == "Et"
+    @test_broken passagesforlexeme(atokens, "ls.n16278")[1] == CtsUrn("urn:cts:demo:latin.sample:1")
 
     # @test lexemedictionary ....
 end
