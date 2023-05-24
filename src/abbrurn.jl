@@ -24,7 +24,7 @@ end
 $(SIGNATURES)
 """
 function collection(au::T) where {T <: AbbreviatedUrn}
-    # default to looking for a member!
+    # default to looking for a member if method not overriden:
     au.collection
 end
 
@@ -33,16 +33,8 @@ end
 $(SIGNATURES)
 """
 function objectid(au::T) where {T <: AbbreviatedUrn}
-    # default to looking for a member!
+    # default to looking for a member if method not overriden:
     au.objectid
-end
-
-"""Override `Base.print` for `AbbreviatedUrn`.
-
-$(SIGNATURES)
-"""
-function print(io::IO, au::T) where {T <: AbbreviatedUrn}
-    print(io, join([collection(au), objectid(au)], "."))
 end
 
 "Abbreviated URN for a morphological stem."
@@ -82,7 +74,7 @@ struct LexemeUrn <: AbbreviatedUrn
         if length(parts) == 2
             new(parts[1], parts[2])
         else
-            throw(ArgumentError("AbbreviatedUrn: invalid syntax: $(s)"))
+            throw(ArgumentError("AbbreviatedUrn: invalid syntax: '$(s)'"))
         end
     end
 end

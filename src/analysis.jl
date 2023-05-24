@@ -66,9 +66,15 @@ using `registry` as the expansion dictionary.
 
 $(SIGNATURES)
 """
-function delimited(a::Analysis, delim = "|"; registry = nothing)
+function delimited(a::Analysis; delim = "|", registry = nothing)
     if isnothing(registry)
-        abbrcex(a, delim)
+        join([ a.token,
+            a.lexeme,
+            a.form,
+            a.stem,
+            a.rule
+            ], delim)
+
     else
         join([ a.token,
             expand(a.lexeme, registry),
@@ -80,15 +86,14 @@ function delimited(a::Analysis, delim = "|"; registry = nothing)
 end
 
 
-
 """Serialize a Vector of `Analysis` objects as delimited text.
 
 $(SIGNATURES)
 """
-function delimited(v::AbstractVector{Analysis}, delim = "|"; registry = nothing)
+function delimited(v::AbstractVector{Analysis}; delim = "|", registry = nothing)
     lines = []
     for analysis in v
-        push!(lines, delimited(analysis, delim; registry = registry))
+        push!(lines, delimited(analysis; delim = delim, registry = registry))
     end
 
     join(lines, "\n")
@@ -105,22 +110,57 @@ function relationsblock(urn::Cite2Urn, label::AbstractString, v::AbstractVector{
         join(["label", label], delim),
         join(["token", "lexeme", "form", "stem", "rule"], delim)
     ]
-    lines = delimited(v, delim, registry = registry)
+    lines = delimited(v; delim = delim, registry = registry)
     join(headerlines, "\n") * lines
 end
 
-"""Serialize an `Analysis` using abbreviated URNs as identifiers.
+
+"""True if any element in stringlist is empty."""
+function no_id(stringlist)
+    isempty(stringlist[1]) || isempty(stringlist[2]) ||
+    isempty(stringlist[3]) || isempty(stringlist[4]) 
+end
+
+"""Parse delimited-text representaiton into an `Analysis`.
+If delimited-text form uses full Cite2Urns, these are abbreviated.
 
 $(SIGNATURES)
 """
-function abbrcex(a::Analysis, delim = "|")
-    join([ a.token,
-        a.lexeme,
-        a.form,
-        a.stem,
-        a.rule
-        ], delim)
+function analysis(s, delim = "|")::Union{Analysis,Nothing}
+    parts = split(s, delim)
+    tokentext = parts[1]
+    
+    if no_id(parts[2:5])
+        nothing
+
+    else
+        lexu = startswith(parts[2], "urn:") ? Cite2Urn(parts[2]) |> abbreviate |> LexemeUrn : LexemeUrn(parts[2])
+        formu = startswith(parts[3], "urn:") ? Cite2Urn(parts[3]) |> abbreviate |> FormUrn : FormUrn(parts[3])
+        stemu = startswith(parts[4], "urn:") ? Cite2Urn(parts[4]) |> abbreviate |> StemUrn : StemUrn(parts[4])
+        ruleu = startswith(parts[5], "urn:") ? Cite2Urn(parts[5]) |> abbreviate |> RuleUrn : RuleUrn(parts[5])
+
+        Analysis(
+            tokentext,
+            lexu,
+            formu,
+            stemu,
+            ruleu
+        )
+    end
 end
+
+
+
+"""Compose a string listing tokens from a list of `Analysis` objects
+"""
+function tokentext(v::Vector{Analysis})::AbstractString
+    strvals = map(a -> a.token, v)
+    join(strvals, ", ")
+end
+
+
+
+
 
 
 #=
@@ -146,27 +186,3 @@ function tokenmap_cex(prs)::Tuple{ String, Vector{Analysis} }
     join(cexlines,"\n")
 end
 =#
-
-"""Parse delimited-text representaiton into an `Analysis`.
-
-$(SIGNATURES)
-"""
-function analysis_fromdelimited(s, delim = ",")::Analysis
-    parts = split(s, delim)
-    Analysis(
-        parts[1],
-        Cite2Urn(parts[2]) |> abbreviate |> LexemeUrn,
-        Cite2Urn(parts[3]) |> abbreviate |> FormUrn,
-        Cite2Urn(parts[4]) |> abbreviate |> StemUrn,
-        Cite2Urn(parts[5]) |> abbreviate |> RuleUrn
-    )
-end
-
-
-
-"""Compose a string listing tokens from a list of `Analysis` objects
-"""
-function tokens(v::Vector{Analysis})::AbstractString
-    strvals = map(a -> a.token, v)
-    join(strvals, ", ")
-end

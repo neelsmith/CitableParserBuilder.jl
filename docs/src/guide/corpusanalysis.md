@@ -60,6 +60,10 @@ analyzedtokens_fromcex(cexoutput)
 ```
 (We'll be tidy and remove the temporary file.) 
 ```@example corpus
-#rm(delimited_output)
+rm(delimited_output)
 ```
 
+
+## Profiling a corpus
+
+TBA in a future release.

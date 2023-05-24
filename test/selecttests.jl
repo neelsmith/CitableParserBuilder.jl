@@ -8,7 +8,7 @@ using CitableObject, CitableText, CitableCorpus
 using Orthography
 
 using CSV
-using Compat.Test
+using Test
 using TestSetExtensions
 
 @testset "All the tests" begin
