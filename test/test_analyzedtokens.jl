@@ -72,7 +72,7 @@ end
     @test length(atokens.analyses[2].analyses) == 3
 
     
-    @test_broken stringsforlexeme(atokens, "ls.n16278")[1] == "Et"
+    @test stringsforlexeme(atokens, "ls.n16278")[1] == "Et"
     @test_broken passagesforlexeme(atokens, "ls.n16278")[1] == CtsUrn("urn:cts:demo:latin.sample:1")
 
     # @test lexemedictionary ....
