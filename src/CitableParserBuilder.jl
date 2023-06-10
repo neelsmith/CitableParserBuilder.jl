@@ -6,6 +6,7 @@ using Orthography
 using Documenter, DocStringExtensions
 
 using OrderedCollections, StatsBase
+using Dictionaries
 
 import Base: show
 import Base: ==

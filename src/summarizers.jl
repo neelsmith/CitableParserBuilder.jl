@@ -39,13 +39,20 @@ function passagesforlexeme(v::AbstractVector{AnalyzedToken}, lexstr::AbstractStr
     map(u -> CtsUrn(u), urnstrings)
 end
 
+
+function lexemedictionary(parses::AnalyzedTokens, tokenindex::Dictionary{String, Vector{CtsUrn}})
+    lexemedictionary(parses.analyses, tokenindex)
+end
+
 """From a vector of `AnalyzedToken`s and an index of tokens in a corpus,
 construct a dictionary keyed by lexemes, mapping to a further dictionary
 of surface forms to passages.
 
 $(SIGNATURES)
 """
-function lexemedictionary(parses::Vector{AnalyzedToken}, tokenindex)
+function lexemedictionary(parses::Vector{AnalyzedToken}, tokenindex::Dictionary{String, Vector{CtsUrn}}
+ 
+    )
     lexformdict = Dict()
     for l in lexemes(parses)
         lexstr = string(l)
