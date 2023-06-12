@@ -42,6 +42,7 @@ export AnalyzedToken
 export AbbreviatedUrn
 export objectid, collection
 export LexemeUrn, FormUrn, StemUrn, RuleUrn
+export lexeme
 
 export expand, abbreviate
 export fstsafe, readfst
