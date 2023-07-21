@@ -32,7 +32,7 @@ end
 
 """Parse String `s` by looking it up in a given dictionary.
 """
-function parsetoken(s::AbstractString, parser::GettysburgParser; data = nothing)
+function parsetoken(s::AbstractString, parser::GettysburgParser, ortho::T; data = nothing) where {T <: OrthographicSystem}
     if isnothing(data) 
         throw(ArgumentError("The GettysburgParser type requires the CitableParser's data parameter in addition to a string token."))
     end

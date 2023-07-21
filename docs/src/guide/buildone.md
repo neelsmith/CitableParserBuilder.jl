@@ -23,7 +23,7 @@ Be sure to import `CitableParserBuilder: parsetoken` before defining a method of
 
 ```doctest buildone
 import CitableParserBuilder: parsetoken
-function parsetoken(s::AbstractString, parser::FakeParser; data = nothing) 
+function parsetoken(s::AbstractString, parser::FakeParser, ortho::T; data = nothing)  where {T <: OrthographicSystem}
     # Returns only the same analysis no matter
     # what the token is
     [
