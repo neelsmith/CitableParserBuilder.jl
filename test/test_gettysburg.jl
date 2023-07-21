@@ -10,7 +10,7 @@
 
     wdlist = tokenvalues(c, ortho)
     tokenized = tokenizedcorpus(c, ortho, filterby = LexicalToken())
-    analyses = parsecorpus(tokenized, parser; data = parser.data)
+    analyses = parsecorpus(tokenized, parser, ortho; data = parser.data)
     @test length(analyses) == 1313
 end
 
