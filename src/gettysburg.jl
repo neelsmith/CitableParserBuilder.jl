@@ -30,9 +30,13 @@ function gettysburgParser(; dict = nothing)
     end
 end
 
+function orthography(p::GettysburgParser)
+    simpleAscii()
+end
+
 """Parse String `s` by looking it up in a given dictionary.
 """
-function parsetoken(s::S, parser::GettysburgParser, ortho::T; data = nothing) where {S <: AbstractString, T <: OrthographicSystem}
+function parsetoken(s::S, parser::GettysburgParser; data = nothing) where {S <: AbstractString}
     if isnothing(data) 
         throw(ArgumentError("The GettysburgParser type requires the CitableParser's data parameter in addition to a string token."))
     end

@@ -4,7 +4,7 @@ $(SIGNATURES)
 
 Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects. Blank lines in input are silently ignored.
 """
-function parselist(vocablist::Vector{S}, p::P, ortho::O; data = nothing, countinterval = 100) where {P <: CitableParser, S <: AbstractString, O <: OrthographicSystem}
+function parselist(vocablist::Vector{S}, p::P; data = nothing, countinterval = 100) where {P <: CitableParser, S <: AbstractString}
     @debug("Vocabulary size: ", length(vocablist))
     counter = 0
     parses = []
@@ -24,10 +24,10 @@ $(SIGNATURES)
 
 Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects.
 """
-function parselist(f, p::T, reader::Type{FileReader}, ortho::O; 
-    data = nothing, countinterval = 100) where {T <: CitableParser, O <: OrthographicSystem}
+function parselist(f, p::T, reader::Type{FileReader}; 
+    data = nothing, countinterval = 100) where {T <: CitableParser}
     wordlist = readlines(f) 
-    parselist(wordlist, p, ortho, data = data, countinterval = countinterval)
+    parselist(wordlist, p, data = data, countinterval = countinterval)
 end
 
 
@@ -37,10 +37,10 @@ $(SIGNATURES)
 
 Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects.
 """
-function parselist(u, p::T, ortho::O, reader::Type{UrlReader}; 
-    data = nothing, countinterval = 100) where {T <: CitableParser, O <: OrthographicSystem}
+function parselist(u, p::T, reader::Type{UrlReader}; 
+    data = nothing, countinterval = 100) where {T <: CitableParser}
     wordlist = split(String(HTTP.get(u).body) , "\n")
-    parselist(wordlist, p, ortho; data = data, countinterval = countinterval)
+    parselist(wordlist, p; data = data, countinterval = countinterval)
 end
 
 
@@ -50,8 +50,8 @@ $(SIGNATURES)
 
 Returns a single `AnalyzedToken`.
 """
-function parsepassage(cn::CitablePassage, p::T, ortho::O;  data = nothing) where {T <: CitableParser, O <: OrthographicSystem}
-    AnalyzedToken(CitableToken(cn, LexicalToken()), parsetoken(cn.text, p, ortho; data = data))
+function parsepassage(cn::CitablePassage, p::T;  data = nothing) where {T <: CitableParser}
+    AnalyzedToken(CitableToken(cn, LexicalToken()), parsetoken(cn.text, p; data = data))
 end
 
 
@@ -61,8 +61,8 @@ $(SIGNATURES)
 
 Returns a single `AnalyzedToken`.
 """
-function parsepassage(ct::CitableToken, p::T, ortho::O;  data = nothing) where {T <: CitableParser, O <: OrthographicSystem}
-    AnalyzedToken(ct, parsetoken(ct.passage.text, p, ortho; data = data))
+function parsepassage(ct::CitableToken, p::T;  data = nothing) where {T <: CitableParser}
+    AnalyzedToken(ct, parsetoken(ct.passage.text, p; data = data))
 end
 
 
@@ -72,10 +72,10 @@ $(SIGNATURES)
 
 Returns an`AnalyzedTokens` object.
 """
-function parsecorpus(c::CitableTextCorpus, p::T, ortho::O; data = nothing, countinterval = 100) where {T <: CitableParser, O <: OrthographicSystem}
+function parsecorpus(c::CitableTextCorpus, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
     wordlist = map(psg -> psg.text, c.passages) |> unique
     @info("Corpus size (tokens): ", length(c.passages))
-    parsedict = parselist(wordlist, p, ortho; data = data, countinterval = countinterval)
+    parsedict = parselist(wordlist, p; data = data, countinterval = countinterval)
     keylist = keys(parsedict)
     results = AnalyzedToken[]
     for psg in c.passages
