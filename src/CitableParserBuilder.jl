@@ -51,7 +51,8 @@ export tokens, lexemes, forms, stems, rules
 export lexemehisto
 export stringsforlexeme, lexemedictionary, passagesforlexeme
 
-export parsetoken, parselist
+export parsetoken, orthography
+export parselist
 export parsepassage, parsecorpus
 
 export relationsblock
