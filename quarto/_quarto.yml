@@ -1,6 +1,7 @@
 project:
   type: website
 jupyter: julia-1.10  
+theme: spacelab
 execute:
   freeze: auto
 date: last-modified  
@@ -18,14 +19,17 @@ website:
     left:
       - text: "Home"
         file: index.qmd
-      - text: "Tutorials"
-        file: tutorials/index.qmd          
       - text: "Concepts"
-        file: concepts/index.qmd   
+        file: concepts/index.qmd          
+      - text: "Tutorials"
+        file: tutorials/index.qmd  
+      
       - text: "Guides"
         file: guides/index.qmd           
       - text: "Reference"
         file: reference/index.qmd  
+      - text: "Acknowledgments"
+        file: acks.qmd
     right:   
       - icon: github
         href: https://github.com/hcmid/Orthography.jl
@@ -35,18 +39,22 @@ website:
     - title: "Tutorials"
       contents: 
         - tutorials/index.qmd
+        - tutorials/parsing.qmd
 
     - title: "Guides"
       contents:
         - guides/index.qmd
+        - guides/abbrurns.qmd
 
     - title: "Reference"
       contents: 
         - reference/index.qmd
+        - reference/gburg.qmd
 
     - title: "Concepts"
       contents: 
         - concepts/index.qmd
+        - concepts/analyses.qmd
 
         
 

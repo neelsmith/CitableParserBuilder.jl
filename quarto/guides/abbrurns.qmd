@@ -1,4 +1,6 @@
-# Abbreviated URN values
+---
+title: "Abbreviated URN values"
+---
 
 The `AbbreviatedUrn` is an abstract type supporting an abbreviated notation for `Cite2Urn`s. It allows you to work with objects uniquely identified by collection identifier and object identifier, when the collection is registered in a dictionary that can expand the collection identifier to a full `Cite2Urn`.
 

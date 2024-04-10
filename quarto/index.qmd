@@ -1,5 +1,9 @@
 ---
-title: "Orthography"
+title: "Citable parsers"
 ---
 
-Concepts and implementation in a Julia interface.
+
+
+This site introduces the conceptual model of a citable morphological parser developed over many years in the work of the Holy Cross Manuscripts, Inscriptions and Documents Club (MID). 
+
+It also includes documentation of `CitableParserBuilder.jl`, a Julia package that implements the MID model of citable morphological analysis. `CitableParserBuilder.jl` defines common functions and data structures for working with citable morphological analyses of citable texts.  

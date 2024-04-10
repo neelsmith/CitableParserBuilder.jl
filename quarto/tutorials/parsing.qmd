@@ -1,3 +1,7 @@
+---
+title: "Parsing"
+---
+
 # Users' guide: using a `CitableParser`
 
 Any implementation of a `CitableParser` works in basically the same way.  The parsing functions all have a common pair of signatures:
