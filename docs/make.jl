@@ -22,13 +22,13 @@ makedocs(
 
             "guide/parsers.md",
             "guide/analyses.md",
-            "guide/corpusanalysis.md",
+            
             "guide/parsevectors.md",
-            "guide/abbrurns.md",
+  
             "guide/utils.md",
             "guide/buildone.md",
-            "guide/parsers.md",
-            "guide/gburg.md"
+            
+            
         ],
         "API documentation" => [
             "man/index.md"
