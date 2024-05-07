@@ -20,7 +20,7 @@ makedocs(
         "Overview" => "index.md",
         "User's guide" => [
 
-            "guide/parser.md",
+            "guide/parsers.md",
             "guide/analyses.md",
             "guide/corpusanalysis.md",
             "guide/parsevectors.md",
