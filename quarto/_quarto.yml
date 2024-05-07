@@ -32,7 +32,7 @@ website:
         file: acks.qmd
     right:   
       - icon: github
-        href: https://github.com/hcmid/Orthography.jl
+        href: https://github.com/neelsmith/CitableParserBuilder.jl
         aria-label: GitHub
 
   sidebar:
