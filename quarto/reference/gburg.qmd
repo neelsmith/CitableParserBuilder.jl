@@ -1,5 +1,9 @@
+---
+title: "The `GettysburgParser`"
+---
 
-# Appendix: a note on the citable parser
+
+
 
 The `GettysburgParser` used in this demonstration works with a simple dictionary of tokens to POS tags.  The dictionary was constructed by wrapping the Python NLTK POS tagger with a Julia function. This page documents how to do that so that you can generically apply the NTLK tagger to a list of tokens from Julia.
 
