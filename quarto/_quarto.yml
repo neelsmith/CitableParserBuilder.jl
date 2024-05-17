@@ -5,14 +5,14 @@ theme: spacelab
 execute:
   freeze: auto
 date: last-modified  
-margin-header: "⚠️ *Draft release.*"
+margin-header: "Documentation for unreleased package version: `0.26.0`"
 format:
   html: 
     toc: true
 
 
 website:
-  title: "parsing"
+  title: "Building citable parsers"
   navbar:
     background: primary
     search: true
@@ -28,8 +28,7 @@ website:
         file: guides/index.qmd           
       - text: "Reference"
         file: reference/index.qmd  
-      - text: "Acknowledgments"
-        file: acks.qmd
+
     right:   
       - icon: github
         href: https://github.com/neelsmith/CitableParserBuilder.jl

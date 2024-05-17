@@ -2,27 +2,17 @@
 title: "Analyzing a corpus"
 ---
 
-
-```{julia}
-#| echo: false
-#| output: false
-#| warning: false
-
-using CitableParserBuilder
-repo = pwd()  # hide
-```
-
-
-
 The `CitableParserBuilder` defines a number of functions that draw on a concrete implementation of the `parsetoken` function to analyze a citable corpus.
 
 We'll load a citable corpus from a file in this repository's `test/data` directory (referred to here as `f`).
 
 
 ```{julia}
+#| warning: false
+using CitableParserBuilder
 using CitableCorpus, CitableBase
-corpuscexfile = joinpath(repo,"test","data","gettysburgcorpus.cex") 
-corpus = fromcex(corpuscexfile, CitableTextCorpus, FileReader)
+corpusurl = "https://raw.githubusercontent.com/neelsmith/CitableParserBuilder.jl/main/test/data/gettysburgcorpus.cex"
+corpus = fromcex(corpusurl, CitableTextCorpus, UrlReader)
 ```
 
 We'll use the `SimpleAscii` orthography from the `Orthography` package to prepare a tokenized corpus.
@@ -40,9 +30,14 @@ The result of parsing the corpus is a Vector of `AnalyzedToken`s.  There is one 
 
 ```{julia}
 #| warning: false
-dictcsv = joinpath(repo, "test", "data", "posdict.csv") 
-using CSV
+using Downloads, CSV
+dicturl = "https://raw.githubusercontent.com/neelsmith/CitableParserBuilder.jl/main/test/data/posdict.csv"
+dictcsv = Downloads.download(dicturl)
 morphdict = CSV.File(dictcsv) |> Dict
+# Tidy up temp file:
+rm(dictcsv)
+
+
 using CitableParserBuilder
 parser = CitableParserBuilder.gettysburgParser(dict = morphdict)
 parsed =  parsecorpus(tc, parser; data = parser.data)
@@ -58,27 +53,30 @@ urndict = Dict(
     "gburgrule" => "urn:cite2:citedemo:gburgrule.v1:",
     "gburgstem" => "urn:cite2:citedemo:gburgstem.v1:"
 )
-# This is borken
-#delimited(parsed; registry = urndict)
+
+textoutput = delimited(parsed; registry = urndict)
 ```
 
 
-```
+```{julia}
 delimited_output = tempname()
 open(delimited_output, "w") do io
-    write(io, x)
+    write(io, textoutput)
 end
 ```
 
-We can read the file with `analyzedtokens_fromcex` to create a new Vector
-of analyses.
+We can read the file to create a new Vector of analyses.
 
-```
+```{julia}
+#| warning: false
 cexoutput = read(delimited_output, String) 
-analyzedtokens_fromcex(cexoutput)
+fromcex(cexoutput, AnalyzedToken)
 ```
+
+
 (We'll be tidy and remove the temporary file.) 
-```
+
+```{julia}
 rm(delimited_output)
 ```
 

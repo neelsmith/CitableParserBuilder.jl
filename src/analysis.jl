@@ -67,6 +67,7 @@ using `registry` as the expansion dictionary.
 $(SIGNATURES)
 """
 function delimited(a::Analysis; delim = "|", registry = nothing)
+    
     if isnothing(registry)
         join([ a.token,
             a.lexeme,
@@ -76,12 +77,24 @@ function delimited(a::Analysis; delim = "|", registry = nothing)
             ], delim)
 
     else
-        join([ a.token,
+        @debug("Serialize token $(a.token)")
+        @debug("Expand lexeme: $(expand(a.lexeme, registry))")
+        @debug("Expand form $(a.form) to...") 
+        @debug("   -> $(expand(a.form, registry))")
+        @debug("Expand stem: $(expand(a.stem, registry))")
+        @debug("Expand rule: $(expand(a.rule, registry))")
+        @debug("\n\n")
+        try 
+            join([ a.token,
             expand(a.lexeme, registry),
             expand(a.form, registry),
             expand(a.stem, registry),
             expand(a.rule, registry)
             ], delim)
+        catch e
+            @warn("Failed to serialized tokekn $(a.token)")
+            ""
+        end
     end
 end
 

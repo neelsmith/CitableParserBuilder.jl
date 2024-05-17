@@ -79,12 +79,22 @@ using abbreviated URNs for identifiers.  Note that for a sigle CEX line, the `An
 $(SIGNATURES)
 """
 function fromcex(s::AbstractString, ::Type{AnalyzedToken}; delimiter = "|", configuration = nothing, strict = true)
-    parts = split(s, delimiter)
-    cp = CitablePassage(CtsUrn(parts[1]), parts[2])
-    tokentype = parts[8] * "()" |> Meta.parse |> eval
-    ctoken = CitableToken(cp, tokentype)
-    alist =  isempty(parts[3]) ? [] : [analysis(join(parts[3:7], "|"))]
+    lines = filter(split(s, "\n")) do ln
+        !isempty(ln)
+    end
 
-    AnalyzedToken(ctoken, alist) 
+    map(lines) do s
+        parts = split(s, delimiter)
+        
+        if length(parts) < 8
+            @warn("`fromcex` reading AnalyzedTokens: only got $(length(parts)) columns for data line $(s)")
+        else
+            cp = CitablePassage(CtsUrn(parts[1]), parts[2])
+            tokentype = parts[8] * "()" |> Meta.parse |> eval
+            ctoken = CitableToken(cp, tokentype)
+            alist =  isempty(parts[3]) ? [] : [analysis(join(parts[3:7], "|"))]
+            AnalyzedToken(ctoken, alist) 
+        end
+    end
 end
 
