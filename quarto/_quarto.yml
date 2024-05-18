@@ -49,7 +49,10 @@ website:
     - title: "Reference"
       contents: 
         - reference/index.qmd
+        - reference/apis.qmd
         - reference/gburg.qmd
+        - reference/examples.qmd
+        - reference/sfst.qmd
 
     - title: "Concepts"
       contents: 

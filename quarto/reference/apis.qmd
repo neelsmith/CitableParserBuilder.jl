@@ -1,4 +1,6 @@
-# API documentation
+---
+title: "API documentation"
+---
 
 ## Structures
 
@@ -56,3 +58,4 @@ relationsblock
 delimited
 cex
 ```
+
