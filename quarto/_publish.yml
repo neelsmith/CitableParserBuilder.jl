@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: 86d09b3d-7dd5-4a83-b9bb-34311eb98348
+      url: 'https://neelsmith.quarto.pub/citableparserbuilder'
