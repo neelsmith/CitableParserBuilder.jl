@@ -4,7 +4,7 @@
 
 # CitableParserBuilder.jl
 
-Common infrastructure for managing citable analytical parsers. Includes utilities for compiling parsers with the Stuttgart FST toolkit.
+Common infrastructure for managing citable analytical parsers. .
 
 The `CitableParserBuilder` package is used by `Kanones.jl`, `Tabulae.jl`, and `Lycian.jl`.
 
