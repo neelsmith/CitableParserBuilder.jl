@@ -117,42 +117,188 @@ using CitableParserBuilder
 
 
 
-parsepassage
-parsecorpus
+`parsepassage`
 
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsepassage
+```
+:::
 
+`parsecorpus`
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
 
 
 ## Working with vectors of `AnalyzedToken`s
 
-```@docs
+
 lexemes
-stringsforlexeme
-lexemedictionary
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
 ```
+:::
+
+stringsforlexeme
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+lexemedictionary
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
 
 ## Working with `AbbreviatedUrn`s
 
-```@docs
+
 abbreviate
-expand
-fstsafe
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
 ```
+:::
+
+expand
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+fstsafe
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+
 
 ## Working with `Stem`s and `Rule`s
 
-```@docs
+
 CitableParserBuilder.lexeme
-CitableParserBuilder.id
-CitableParserBuilder.inflectiontype
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
 ```
+:::
+
+CitableParserBuilder.id
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+CitableParserBuilder.inflectiontype
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+
 
 ## Serialization
 
-```@docs
+
 readfst
-relationsblock
-delimited
-cex
+
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
 ```
+:::
+
+relationsblock
+
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+`delimited`
+
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc delimited
+```
+:::
+
+`cex`
+
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc cex
+```
+:::
 
