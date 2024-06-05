@@ -2,4 +2,7 @@
 title: Tutorials
 ---
 
-Learn `CitableParserBuilder.jl`.
+`CitableParserBuilder.jl`.
+
+Package includes one example implementation.
+

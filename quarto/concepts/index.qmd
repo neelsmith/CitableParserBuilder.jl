@@ -3,7 +3,26 @@ title: Concepts
 ---
 
 
-This site introduces the conceptual model of a citable morphological parser developed over many years in the work of the Holy Cross Manuscripts, Inscriptions and Documents Club (MID). 
+Natural languages have very different morphological structures. Nevertheless, we can define general patterns for the process of analyzing the morphology of a digital text, and expressing the results in terms of citable scholarly resources.[^mid]
+
+
+[^mid]: The model of citable morphological parsing presented here was developed over many years in the work of the Holy Cross Manuscripts, Inscriptions and Documents Club (MID). 
+
+1. *Parsing* operates on individual tokens; *morphological parsing* operates on lexical tokens (and not on puncutation, numbers, or other types of non-lexical tokens). 
+2. Morphologically parsing a token produces zero or more *morphological analyses*. Each morphological analysis identifies a *lexeme* and a *form* for the token. The structure of the form identified will vary from one language to another. We can 
+
+
+Every analysis of a string value identifies a valid pairing of a .  The `Analysis` also includes a stem and rule that explain how the analysis' lexeme and form were arrived at.  The structure of an `Analysis` therefore consists of a string value (the token) and four URN values:
+
+1. the *lexeme*
+2. the *morphological form*
+3. the *stem* used to arrive at the analysis
+4. the *inflectional rule* used to arrive at the analysis
+
+The `AnalyzedToken` type associates a Vector of `Analysis` objects with a citable token.
+
+
+
 
 It also includes documentation of `CitableParserBuilder.jl`, a Julia package that implements the MID model of citable morphological analysis. `CitableParserBuilder.jl` defines common functions and data structures for working with .  
 
@@ -18,8 +37,10 @@ Parsing functions use a `CitableParser` to operate either on string values for i
 Parsing a string value returns a (possibly empty) list of `Analysis` objects.  Parsing a citable passage returns an `AnalyzedToken`, which pairs the citable passage with the analyses resulting from parsing the passage's text content.
 
 
-!!! tip
-    You can use an `OrthographicSystem` to create a complete tokenized edition from a citable edition. See the documentation for [the `Orthography` module](https://hcmid.github.io/Orthography.jl/stable/guide/corpora/).
+::: {.callout-tip title="Tokenize a citable text"}
+
+You can use an `OrthographicSystem` to create a complete tokenized edition from a citable edition. See the documentation for [the `Orthography` module](https://neelsmith.quarto.pub/orthography/tutorials/corpora.html).
+:::    
 
 
 

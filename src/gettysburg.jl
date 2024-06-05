@@ -12,7 +12,7 @@ using CSV, HTTP
 struct GettysburgParser <: CitableParser
     data
 end
-# parsegburgstring
+
 
 
 GETTYSBURG_DICT_URL = "https://raw.githubusercontent.com/neelsmith/CitableCorpusAnalysis.jl/main/test/data/posdict.csv"
