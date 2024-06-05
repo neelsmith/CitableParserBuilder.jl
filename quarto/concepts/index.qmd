@@ -2,6 +2,13 @@
 title: Concepts
 ---
 
+
+This site introduces the conceptual model of a citable morphological parser developed over many years in the work of the Holy Cross Manuscripts, Inscriptions and Documents Club (MID). 
+
+It also includes documentation of `CitableParserBuilder.jl`, a Julia package that implements the MID model of citable morphological analysis. `CitableParserBuilder.jl` defines common functions and data structures for working with .  
+
+
+
 The `CitableParserBuilder` module offers common functions and data structures for working with citable morphological analyses of citable texts
 
 At the center of the module are the abstract `CitableParser`, and the concrete `Analysis` and `AnalyzedToken` types. 
