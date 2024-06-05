@@ -20,7 +20,6 @@ makedocs(
         "Overview" => "index.md",
         "User's guide" => [
 
-            "guide/parsers.md",
             "guide/analyses.md",
             
             "guide/parsevectors.md",
@@ -29,9 +28,6 @@ makedocs(
             "guide/buildone.md",
             
             
-        ],
-        "API documentation" => [
-            "man/index.md"
         ]
     ]
     )
