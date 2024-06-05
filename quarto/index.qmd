@@ -10,7 +10,7 @@ It also includes documentation of `CitableParserBuilder.jl`, a Julia package tha
 
 
 
-## `CitableParserBuilder.jl`: documentation
+## Contents of this site
 
 | | Learning the package | Using the package |
 | --- | --- | --- |

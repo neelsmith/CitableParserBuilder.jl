@@ -1,8 +1,0 @@
----
-title: Acknowledgments
----
-
-
-- contributors of HC MID from 2010-2023
-- HMT seminar participants and contributors
-- special acknowlegment to Toni Armstrong

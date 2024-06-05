@@ -1,0 +1,304 @@
+---
+title: "API documentation"
+---
+
+## Types
+
+
+
+
+`AbbreviatedUrn` 
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+using CitableParserBuilder
+@doc AbbreviatedUrn
+```
+:::
+
+
+`Stem`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc Stem
+```
+:::
+
+
+`Rule`
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc Rule
+```
+:::
+
+
+`Analysis`
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc Analysis
+```
+:::
+
+`StemUrn`
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc StemUrn
+```
+:::
+
+`RuleUrn`
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc RuleUrn
+```
+:::
+
+`LexemeUrn`
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc LexemeUrn
+```
+:::
+
+`FormUrn`
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc FormUrn
+```
+:::
+
+`AnalyzedToken`
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc AnalyzedToken
+```
+:::
+
+
+## Parsing
+
+`parsetoken`
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsetoken
+```
+:::
+
+
+
+`parsepassage`
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsepassage
+```
+:::
+
+`parsecorpus`
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+
+## Working with vectors of `AnalyzedToken`s
+
+
+lexemes
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+stringsforlexeme
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+lexemedictionary
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+
+## Working with `AbbreviatedUrn`s
+
+
+abbreviate
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+expand
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+fstsafe
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+
+
+## Working with `Stem`s and `Rule`s
+
+
+CitableParserBuilder.lexeme
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+CitableParserBuilder.id
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+CitableParserBuilder.inflectiontype
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+
+
+## Serialization
+
+
+readfst
+
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+relationsblock
+
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc parsecorpus
+```
+:::
+
+`delimited`
+
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc delimited
+```
+:::
+
+`cex`
+
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc cex
+```
+:::
+
