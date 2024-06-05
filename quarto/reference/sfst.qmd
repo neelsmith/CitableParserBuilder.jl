@@ -1,5 +1,5 @@
 ---
-title: "SFST utilities"
+title: "SFST utilities (deprecated)"
 ---
 
 ## A historical note
