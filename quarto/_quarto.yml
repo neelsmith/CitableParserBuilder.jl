@@ -54,6 +54,8 @@ website:
         - guides/index.qmd
         - guides/abbrurns.qmd
         - guides/tokenvectors.qmd
+        - guides/buildone.qmd
+
 
     - title: "Reference"
       contents: 

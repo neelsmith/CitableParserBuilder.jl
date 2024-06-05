@@ -18,17 +18,7 @@ makedocs(
     sitename="CitableParserBuilder.jl",
     pages = [
         "Overview" => "index.md",
-        "User's guide" => [
 
-            "guide/analyses.md",
-            
-            "guide/parsevectors.md",
-  
-            "guide/utils.md",
-            "guide/buildone.md",
-            
-            
-        ]
     ]
     )
 
