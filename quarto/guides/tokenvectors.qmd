@@ -44,7 +44,9 @@ Get a dictionary keyed by lexeme that can be used to find all forms, and all pas
 for a given lexeme.  It will have the same length as the list of lexemes, which are its keys.
 
 
-```@example vectors
+THIS IS BORKEN:
+
+```
 ortho = simpleAscii() # hide
 tokenindex = corpusindex(corpus, ortho)
 lexdict = lexemedictionary(parsed, tokenindex)
@@ -53,6 +55,6 @@ length(lexdict)
 
 Each entry in the dictionary is a further dictionary mapping surface forms to passages.
 
-```@example vectors
+```
 lexdict["gburglex.and"]
 ```
