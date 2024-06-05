@@ -53,6 +53,7 @@ website:
       contents:
         - guides/index.qmd
         - guides/abbrurns.qmd
+        - guides/tokenvectors.qmd
 
     - title: "Reference"
       contents: 
