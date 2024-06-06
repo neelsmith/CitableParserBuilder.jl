@@ -27,7 +27,7 @@ import CitableBase: fromcex
 import CitableBase: citablecollectiontrait
 
 
-export ParserTrait
+
 
 export Analysis, analysis
 export token, lexemeurn, formurn, stemurn, ruleurn
@@ -35,6 +35,7 @@ export tokens
 export AnalyzedToken, AnalyzedTokens
 
 export CitableParser
+export StringParser, DictionaryParser
 export Stem, Rule
 
 export AnalyzedToken

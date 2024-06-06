@@ -1,5 +1,91 @@
-abstract type CitableParser end
+abstract type CitableParser 
+end
 
+"""A parser parsing tokens by looking them up in a precomputed dictionary of all recognized forms."""
+struct StringParser <: CitableParser
+    entries::Vector{AbstractString}
+
+    StringParser
+end
+
+"""Write entries to file.
+$(SIGNATURES)
+"""
+function tofile(p::StringParser, f)
+    open(f, "w") do io
+        write(f, join(p.entries,"\n"))
+    end
+end
+
+
+"""A parser parsing tokens by looking them up in a precomputed dictionary of all recognized forms."""
+struct DictionaryParser <: CitableParser
+    dict    
+end
+
+
+
+"""Parse token `s` by looking it up in `p.dict`.
+$(SIGNATURES)
+"""
+function parsetoken(s::AbstractString, p::DictionaryParser)::Vector{Analysis}
+
+    results = Vector{Analysis}()
+    analyses = p.dict[s]
+    for a in analyses
+        # An Analysis has five members: a token string value, and four abbreviated URNs, one each for the lexeme, form, rule and stem.
+        cols = split(a, "|")
+        lex = LexemeUrn(cols[1])
+        frm = FormUrn(cols[2])
+        rule = RuleUrn(cols[3])
+        stem = StemUrn(cols[4])
+        push!(results, Analysis(s, lex,frm,rule,stem))
+    end
+    results
+end
+
+
+"""A parser parsing tokens by looking them up in a precomputed dictionary of all recognized forms."""
+struct DFParser <: KanonesParser
+    df::DataFrame
+end
+
+"""Create a `DFParser` from delimited text file.
+$(SIGNATURES)
+"""
+function dfParser(delimitedfile; delimiter = "|")
+    @info("Reading delimited-text file $(delimitedfile)...")
+    CSV.File(delimitedfile; delim = delimiter) |> DataFrame |> DFParser
+end
+
+"""Write dataframe parser to a delimited file.
+
+$(SIGNATURES)
+"""
+function tofile(dfp::DFParser, outfile; delimiter = "|")
+    CSV.write(outfile,dfp.df, delim = delimiter)
+end
+
+function parsetoken(s::AbstractString, parser::DFParser; data = nothing)
+    @debug("SEARCH FOR $(knormal(s))...")
+    resultdf = subset(parser.df, :Token => t -> t .== knormal(s))
+
+    resultarray = Analysis[]
+
+    for r in eachrow(resultdf)
+        a =  Analysis(
+            r.Token, 
+            LexemeUrn(r.Lexeme),
+            FormUrn(r.Form),
+            StemUrn(r.Stem),
+            RuleUrn(r.Rule)
+        )
+        push!(resultarray, a)
+    end
+    resultarray
+end
+
+#=
 """The parser trait."""
 abstract type ParserTrait end
 
@@ -40,9 +126,9 @@ end
 $(SIGNATURES)
 """
 function parsetoken(::CanParseCitable, s, x; data = nothing)
-    throw(DomainError(x, string("Please implement the urn function for type ", typeof(x))))
+    throw(DomainError(x, string("Please implement the parsetoken function for type ", typeof(x))))
 end
-
+=#
 
 function orthography(p::T) where {T <: CitableParser}
     msg = string("The orthography function is not implemented for type ", T)
