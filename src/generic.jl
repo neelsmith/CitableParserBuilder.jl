@@ -78,7 +78,7 @@ Returns an`AnalyzedTokens` object.
 function parsecorpus(c::CitableTextCorpus, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
     wordlist = map(psg -> psg.text, c.passages) |> unique
     @info("Corpus size (tokens): ", length(c.passages))
-    parsedict = parselist(wordlist, p; data = data, countinterval = countinterval)
+    parsedict = parselist(wordlist, p; countinterval = countinterval)
     keylist = keys(parsedict)
     results = AnalyzedToken[]
     for psg in c.passages

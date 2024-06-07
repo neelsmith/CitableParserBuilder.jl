@@ -3,11 +3,10 @@
     corpus = fromcex(f, CitableTextCorpus, FileReader)
     tc = tokenizedcorpus(corpus, simpleAscii())
 
-    dictcsv = joinpath(pwd(),"data", "posdict.csv")
-    dictdata = CSV.File(dictcsv) |> Dict
-    parser = CitableParserBuilder.gettysburgParser(dict = dictdata)
+    
+    parser = CitableParserBuilder.gettysburgParser(pwd() |> dirname)
 
-    parsed =  parsecorpus(tc, parser; data = parser.data)
+    parsed =  parsecorpus(tc, parser)
     @test isa(parsed, AnalyzedTokens)
     @test length(parsed) == 64
 
