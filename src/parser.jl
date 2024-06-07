@@ -1,8 +1,12 @@
 abstract type CitableParser 
 end
 
+abstract type AbstractDFParser <: CitableParser end
+abstract type AbstractStringParser <: CitableParser end
+abstract type AbstractDictParser <: CitableParser end
+
 """A parser parsing tokens by looking them up in a precomputed dictionary of all recognized forms."""
-struct StringParser <: CitableParser
+struct StringParser <: AbstractStringParser
     entries::Vector{AbstractString}
 
     StringParser
@@ -19,7 +23,7 @@ end
 
 
 """A parser parsing tokens by looking them up in a precomputed dictionary of all recognized forms."""
-struct DictionaryParser <: CitableParser
+struct DictionaryParser <: AbstractDictParser
     dict    
 end
 

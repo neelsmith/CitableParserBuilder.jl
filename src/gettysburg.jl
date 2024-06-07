@@ -9,7 +9,7 @@ using CSV, Downloads
 
 """POS tagger keyed to the text of the Gettysburg address. `data` is a dictionary of tokens to form POS tag.
 """
-struct GettysburgParser <: CitableParser
+struct GettysburgParser <: AbstractDFParser
     data
 end
 
@@ -45,8 +45,7 @@ function gettysburgParser()
     dict = CSV.File(downloaded) |> Dict
     rm(downloaded)
     
-    gettsyburgDictToParser(dict; delimiter = delimiter)
-    
+    gettsyburgDictToParser(dict) |> GettysburgParser
 end
 
 
@@ -57,7 +56,7 @@ $(SIGNATURES)
 function gettysburgParser(repo::AbstractString; delimiter = ",")
     src = joinpath(repo,"test","data","posdict.csv")
     dict = CSV.File(src) |> Dict
-    gettsyburgDictToParser(dict; delimiter = delimiter)
+    gettsyburgDictToParser(dict; delimiter = delimiter) |> GettysburgParser
 end
 
 function orthography(p::GettysburgParser)
