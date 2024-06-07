@@ -3,6 +3,7 @@ title: Tutorials
 ---
 
 
+All implementations the `CitableParser` abstract type work the same way.
 
 
-The tutorials linked here use a very simple implementation of the `CitableParser` designed to parse a corpus of all the known versions of Lincoln's Gettysburg Address, and to identify the form of tokens with the [part of speech code used by the Penn treebank project](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html).
+The tutorials linked here use a very simple implementation designed to parse the text of Lincoln's Gettysburg Address. Its analysis identifies lexical tokens with the [part of speech code used by the Penn treebank project](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html).
