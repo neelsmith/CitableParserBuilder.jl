@@ -2,7 +2,7 @@
 title: "Citable parsers"
 ---
 
-`CitableParserBuilder.jl` is a Julia package defining a framework for morphological parsing. It defines abstract types of and functions for working with citable morphological analyses of citable texts
+`CitableParserBuilder.jl` is a Julia package defining a framework for in-memory morphological parsers. It was conceived for and is especially appropriate for parsing corpora of texts in historical languages.
 
 
 

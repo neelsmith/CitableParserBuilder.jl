@@ -46,7 +46,7 @@ end
 
 
 """A parser parsing tokens by looking them up in a precomputed dictionary of all recognized forms."""
-struct DFParser <: KanonesParser
+struct DFParser <: CitableParser
     df::DataFrame
 end
 

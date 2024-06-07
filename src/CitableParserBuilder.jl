@@ -7,6 +7,7 @@ using Documenter, DocStringExtensions
 
 using OrderedCollections, StatsBase
 using Dictionaries
+using DataFrames
 
 import Base: show
 import Base: ==

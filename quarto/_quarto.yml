@@ -69,6 +69,7 @@ website:
       contents: 
         - concepts/index.qmd
         - concepts/analyses.qmd
+        - concepts/architecture.qmd
 
         
 
