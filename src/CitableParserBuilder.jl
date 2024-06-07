@@ -64,6 +64,9 @@ export urn
 
 
 include("parser.jl")
+include("dfparser.jl")
+include("stringparser.jl")
+include("dictparser.jl")
 include("abbrurn.jl")
 include("analysis.jl")
 include("citeurn.jl")

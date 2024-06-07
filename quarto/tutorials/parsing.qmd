@@ -23,8 +23,10 @@ The signature with the optional data parameter is out of date
 and will be removed in the next release.
 :::
 
+
+
 ```{julia}
-scoreparses = parsetoken("score", parser; data = parser.data)
+scoreparses = parsetoken("score", parser)
 length(scoreparses)
 ```
 ```{julia}
