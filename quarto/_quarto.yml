@@ -47,7 +47,9 @@ website:
       contents: 
         - tutorials/index.qmd
         - tutorials/parsing.qmd
+        - tutorials/parsecitable.qmd
         - tutorials/corpus.qmd
+        - tutorials/serialization.qmd
 
     - title: "Guides"
       contents:

@@ -5,4 +5,4 @@ title: Concepts
 
 1. Basic concepts: [parsing and morphological analyses](./analyses.qmd)
 2. Designing a [parser for historical languages](./architecture.qmd)
-3. Semantics of a [morphological analysis](./analysis-implementation.qmd)
+3. Parsing [citable texts](./analysis-implementation.qmd)

@@ -1,4 +1,4 @@
-# Implementation of a morphological analysis
+# Analyses and citable texts
 
 
 The `Analysis` type represents the results of analyzing a string morphologically.

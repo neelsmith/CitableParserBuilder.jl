@@ -11,8 +11,8 @@ Content TBA
 ### Parsing to identifiers
 
 - `CitableParserBuilder.jl` was motivated by study of historical languages
-- these are closed productions requiring a corpus-linguistic approach
-- in 2024, personal computers are adequate to handle complete pre-computed parsing output of all possible forms (stem * rule products)
+- texts in historical languages are closed productions requiring a corpus-linguistic approach
+- in 2024, personal computers are adequate to handle complete pre-computed parsing output of all possible forms (in most implementations, the Cartesian product of stem * rule)
 - therefore `CitableParserBuilder.jl` implements an in-memory parsing system
 
 
