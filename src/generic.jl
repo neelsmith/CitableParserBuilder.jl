@@ -4,7 +4,7 @@ $(SIGNATURES)
 
 Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects. Blank lines in input are silently ignored.
 """
-function parselist(vocablist::Vector{S}, p::P; data = nothing, countinterval = 100) where {P <: CitableParser, S <: AbstractString}
+function parselist(vocablist::Vector{S}, p::P; countinterval = 100) where {P <: CitableParser, S <: AbstractString}
     @debug("Vocabulary size: ", length(vocablist))
     counter = 0
     parses = []
@@ -13,7 +13,7 @@ function parselist(vocablist::Vector{S}, p::P; data = nothing, countinterval = 1
         if mod(counter, countinterval) == 0
             @info("Parsing ", counter)
         end
-        push!(parses, (vocab, parsetoken(vocab, p; data)))
+        push!(parses, (vocab, parsetoken(vocab, p)))
     end
     parses |> Dict
 end
@@ -40,7 +40,7 @@ Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` object
 function parselist(u, p::T, reader::Type{UrlReader}; 
     data = nothing, countinterval = 100) where {T <: CitableParser}
     wordlist = split(String(HTTP.get(u).body) , "\n")
-    parselist(wordlist, p; data = data, countinterval = countinterval)
+    parselist(wordlist, p; countinterval = countinterval)
 end
 
 

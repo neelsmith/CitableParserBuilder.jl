@@ -45,8 +45,6 @@ end
 function gettysburgParser() 
    
     downloaded = Downloads.download(CitableParserBuilder.GETTYSBURG_DICT_URL)
-
-    #downloaded = CSV.File(HTTP.get(CitableParserBuilder.GETTYSBURG_DICT_URL).body) |> Dict
     @info("Done loading.")
 
     dict = CSV.File(downloaded) |> Dict
