@@ -12,7 +12,7 @@ format:
 
 
 website:
-  title: "Building citable parsers"
+  title: "Citable morphological parsers"
   navbar:
     background: primary
     search: true
@@ -46,6 +46,8 @@ website:
     - title: "Tutorials"
       contents: 
         - tutorials/index.qmd
+        - text: "---"
+        - tutorials/parsers.qmd
         - tutorials/parsing.qmd
         - tutorials/parsecitable.qmd
         - tutorials/corpus.qmd

@@ -5,6 +5,19 @@
 
 You can also parse citable text structures: passages, documents and corpora.  Here we illustrate parsing a citable passage.
 
+First, create a `GettysburgParser` and assign it to a variable named `parser`.
+
+```{julia}
+#| warning: false
+#| output: false
+#| code-fold: true
+#| code-summary: "Instantiate a parser"
+
+using CitableParserBuilder
+parser = CitableParserBuilder.gettysburgParser()
+```
+
+
 ```{julia}
 using CitableText, CitableCorpus
 psgurn = CtsUrn("urn:cts:demo:gburg.hays.v2:1.2")
@@ -20,6 +33,8 @@ The result is a new kind of object, the `AnalyzedToken`, which associates a Vect
 urn(psg_analysis)
 ```
 
-```{julia}
+What's this?
+
+```
 psg_analysis.analyses == scoreparses
 ```

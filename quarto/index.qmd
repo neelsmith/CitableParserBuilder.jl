@@ -13,3 +13,15 @@ title: "Citable parsers"
 | **Hands-on** |  Try a [tutorial](./tutorials/) to start using  `CitableParserBuilder.jl`  | Find [recipes](./guides/) for specific tasks |
 | **Cognition** | What is a [citable morphological parser](./concepts/)?  | See [API documentation](./reference/), and other reference information |
 
+
+
+## Implementations
+
+
+The following Julia packages implement the `CitableParser` abstraction:
+
+
+- `Kanones`: ancient Greek. Docs (in progress). [Github](https://github.com/neelsmith/Kanones.jl).
+- `Tabulae`: Latin. [Docs](https://neelsmith.github.io/Tabulae.jl/stable/). [Github](https://github.com/neelsmith/Tabulae.jl).
+- `Lycian`: Lycian. [Docs](https://neelsmith.github.io/Lycian.jl/stable/).[Github](https://github.com/neelsmith/Lycian.jl).
+- `Luhot`: Biblical Hebrew (not yet registered with juliahub).

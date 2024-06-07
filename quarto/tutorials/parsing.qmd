@@ -3,19 +3,17 @@ title: "Parsing a string value"
 ---
 
 
-
-
-
-Here we instantiate the sample parser, and verify that it is indeed a subtype of `CitableParser`.
+First, create a `GettysburgParser` and assign it to a variable named `parser`.
 
 ```{julia}
 #| warning: false
+#| output: false
+#| code-fold: true
+#| code-summary: "Instantiate a parser"
+
 using CitableParserBuilder
 parser = CitableParserBuilder.gettysburgParser()
-typeof(parser) |> supertype
 ```
-
-## Parsing string values
 
 When we parse a string token, the result is a Vector of `Analysis` objects. Our parser produces only one analysis for the toekn "score".
 
@@ -55,6 +53,6 @@ length(wordsparsed)
 
 
 :::{.callout-tip title="Tip for parsing a citable corpus"}
-You can use an `OrthographicSystem` to create generate a list of unique lexical tokens for an entire citable corpus. See the current documentation for [the `Orthography.jl` package](https://hcmid.github.io/Orthography.jl/stable/guide/corpora/)  (which is in the process of [being updated here](https://neelsmith.quarto.pub/digitexts/orthography/)).
+You can use an `OrthographicSystem` to create generate a list of unique lexical tokens for an entire citable corpus. See the documentation for [the `Orthography.jl` package](https://neelsmith.quarto.pub/orthography/)  with [this tutorial](https://neelsmith.quarto.pub/orthography/tutorials/corpora.html/).
 :::
 

@@ -15,7 +15,12 @@ length(registry)
 
 Use the `cex` function (from `CitableBase`) to format your analyzes as delimited text.  To expand abbreviated URNs to full CTS and CITE2 URNs while formatting as deliimted text, use the `delimited` function. You can use normal Julia IO to write the results to a file, for example.
 
-```{julia}
+
+::: {.callout-warning title="Broken"}
+THis section needs updating
+:::
+
+```
 cex_output = delimited(psg_analysis, registry = registry)
 open("outfile.cex", "w") do io
     write(io, cex_output)
