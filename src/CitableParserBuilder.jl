@@ -39,6 +39,9 @@ export CitableParser
 export StringParser, DictionaryParser
 export Stem, Rule
 
+export DFParser, dfParser
+export dataframe, orthography
+
 export AnalyzedToken
 
 export AbbreviatedUrn

@@ -1,0 +1,56 @@
+# Working directly with parser data sources
+
+The `GettysburgParser` type is a subtype of the abstract `CitableParser`, so we can use functions like `parsetoken`, and `orthography` that work with any `CitableParser`.
+
+```{mermaid}
+graph LR
+AbstractDFParser --> CitableParser
+
+AbstractStringParser --> CitableParser
+
+
+AbstractDictParser --> CitableParser
+
+GettysburgParser --> AbstractDFParser
+```
+
+
+```{julia}
+#| warning: false
+
+
+using CitableParserBuilder
+gparser = CitableParserBuilder.gettysburgParser()
+
+gparser  |> typeof |> supertype
+```
+
+
+```{julia}
+#| warning: false
+orthography(gparser) |> typeof
+```
+
+
+```{julia}
+parsetoken("score", gparser)
+```
+
+We can also use functions that apply to dataframe-backed parsers (subtypes of `AbstractDFParser`).  You can get direct access to the backing `DataFrame`, for example:
+
+```{julia}
+df = dataframe(gparser)
+# display first 5 rows:
+df[1:5,:]
+```
+
+## Converting to other parser types
+
+
+```{julia}
+stringbacked = StringParser(gparser)
+```
+
+::: {.callout-note title="TBA"}
+Documentation ofictionary-backed parser TBA.
+:::

@@ -5,6 +5,7 @@ $(SIGNATURES)
 """
 struct DFParser <: AbstractDFParser
     df::DataFrame
+    ortho::OrthographicSystem
 end
 
 
@@ -12,10 +13,19 @@ end
 
 $(SIGNATURES)
 """
-function dataframe(dfp::DFParser)
+function dataframe(dfp::DFParser, ortho = simpleAscii())
     dfp.df
 end
 
+
+
+"""Get orthographic system for a dataframe parser.
+
+$(SIGNATURES)
+"""
+function orthography(dfp::DFParser)
+    dfp.ortho
+end
 
 function parsetoken(s::AbstractString, parser::AbstractDFParser; data = nothing)
     @debug("SEARCH FOR $(s)...")
@@ -42,7 +52,7 @@ end
 """Create a `DFParser` from delimited text file.
 $(SIGNATURES)
 """
-function dfParser(delimitedfile; delimiter = "|")
+function dfParser(delimitedfile, ortho = simpleAscii(); delimiter = "|")
     @info("Reading delimited-text file $(delimitedfile)...")
     CSV.File(delimitedfile; delim = delimiter) |> DataFrame |> DFParser
 end

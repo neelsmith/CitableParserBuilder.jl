@@ -10,11 +10,16 @@ using CSV, Downloads
 """POS tagger keyed to the text of the Gettysburg address. `data` is a dictionary of tokens to form POS tag.
 """
 struct GettysburgParser <: AbstractDFParser
-    data
+    data::DataFrame
 end
+
 
 function dataframe(gp::GettysburgParser)
     gp.data
+end
+
+function orthography(gp::GettysburgParser)
+    simpleAscii()
 end
 
 GETTYSBURG_DICT_URL = "https://raw.githubusercontent.com/neelsmith/CitableCorpusAnalysis.jl/main/test/data/posdict.csv"
@@ -31,7 +36,7 @@ function gettsyburgDictToParser(dict::Dict; delimiter = ",")
         push!(datarows, row)
     end
     csvsrc = join(datarows,"\n")
-    CSV.File(IOBuffer(csvsrc)) |> DataFrame
+    CSV.File(IOBuffer(csvsrc)) |> DataFrame #|> GettysburgParser
 end
 
 
@@ -57,10 +62,8 @@ $(SIGNATURES)
 """
 function gettysburgParser(repo::AbstractString; delimiter = ",")
     src = joinpath(repo,"test","data","posdict.csv")
+
+    @info("Src is $(src)")
     dict = CSV.File(src) |> Dict
     gettsyburgDictToParser(dict; delimiter = delimiter) |> GettysburgParser
-end
-
-function orthography(p::GettysburgParser)
-    simpleAscii()
 end

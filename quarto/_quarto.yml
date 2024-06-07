@@ -53,13 +53,14 @@ website:
         - tutorials/corpus.qmd
         - tutorials/serialization.qmd
 
+
     - title: "Guides"
       contents:
         - guides/index.qmd
         - guides/abbrurns.qmd
         - guides/tokenvectors.qmd
         - guides/buildone.qmd
-
+        - guides/parserbackends.qmd
 
     - title: "Reference"
       contents: 
