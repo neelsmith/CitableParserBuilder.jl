@@ -25,9 +25,9 @@ $(SIGNATURES)
 Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects.
 """
 function parselist(f, p::T, reader::Type{FileReader}; 
-    data = nothing, countinterval = 100) where {T <: CitableParser}
+    countinterval = 100) where {T <: CitableParser}
     wordlist = readlines(f) 
-    parselist(wordlist, p, data = data, countinterval = countinterval)
+    parselist(wordlist, p, countinterval = countinterval)
 end
 
 
@@ -38,8 +38,11 @@ $(SIGNATURES)
 Returns a Dict mapping strings to a (possibly empty) vector of `Analysis` objects.
 """
 function parselist(u, p::T, reader::Type{UrlReader}; 
-    data = nothing, countinterval = 100) where {T <: CitableParser}
-    wordlist = split(String(HTTP.get(u).body) , "\n")
+    countinterval = 100) where {T <: CitableParser}
+
+    tmp = Downloads.download(u)
+    wordlist = readlines(tmp)
+    rm(tmp)
     parselist(wordlist, p; countinterval = countinterval)
 end
 

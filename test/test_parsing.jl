@@ -13,6 +13,8 @@
     @test length(fileresults) == 4
 
     url = "https://raw.githubusercontent.com/neelsmith/CitableParserBuilder.jl/dev/test/data/wordlist.txt"
+
+    
     urlresults = parselist(url, parser, UrlReader)
     @test length(urlresults) == 4
 
