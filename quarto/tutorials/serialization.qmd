@@ -1,5 +1,5 @@
 
-# Exporting a parser to CEX format
+# Saving and loading a parser
 
 When we export analyses to CEX format, we want to use full CITE2 URNs, rather than the abbreviated URNs of the `Analysis` structure.  You need a dictionary mapping collection names to full CITE2 URN values for the collection.
 
