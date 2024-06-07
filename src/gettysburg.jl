@@ -13,7 +13,9 @@ struct GettysburgParser <: AbstractDFParser
     data
 end
 
-
+function dataframe(gp::GettysburgParser)
+    gp.data
+end
 
 GETTYSBURG_DICT_URL = "https://raw.githubusercontent.com/neelsmith/CitableCorpusAnalysis.jl/main/test/data/posdict.csv"
 
@@ -61,24 +63,4 @@ end
 
 function orthography(p::GettysburgParser)
     simpleAscii()
-end
-
-"""Parse String `s` by looking it up in a given dictionary.
-"""
-function parsetoken(s::S, parser::GettysburgParser; data = nothing) where {S <: AbstractString}
-    if isnothing(data) 
-        throw(ArgumentError("The GettysburgParser type requires the CitableParser's data parameter in addition to a string token."))
-    end
-    objid = s in keys(data) ? data[s] : "UNANALYZED"
-    if objid == "UNANALYZED"
-        @warn("String \"$s\" not parsed by Gettysburg parser.") # in $(typeof(data))")
-        []
-    else
-        @debug("Objid ", objid)
-        formurn = objid == "." ? FormUrn("gburgform.dot") : FormUrn("gburgform.$objid")
-        lexurn = s == "." ? LexemeUrn("gburglex.period") : LexemeUrn("gburglex.$s")
-        ruleurn = RuleUrn("gburgrule.all")
-        stemurn = StemUrn("gburgstem.all")
-        [Analysis(s, lexurn, formurn, stemurn, ruleurn)]
-    end
 end
