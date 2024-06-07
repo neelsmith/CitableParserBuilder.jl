@@ -8,8 +8,8 @@ title: "Citable parsers"
 
 ## Contents
 
-| | Learning about morphological parsing | Using `CitableParserBuilder.jl` |
+| | Learn about morphological parsing with `CitableParserBuilder.jl` | Reference material |
 | --- | --- | --- |
 | **Hands-on** |  Try a [tutorial](./tutorials/) to start using  `CitableParserBuilder.jl`  | Find [recipes](./guides/) for specific tasks |
-| **Cognition** | What is a [citable morphological parser](./concepts/)?  | See [reference information](./reference/) (including API documentation for all exported functions) |
+| **Cognition** | What is a [citable morphological parser](./concepts/)?  | See [API documentation](./reference/), and other reference information |
 

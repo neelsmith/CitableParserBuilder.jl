@@ -61,15 +61,16 @@ website:
       contents: 
         - reference/index.qmd
         - reference/apis.qmd
+        - text: "---"
         - reference/gburg.qmd
-        - reference/examples.qmd
         - reference/sfst.qmd
 
     - title: "Concepts"
       contents: 
         - concepts/index.qmd
-        - concepts/analyses.qmd
+        - concepts/analyses.qmd        
         - concepts/architecture.qmd
+        - concepts/analysis-implementation.qmd        
 
         
 
