@@ -48,8 +48,9 @@ df[1:5,:]
 
 
 ```{julia}
-stringbacked = StringParser(gparser)
+#stringbacked = StringParser(gparser)
 ```
+StringReader
 
 ::: {.callout-note title="TBA"}
 Documentation ofictionary-backed parser TBA.

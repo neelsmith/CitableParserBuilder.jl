@@ -15,6 +15,8 @@ import Base: iterate
 import Base: eltype
 import Base: length
 
+
+using CitableBase
 import CitableBase: citabletrait
 import CitableBase: urntype
 import CitableBase: urn
@@ -36,11 +38,21 @@ export tokens
 export AnalyzedToken, AnalyzedTokens
 
 export CitableParser
-export StringParser, DictionaryParser
+export AbstractStringParser, AbstractDFParser
+
+# TBA: AbstractrDictionaryParser
 export Stem, Rule
 
+export StringParser
+
+
 export DFParser, dfParser
-export dataframe, orthography
+export dataframe, orthography, delimiter
+
+export parsetoken
+export parselist
+export parsepassage, parsecorpus
+
 
 export AnalyzedToken
 
@@ -56,9 +68,7 @@ export tokens, lexemes, forms, stems, rules
 export lexemehisto
 export stringsforlexeme, lexemedictionary, passagesforlexeme
 
-export parsetoken, orthography
-export parselist
-export parsepassage, parsecorpus
+
 
 export relationsblock
 

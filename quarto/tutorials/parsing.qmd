@@ -49,7 +49,7 @@ scoreparses[1].form
 We can also parse a list of words. Here, parsing four words produces a Vector containing four Vectors of `Analysis` objects.
 
 ```{julia}
-wordsparsed = parselist(split("Four score and seven"), parser; data =  parser.data)
+wordsparsed = parselist(split("Four score and seven"), parser)
 length(wordsparsed)
 ```
 

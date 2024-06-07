@@ -61,7 +61,7 @@ $(SIGNATURES)
 function gettysburgParser(repo::AbstractString; delimiter = ",")
     src = joinpath(repo,"test","data","posdict.csv")
 
-    @info("Src is $(src)")
+    @debug("Src is $(src)")
     dict = CSV.File(src) |> Dict
     gettsyburgDictToParser(dict; delimiter = delimiter) |> GettysburgParser
 end

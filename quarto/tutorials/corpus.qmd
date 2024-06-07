@@ -26,20 +26,14 @@ tc = tokenizedcorpus(corpus, simpleAscii())
 We'll build a `GettysburgParser`, a demo parser for the English text of the Gettysburg Address in two steps.  First we'll load a local file with analytical data into a dictionary (here named `morphdict`). Then we'll include that as an optional `dict` parameter when we build the parser.
 
 The result of parsing the corpus is a Vector of `AnalyzedToken`s.  There is one entry for each token in the corpus.
-
+```{julia}
+repo = pwd() |> dirname |> dirname
+```
 
 ```{julia}
 #| warning: false
-using Downloads, CSV
-dicturl = "https://raw.githubusercontent.com/neelsmith/CitableParserBuilder.jl/main/test/data/posdict.csv"
-dictcsv = Downloads.download(dicturl)
-morphdict = CSV.File(dictcsv) |> Dict
-# Tidy up temp file:
-rm(dictcsv)
-
-
 using CitableParserBuilder
-parser = CitableParserBuilder.gettysburgParser(dict = morphdict)
+parser = CitableParserBuilder.gettysburgParser(repo)
 parsed =  parsecorpus(tc, parser; data = parser.data)
 length(parsed)
 ```

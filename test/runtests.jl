@@ -5,6 +5,8 @@ using Orthography
 using CSV
 using Test
 
+inclde("test_parsers.jl")
+
 include("test_abbrexpan.jl")
 include("test_analyses.jl")
 include("test_analyzedtokens.jl")

@@ -13,11 +13,9 @@ end
 
 $(SIGNATURES)
 """
-function dataframe(dfp::DFParser, ortho = simpleAscii())
+function data(dfp::DFParser, ortho = simpleAscii())::DataFrame
     dfp.df
 end
-
-
 
 """Get orthographic system for a dataframe parser.
 
@@ -47,8 +45,6 @@ function parsetoken(s::AbstractString, parser::AbstractDFParser; data = nothing)
 end
 
 
-# All 
-
 """Create a `DFParser` from delimited text file.
 $(SIGNATURES)
 """
@@ -61,11 +57,6 @@ end
 # ... Write this
 
 
-function parsetoken(dfp::DFParser)
-end
-
-
-
 """Write dataframe parser to a delimited file.
 
 $(SIGNATURES)
@@ -74,6 +65,9 @@ function tofile(dfp::DFParser, outfile; delimiter = "|")
     CSV.write(outfile, dfp.df, delim = delimiter)
 end
 
+
+
+#=
 function parsetoken(s::AbstractString, parser::DFParser; data = nothing)
     @debug("SEARCH FOR $(knormal(s))...")
     resultdf = subset(parser.df, :Token => t -> t .== knormal(s))
@@ -92,3 +86,4 @@ function parsetoken(s::AbstractString, parser::DFParser; data = nothing)
     end
     resultarray
 end
+=#
