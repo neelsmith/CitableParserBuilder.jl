@@ -1,6 +1,12 @@
 # Working directly with parser data sources
 
-The `GettysburgParser` type is a subtype of the abstract `CitableParser`, so we can use functions like `parsetoken`, and `orthography` that work with any `CitableParser`.
+
+The functionality defined by the abstract `CitableParser` type can be implemented in different ways. Beginning with version `0.26.0` of the `CitableParserBuilder.jl` package, a second tier of abstractions defines types for parsers backed by a dataframe, or by a vector of delimited-text lines. This page shows you how to convert one type of parser to another, and to work directly with the data source underlying the parser.
+
+
+## The type hierarchy
+
+The `GettysburgParser` type is a descendant of the abstract `CitableParser`, so we can use functions like `parsetoken`, and `orthography` that work with any `CitableParser`.
 
 ```{mermaid}
 graph LR
@@ -18,40 +24,34 @@ GettysburgParser --> AbstractDFParser
 ```{julia}
 #| warning: false
 
-
 using CitableParserBuilder
 gparser = CitableParserBuilder.gettysburgParser()
+parsetoken("score", gparser)
 
-gparser  |> typeof |> supertype
 ```
 
-
 ```{julia}
-#| warning: false
 orthography(gparser) |> typeof
 ```
 
 
+It is also a direct subtype of the `AbstractDFParser`, so we can use additional functions that apply to dataframe-backed parsers.
 ```{julia}
-parsetoken("score", gparser)
+gparser  |> typeof |> supertype
 ```
 
-We can also use functions that apply to dataframe-backed parsers (subtypes of `AbstractDFParser`).  You can get direct access to the backing `DataFrame`, for example:
+You can get direct access to the backing `DataFrame`, for example, with the `dataframe` function:
 
 ```{julia}
 df = dataframe(gparser)
-# display first 5 rows:
+# display first 5 rows of DataFrame:
 df[1:5,:]
 ```
 
-## Converting to other parser types
-
+You can also 
 
 ```{julia}
 #stringbacked = StringParser(gparser)
 ```
-StringReader
 
-::: {.callout-note title="TBA"}
-Documentation ofictionary-backed parser TBA.
-:::
+
