@@ -39,7 +39,7 @@ end
 """Parse a single token using `parser`.
 $(SIGNATURES)
 """
-function parsetoken(s::AbstractString, parser::StringParser)
+function parsetoken(s::AbstractString, parser::AbstractStringParser)
     ptrn = s * delimiter(parser)
     @debug("Looking for $(s) in parser data")
     matches = filter(ln -> startswith(ln, ptrn), datasource(parser))
