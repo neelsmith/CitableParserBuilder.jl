@@ -74,17 +74,29 @@ stringbacked = StringParser(gparser)
 String-backed parsers work identically for functions applying to all citable parsers.
 
 ```{julia}
-parsetoken("score", stringbacked)
+parsetoken("score", stringbacked) == parsetoken("score", gparser)
 ```
 
 ```{julia}
 orthography(stringbacked) |> typeof
 ```
 
-It is a direct subtype of the `AbstractStringParser`, however.
+It is a direct subtype of the `AbstractStringParser`.
 
 ```{julia}
 stringbacked  |> typeof |> supertype
 ```
 
-Th
+This gives us access to the `delimiter` function to find out how lines of delimited text are structured.
+
+```{julia}
+delimiter(stringbacked)
+```
+
+The same `datasource` function provides the underlying data, but now in the form of a Vector of strings (including a header line).
+
+```{julia}
+datalines = datasource(stringbacked)
+# The first five lines:
+datalines[1:5]
+```
