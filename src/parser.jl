@@ -1,5 +1,29 @@
 abstract type CitableParser end
 
+abstract type AbstractDFParser <: CitableParser end
+abstract type AbstractStringParser <: CitableParser end
+abstract type AbstractDictParser <: CitableParser end
+
+"""Catch failure to implement `orthography` function for a
+subtype of `CitableParser`.
+$(SIGNATURES)
+"""
+function orthography(p::T) where {T <: CitableParser}
+    msg = string("The orthography function is not implemented for type ", T)
+    throw(DomainError(p, msg))
+end
+
+
+"""Catch failure to implement `parsetoken` function for a
+subtype of `CitableParser`.
+$(SIGNATURES)
+"""
+#function parsetoken(s::AbstractString, p::T) where {T <: CitableParser}
+#    msg = string("The parsetoken function is not implemented for type ", T)
+#    throw(DomainError(p, msg))
+#end
+
+#=
 """The parser trait."""
 abstract type ParserTrait end
 
@@ -40,11 +64,6 @@ end
 $(SIGNATURES)
 """
 function parsetoken(::CanParseCitable, s, x; data = nothing)
-    throw(DomainError(x, string("Please implement the urn function for type ", typeof(x))))
+    throw(DomainError(x, string("Please implement the parsetoken function for type ", typeof(x))))
 end
-
-
-function orthography(p::T) where {T <: CitableParser}
-    msg = string("The orthography function is not implemented for type ", T)
-    throw(DomainError(p, msg))
-end
+=#

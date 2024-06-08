@@ -1,0 +1,102 @@
+# Working directly with parser data sources
+
+
+The functionality defined by the abstract `CitableParser` type can be implemented in different ways. Beginning with version `0.26.0` of the `CitableParserBuilder.jl` package, a second tier of abstractions defines types for parsers backed by a dataframe, or by a vector of delimited-text lines. This page shows you how to convert one type of parser to another, and to work directly with the data source underlying the parser.
+
+
+## Dataframe-backed parsers
+
+### Example: the `GettysburgParser`
+
+The `GettysburgParser` type is a descendant of the abstract `CitableParser`, so we can use functions like `parsetoken`, and `orthography` that work with any `CitableParser`.
+
+```{mermaid}
+graph LR
+AbstractDFParser --> CitableParser
+
+AbstractStringParser --> CitableParser
+
+
+AbstractDictParser --> CitableParser
+
+GettysburgParser --> AbstractDFParser
+```
+
+
+```{julia}
+#| warning: false
+
+using CitableParserBuilder
+gparser = CitableParserBuilder.gettysburgParser()
+parsetoken("score", gparser)
+
+```
+
+```{julia}
+orthography(gparser) |> typeof
+```
+
+
+It is also a direct subtype of the `AbstractDFParser`, so we can use additional functions that apply to dataframe-backed parsers.
+```{julia}
+gparser  |> typeof |> supertype
+```
+
+You can get direct access to the backing `DataFrame`, for example, with the `dataframe` function:
+
+```{julia}
+df = datasource(gparser)
+# display first 5 rows of DataFrame:
+df[1:5,:]
+```
+
+
+
+## String-backed parsers
+
+
+String-backed parsers use a Vector of delimited-text strings to store data.  You can easily build one manually.
+```{julia}
+src = """Token|Lexeme|Form|Stem|Rule
+et|ls.n16278|morphforms:1000000001|stems.example1|rules.example1
+"""
+srclines = split(src,"\n")
+manual = StringParser(srclines)
+```
+
+You can also convert a dataframe-backed parser to a `StringParser`
+
+```{julia}
+stringbacked = StringParser(gparser)
+```
+
+
+String-backed parsers work identically for functions applying to all citable parsers.
+
+```{julia}
+parsetoken("score", stringbacked) == parsetoken("score", gparser)
+```
+
+```{julia}
+orthography(stringbacked) |> typeof
+```
+
+It is a direct subtype of the `AbstractStringParser`.
+
+```{julia}
+stringbacked  |> typeof |> supertype
+```
+
+This gives us access to the `delimiter` function to find out how lines of delimited text are structured.
+
+```{julia}
+delimiter(stringbacked)
+```
+
+The same `datasource` function provides the underlying data, but now in the form of a Vector of strings (including a header line).
+
+```{julia}
+datalines = datasource(stringbacked)
+# The first five lines:
+datalines[1:5]
+```

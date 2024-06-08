@@ -1,0 +1,26 @@
+# Constructing a parser
+
+
+::: {.callout-caution}
+Content TBA
+:::
+
+```{julia}
+#| warning: false
+using CitableParserBuilder
+parser = CitableParserBuilder.gettysburgParser()
+typeof(parser) |> supertype
+```
+
+
+## Outline
+
+- in-memory implementations
+- interchangeable back ends (DataFrame, vector of strings, Dict)
+- concrete implementations work only with identifiers
+- advantages of subtypes are that they understand what the identifiers refer to
+
+### The GettysburgParser
+
+
+- tokens identified with [part of speech code used by the Penn treebank project](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html)

@@ -1,0 +1,22 @@
+# Parsers for historical languages
+
+
+::: {.callout-caution}
+Content TBA
+:::
+
+
+## Outline
+
+### Parsing to identifiers
+
+- `CitableParserBuilder.jl` was motivated by study of historical languages
+- texts in historical languages are closed productions requiring a corpus-linguistic approach
+- in 2024, personal computers are adequate to handle complete pre-computed parsing output of all possible forms (in most implementations, the Cartesian product of stem * rule)
+- therefore `CitableParserBuilder.jl` implements an in-memory parsing system
+
+
+### Resolving identifiers
+
+- the `Analysis` type is concrete
+- its four identifiers can be used in relation to any model of lexeme, form, stem or rule.

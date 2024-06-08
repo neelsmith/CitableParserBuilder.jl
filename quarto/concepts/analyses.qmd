@@ -2,11 +2,36 @@
 title: "Morphological analyses"
 ---
 
+Natural languages have very different morphological structures. Nevertheless, we can define general patterns for the process of analyzing the morphology of a digital text, and expressing the results in terms of citable scholarly resources.[^mid]
 
-The `Analysis` type represents the results of analyzing a string morphologically.
 
-The `AnalyzedToken` type associates a Vector of `Analysis` objects with a citable token.  The `AnalyzedToken` should cite the text at the level of the individual token, normally by expanding the citation hierarchy on level to identify tokens within a canonically citable unit.  The Vector of analyses associated with an `AnalyzedToken` may be empty. This means that no analyis was found for the given token.  
 
-The string value for the token in an `AnalyzedToken`  represents the string as it appears in the cited text.  The string for the token in an `Analysis` represents the string that was analyzed.  These two values may or may not be identical.  If the token was normalized in some way before analysis (e.g., adjusting case or accent) they may differ.
 
-The following page illustrates functions analyzing an entire corpus.
+[^mid]: The model of citable morphological parsing presented here was developed over many years in the work of the Holy Cross Manuscripts, Inscriptions and Documents Club (MID). 
+
+
+
+## Parsing and analyses
+
+*Parsing* operates on individual tokens. It therefore presupposes and requires an [explicit orthographic system defining tokenization](https://neelsmith.quarto.pub/orthography/concepts/), and classifying the resulting tokens.  *Morphological parsing* operates on *lexical tokens* (and not on puncutation, numbers, or other types of non-lexical tokens). 
+
+Morphologically parsing a token produces zero or more *morphological analyses*. 
+
+A morphological analysis identifies a *morphological form*  and a *lexeme* for the token. An analysis of the English word "books", for example, might indicate that this form is a plural noun of a lexeme with the dictionary form "book."
+
+Lexical tokens are often treated as the result of applying a rule to a stem. An English parser, for example, might interpret the token "books" as the result of applying to a stem "book" a rule to add an ending "s" to create a plural form. 
+
+We can therefore model a morphological analysis as associating four pieces of information with a token: a lexeme and a form that together identify the morphology of the token; and a stem and inflectional rule that together explain *how* the analysis arrived at the resulting lexeme and form.
+
+Each of these four pieces of information can be represented by a unique identifier encoded as a URN.
+
+1. the *lexeme*
+2. the *morphological form*
+3. the *stem* used to arrive at the analysis
+4. the *inflectional rule* used to arrive at the analysis
+
+
+ The structure of the form identified will vary from one language to another.
+
+
+

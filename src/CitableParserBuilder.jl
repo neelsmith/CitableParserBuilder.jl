@@ -7,6 +7,7 @@ using Documenter, DocStringExtensions
 
 using OrderedCollections, StatsBase
 using Dictionaries
+using DataFrames
 
 import Base: show
 import Base: ==
@@ -14,6 +15,8 @@ import Base: iterate
 import Base: eltype
 import Base: length
 
+
+using CitableBase
 import CitableBase: citabletrait
 import CitableBase: urntype
 import CitableBase: urn
@@ -27,7 +30,7 @@ import CitableBase: fromcex
 import CitableBase: citablecollectiontrait
 
 
-export ParserTrait
+
 
 export Analysis, analysis
 export token, lexemeurn, formurn, stemurn, ruleurn
@@ -35,7 +38,19 @@ export tokens
 export AnalyzedToken, AnalyzedTokens
 
 export CitableParser
+export AbstractStringParser, AbstractDFParser
+export datasource, orthography
+# TBA: AbstractrDictionaryParser
 export Stem, Rule
+
+export StringParser, stringParser, delimiter
+export DFParser, dfParser
+
+
+export parsetoken
+export parselist
+export parsepassage, parsecorpus
+
 
 export AnalyzedToken
 
@@ -51,9 +66,7 @@ export tokens, lexemes, forms, stems, rules
 export lexemehisto
 export stringsforlexeme, lexemedictionary, passagesforlexeme
 
-export parsetoken, orthography
-export parselist
-export parsepassage, parsecorpus
+
 
 export relationsblock
 
@@ -62,6 +75,9 @@ export urn
 
 
 include("parser.jl")
+include("dfparser.jl")
+include("stringparser.jl")
+include("dictparser.jl")
 include("abbrurn.jl")
 include("analysis.jl")
 include("citeurn.jl")

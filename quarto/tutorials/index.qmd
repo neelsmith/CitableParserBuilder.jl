@@ -2,4 +2,17 @@
 title: Tutorials
 ---
 
-Learn `CitableParserBuilder.jl`.
+
+All implementations of the `CitableParser` abstract type work the same way. The tutorials linked here use a very simple implementation designed to parse the text of Lincoln's Gettysburg Address. Its analysis identifies lexical tokens with the [part of speech code used by the Penn treebank project](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html).
+
+
+
+1. [Constructing a parser](./parsers.qmd)
+1. [Parse a string value](./parsing.qmd)
+2. [Parse a citable token](./parsecitable.qmd)
+3. [Analyze a citable corpus](./corpus.qmd)
+4. [Saving and loading a parser](./serialization.qmd)
+
+
+
+

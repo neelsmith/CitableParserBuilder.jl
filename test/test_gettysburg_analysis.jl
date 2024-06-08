@@ -4,9 +4,8 @@
     c = fromcex(f, CitableTextCorpus, FileReader)
     ortho = simpleAscii()
 
-    dictfile = joinpath("data", "posdict.csv")
-    dict  = CSV.File(dictfile) |> Dict
-    parser = CitableParserBuilder.gettysburgParser(dict = dict)
+
+    parser = CitableParserBuilder.gettysburgParser(pwd() |> dirname)
 
     wdlist = tokenvalues(c, ortho)
     tokenized = tokenizedcorpus(c, ortho, filterby = LexicalToken())
@@ -21,9 +20,7 @@ end
     c = fromcex(f, CitableTextCorpus, FileReader)
     ortho = simpleAscii()
 
-    dictfile = joinpath("data", "posdict.csv")
-    dict  = CSV.File(dictfile) |> Dict
-    parser = CitableParserBuilder.gettysburgParser(dict = dict)
+    parser = CitableParserBuilder.gettysburgParser(pwd() |> dirname)
 
     
   

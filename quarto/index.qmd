@@ -2,18 +2,26 @@
 title: "Citable parsers"
 ---
 
-
-
-This site introduces the conceptual model of a citable morphological parser developed over many years in the work of the Holy Cross Manuscripts, Inscriptions and Documents Club (MID). 
-
-It also includes documentation of `CitableParserBuilder.jl`, a Julia package that implements the MID model of citable morphological analysis. `CitableParserBuilder.jl` defines common functions and data structures for working with citable morphological analyses of citable texts.  
+`CitableParserBuilder.jl` is a Julia package defining a framework for in-memory morphological parsers. It was conceived for and is especially appropriate for parsing corpora of texts in historical languages.
 
 
 
-## Contents of this site
+## Contents
 
-| | Learning the package | Using the package |
+| | Learn about morphological parsing with `CitableParserBuilder.jl` | Reference material |
 | --- | --- | --- |
-| **Hands-on** |  Try a [tutorial](./tutorials/) to start using  the package  | Find [recipes](./guides/) for specific tasks |
-| **Cognition** | Learn about [the conceptual foundation](./concepts/) of the package  | See [reference information](./reference/) (including API documentation for all exported functions) |
+| **Hands-on** |  Try a [tutorial](./tutorials/) to start using  `CitableParserBuilder.jl`  | Find [recipes](./guides/) for specific tasks |
+| **Cognition** | What is a [citable morphological parser](./concepts/)?  | See [API documentation](./reference/), and other reference information |
 
+
+
+## Implementations
+
+
+The following Julia packages implement the `CitableParser` abstraction:
+
+
+- `Kanones`: ancient Greek. Docs (in progress). [Github](https://github.com/neelsmith/Kanones.jl).
+- `Tabulae`: Latin. [Docs](https://neelsmith.github.io/Tabulae.jl/stable/). [Github](https://github.com/neelsmith/Tabulae.jl).
+- `Lycian`: Lycian. [Docs](https://neelsmith.github.io/Lycian.jl/stable/).[Github](https://github.com/neelsmith/Lycian.jl).
+- `Luhot`: Biblical Hebrew (not yet registered with juliahub).

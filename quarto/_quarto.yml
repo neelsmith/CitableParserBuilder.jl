@@ -5,14 +5,14 @@ theme: spacelab
 execute:
   freeze: auto
 date: last-modified  
-margin-header: "Documentation for unreleased package version: `0.26.0`"
+margin-header: "Package version: `0.26.0`"
 format:
   html: 
     toc: true
 
 
 website:
-  title: "Building citable parsers"
+  title: "Citable morphological parsers"
   navbar:
     background: primary
     search: true
@@ -46,8 +46,13 @@ website:
     - title: "Tutorials"
       contents: 
         - tutorials/index.qmd
+        - text: "---"
+        - tutorials/parsers.qmd
         - tutorials/parsing.qmd
+        - tutorials/parsecitable.qmd
         - tutorials/corpus.qmd
+        - tutorials/serialization.qmd
+
 
     - title: "Guides"
       contents:
@@ -55,20 +60,22 @@ website:
         - guides/abbrurns.qmd
         - guides/tokenvectors.qmd
         - guides/buildone.qmd
-
+        - guides/parserbackends.qmd
 
     - title: "Reference"
       contents: 
         - reference/index.qmd
         - reference/apis.qmd
+        - text: "---"
         - reference/gburg.qmd
-        - reference/examples.qmd
         - reference/sfst.qmd
 
     - title: "Concepts"
       contents: 
         - concepts/index.qmd
-        - concepts/analyses.qmd
+        - concepts/analyses.qmd        
+        - concepts/architecture.qmd
+        - concepts/analysis-implementation.qmd        
 
         
 
