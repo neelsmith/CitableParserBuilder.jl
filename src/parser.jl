@@ -18,10 +18,10 @@ end
 subtype of `CitableParser`.
 $(SIGNATURES)
 """
-function parsetoken(s::AbstractString, p::T) where {T <: CitableParser}
-    msg = string("The parsetoken function is not implemented for type ", T)
-    throw(DomainError(p, msg))
-end
+#function parsetoken(s::AbstractString, p::T) where {T <: CitableParser}
+#    msg = string("The parsetoken function is not implemented for type ", T)
+#    throw(DomainError(p, msg))
+#end
 
 #=
 """The parser trait."""

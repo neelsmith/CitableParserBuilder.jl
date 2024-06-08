@@ -13,7 +13,7 @@ end
 
 $(SIGNATURES)
 """
-function data(dfp::DFParser, ortho = simpleAscii())::DataFrame
+function datasource(dfp::DFParser)::DataFrame
     dfp.df
 end
 
@@ -25,9 +25,11 @@ function orthography(dfp::DFParser)
     dfp.ortho
 end
 
-function parsetoken(s::AbstractString, parser::AbstractDFParser; data = nothing)
+function parsetoken(s, parser::AbstractDFParser; data = nothing)
     @debug("SEARCH FOR $(s)...")
-    resultdf = subset(dataframe(parser), :Token => t -> t .== s)
+    df = datasource(parser)
+    @debug("df is $(df)")
+    resultdf = subset(df, :Token => t -> t .== s)
 
     resultarray = Analysis[]
 

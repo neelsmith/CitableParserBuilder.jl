@@ -4,7 +4,9 @@
 The functionality defined by the abstract `CitableParser` type can be implemented in different ways. Beginning with version `0.26.0` of the `CitableParserBuilder.jl` package, a second tier of abstractions defines types for parsers backed by a dataframe, or by a vector of delimited-text lines. This page shows you how to convert one type of parser to another, and to work directly with the data source underlying the parser.
 
 
-## The type hierarchy
+## Dataframe-backed parsers
+
+### Example: the `GettysburgParser`
 
 The `GettysburgParser` type is a descendant of the abstract `CitableParser`, so we can use functions like `parsetoken`, and `orthography` that work with any `CitableParser`.
 
@@ -26,7 +28,7 @@ GettysburgParser --> AbstractDFParser
 
 using CitableParserBuilder
 gparser = CitableParserBuilder.gettysburgParser()
-parsetoken("score", gparser)
+#parsetoken("score", gparser)
 
 ```
 
@@ -43,15 +45,34 @@ gparser  |> typeof |> supertype
 You can get direct access to the backing `DataFrame`, for example, with the `dataframe` function:
 
 ```{julia}
-df = dataframe(gparser)
+df = datasource(gparser)
 # display first 5 rows of DataFrame:
 df[1:5,:]
 ```
 
-You can also 
+You can convert a dataframe-backed parser to a `StringParser`
 
 ```{julia}
-#stringbacked = StringParser(gparser)
+stringbacked = StringParser(gparser)
 ```
 
 
+## String-backed parsers
+
+String-backed parsers work identically for functions applying to all citable parsers.
+
+```{julia}
+parsetoken("score", stringbacked)
+```
+
+```{julia}
+orthography(stringbacked) |> typeof
+```
+
+It is a direct subtype of the `AbstractStringParser`, however.
+
+```{julia}
+stringbacked  |> typeof |> supertype
+```
+
+Th

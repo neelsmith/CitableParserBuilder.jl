@@ -39,15 +39,13 @@ export AnalyzedToken, AnalyzedTokens
 
 export CitableParser
 export AbstractStringParser, AbstractDFParser
-
+export datasource, orthography
 # TBA: AbstractrDictionaryParser
 export Stem, Rule
 
-export StringParser
-
-
+export StringParser, stringParser, delimiter
 export DFParser, dfParser
-export dataframe, orthography, delimiter
+
 
 export parsetoken
 export parselist

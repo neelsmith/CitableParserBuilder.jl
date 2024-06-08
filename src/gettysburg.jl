@@ -14,7 +14,7 @@ struct GettysburgParser <: AbstractDFParser
 end
 
 
-function dataframe(gp::GettysburgParser)
+function datasource(gp::GettysburgParser)
     gp.data
 end
 
