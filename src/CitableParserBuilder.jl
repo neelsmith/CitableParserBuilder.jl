@@ -79,6 +79,7 @@ include("parser.jl")
 include("dfparser.jl")
 include("stringparser.jl")
 include("dictparser.jl")
+include("generators.jl")
 
 include("analysis.jl")
 include("citeurn.jl")

@@ -38,4 +38,14 @@ token.(matches)
 
 ## Example with a dataframe-backed parser
 
-DFParsers work exactly the same way.
+DFParsers work exactly the same way.  Convert a string-backed parser to a dataframe-backed parser.
+
+
+```{julia}
+dfp = DFParser(parser)
+generate(lex, mform, dfp)  .|> token
+```
+
+```{julia}
+generate(lex, mform, dfp)  == generate(lex,mform, parser)
+```
