@@ -47,6 +47,14 @@ function parsetoken(s::AbstractString, parser::AbstractStringParser)
 end
 
 
+"""Generate all possible morphological analyses for a given lexeme and form.
+$(SIGNATURES)
+"""
+function generate(lex::LexemeUrn, mform::FormUrn, parser::AbstractStringParser; delim = "|") 
+    ptrn = string(delim, lex, delim, mform, delim)
+    filter(ln -> occursin(ptrn, ln), datasource(parser)) .|> analysis
+end
+
 """Write entries to file.
 $(SIGNATURES)
 """
@@ -97,4 +105,8 @@ function stringParser(u, ureader::Type{UrlReader};
     sp = StringParser(readlines(tmpfile),o,delim)
     rm(tmpfile)
     sp
+end
+
+function dataframe(sp::StringParser)
+    CSV.File(IOBuffer( join(datasource(sp),"\n")) , delim = "|") |> DataFrame
 end

@@ -52,6 +52,7 @@ website:
         - tutorials/parsecitable.qmd
         - tutorials/corpus.qmd
         - tutorials/serialization.qmd
+        - tutorials/generating.qmd
 
 
     - title: "Guides"
