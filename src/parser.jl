@@ -14,6 +14,15 @@ function orthography(p::T) where {T <: CitableParser}
 end
 
 
+"""Catch failure to implement `generate` function for a
+subtype of `CitableParser`.
+$(SIGNATURES)
+"""
+function generate(lex::LexemeUrn, mform::FormUrn, p::T) where {T <: CitableParser}
+    msg = string("The generate function is not implemented for type ", T)
+    throw(DomainError(p, msg))
+end
+
 """Catch failure to implement `parsetoken` function for a
 subtype of `CitableParser`.
 $(SIGNATURES)

@@ -6,7 +6,10 @@ $(SIGNATURES)
 struct DFParser <: AbstractDFParser
     df::DataFrame
     ortho::OrthographicSystem
+
+    DFParser(df::DataFrame,   ortho::OrthographicSystem = simpleAscii()) = new(df, ortho)
 end
+
 
 
 """Get `DataFrame` object backing the dataframe parser.
@@ -45,6 +48,9 @@ function parsetoken(s, parser::AbstractDFParser; data = nothing)
     end
     resultarray
 end
+
+
+
 
 
 """Create a `DFParser` from delimited text file.

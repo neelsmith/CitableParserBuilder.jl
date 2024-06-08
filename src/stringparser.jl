@@ -47,6 +47,7 @@ function parsetoken(s::AbstractString, parser::AbstractStringParser)
 end
 
 
+
 """Write entries to file.
 $(SIGNATURES)
 """
@@ -97,4 +98,8 @@ function stringParser(u, ureader::Type{UrlReader};
     sp = StringParser(readlines(tmpfile),o,delim)
     rm(tmpfile)
     sp
+end
+
+function dataframe(sp::StringParser)
+    CSV.File(IOBuffer( join(datasource(sp),"\n")) , delim = "|") |> DataFrame
 end

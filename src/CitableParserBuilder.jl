@@ -43,14 +43,14 @@ export datasource, orthography
 # TBA: AbstractrDictionaryParser
 export Stem, Rule
 
-export StringParser, stringParser, delimiter
+export StringParser, stringParser, delimiter, dataframe
 export DFParser, dfParser
 
 
 export parsetoken
 export parselist
 export parsepassage, parsecorpus
-
+export generate
 
 export AnalyzedToken
 
@@ -73,12 +73,14 @@ export relationsblock
 export delimited
 export urn
 
+include("abbrurn.jl")
 
 include("parser.jl")
 include("dfparser.jl")
 include("stringparser.jl")
 include("dictparser.jl")
-include("abbrurn.jl")
+include("generators.jl")
+
 include("analysis.jl")
 include("citeurn.jl")
 include("types.jl")

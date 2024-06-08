@@ -1,0 +1,51 @@
+# Generating forms
+
+```{julia}
+#| echo: false
+#| output: false
+#| warning: false
+repo = pwd() |> dirname |> dirname
+```
+
+## Example with a string-backed parser
+
+Make a string-backed parser.
+
+```{julia}
+#| code-fold: true
+#| code-summary: Make a StringParser
+#| output:  false
+#| warning: false
+using CitableParserBuilder
+parser = CitableParserBuilder.gettysburgParser(repo) |> StringParser
+
+```
+
+Generate a full analysis with token from a lexeme and a morphological form. The result will be a (possibly empty) vector of analyses.
+
+```{julia}
+lex = LexemeUrn("gburglex.come")
+mform = FormUrn("pennpos.VBN")
+matches = generate(lex, mform, parser)
+```
+
+
+Use the `token` function to extract surface tokens (here, using Julia broadcasting).
+
+```{julia}
+token.(matches)
+```
+
+## Example with a dataframe-backed parser
+
+DFParsers work exactly the same way.  Convert a string-backed parser to a dataframe-backed parser.
+
+
+```{julia}
+dfp = DFParser(parser)
+generate(lex, mform, dfp)  .|> token
+```
+
+```{julia}
+generate(lex, mform, dfp)  == generate(lex,mform, parser)
+```
