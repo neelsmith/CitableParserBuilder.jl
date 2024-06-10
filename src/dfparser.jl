@@ -61,10 +61,6 @@ function dfParser(delimitedfile, ortho = simpleAscii(); delimiter = "|")
     CSV.File(delimitedfile; delim = delimiter) |> DataFrame |> DFParser
 end
 
-
-# ... Write this
-
-
 """Write dataframe parser to a delimited file.
 
 $(SIGNATURES)
@@ -72,7 +68,6 @@ $(SIGNATURES)
 function tofile(dfp::DFParser, outfile; delimiter = "|")
     CSV.write(outfile, dfp.df, delim = delimiter)
 end
-
 
 
 #=
