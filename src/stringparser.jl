@@ -51,9 +51,11 @@ end
 """Write entries to file.
 $(SIGNATURES)
 """
-function tofile(p::StringParser, f)
+function tofile(p::StringParser, f; addheader = false)
+    hdr = join(["Token","Lexeme","Form","Stem","Rule"], delimiter(p))
+    content = addheader ? hdr * "\n" * join(p.entries,"\n") : join(p.entries,"\n")
     open(f, "w") do io
-        write(f, join(p.entries,"\n"))
+        write(f, content)
     end
 end
 
