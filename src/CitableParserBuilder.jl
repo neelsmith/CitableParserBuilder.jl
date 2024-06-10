@@ -45,6 +45,7 @@ export Stem, Rule
 
 export StringParser, stringParser, delimiter, dataframe
 export DFParser, dfParser
+export tofile
 
 
 export parsetoken

@@ -254,7 +254,7 @@ CitableParserBuilder.inflectiontype
 ## Serialization
 
 
-readfst
+`tofile`
 
 
 
@@ -262,21 +262,10 @@ readfst
 ```{julia}
 #| echo: false
 #| warning: false
-@doc parsecorpus
+@doc tofile
 ```
 :::
 
-relationsblock
-
-
-
-:::{.callout-note appearance="minimal"}
-```{julia}
-#| echo: false
-#| warning: false
-@doc parsecorpus
-```
-:::
 
 `delimited`
 

@@ -12,7 +12,7 @@ All implementations of the `CitableParser` abstract type work the same way. The 
 2. [Parse a citable token](./parsecitable.qmd)
 3. [Analyze a citable corpus](./corpus.qmd)
 4. [Saving and loading a parser](./serialization.qmd)
-1. [Generating forms](./forms.qmd)
+1. [Generating forms](./generating.qmd)
 
 
 
