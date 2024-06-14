@@ -2,27 +2,32 @@
 
 
 Same set up as before: read corpus, tokenize, parse.
+```{julia}
+#| output: false
+#| echo: false
+repo = dirname(pwd()) |> dirname  # hide
+```
 
-```@setup vectors
+```{julia}
+#| warning: false
+#| output: false
 using CitableCorpus, CitableBase
-repo = dirname(pwd()) |> dirname |> dirname # hide
+
 f = joinpath(repo,"test","data","gettysburgcorpus.cex") 
 corpus = fromcex(f, CitableTextCorpus, FileReader)
 
 using Orthography
 tc = tokenizedcorpus(corpus, simpleAscii())
 
-dictcsv = joinpath(repo, "test", "data", "posdict.csv") 
-using CSV
-morphdict = CSV.File(dictcsv) |> Dict
 using CitableParserBuilder
-parser = CitableParserBuilder.gettysburgParser(dict = morphdict)
+parser = CitableParserBuilder.gettysburgParser()
 ```
 
 
-```@example vectors
+```{julia}
+#| warning: false
+#| output: false
 parsed =  parsecorpus(tc, parser; data = parser.data)
-length(parsed)
 ```
 
 
@@ -30,13 +35,13 @@ length(parsed)
 
 Get a list of unique lexeme identifiers for all parsed tokens.
 
-```@example vectors
+```{julia}
 lexemelist = lexemes(parsed)
 length(lexemelist)
 ```
 
 For a given lexeme, find all surface forms appearing in the corpus.  The lexeme "gburglex.and" appears in only one form, *and*.
-```@example vectors
+```{julia}
 stringsforlexeme(parsed, "gburglex.and" )
 ```
 
