@@ -26,7 +26,6 @@
     # This part is broken:
     urndict = Dict(
     "gburglex" => "urn:cite2:citedemo:gburglex.v1:",
-    "gburgform" => "urn:cite2:citedemo:gburgform.v1:",
     "pennpos"  => "urn:cite2:citedemo:pennpos.v1:",
     "gburgrule" => "urn:cite2:citedemo:gburgrule.v1:",
     "gburgstem" => "urn:cite2:citedemo:gburgstem.v1:"

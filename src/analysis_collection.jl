@@ -89,12 +89,17 @@ end
 $(SIGNATURES)
 """
 function fromcex(trait::AnalysesCex, s::AbstractString,  ::Type{AnalyzedTokens}; delimiter = "|", configuration = nothing, strict = true)
+    @info("HEY! PARSE Plural AnalyzedTokens from cex")
     rawlines = split(s, "\n")[2:end]
     datalines = filter(ln -> ! isempty(ln), rawlines)
+
+    debugdisp = join(datalines,"\n\n")
+    @info("Datalines:\n $(debugdisp)")
+
     prevcitable = nothing
     curranalyses = Analysis[]
     tokens = AnalyzedToken[]
-    @debug(length(datalines), " data lines")
+    @info("$(length(datalines)) data lines")
     for ln in datalines
         parts = split(ln, delimiter)
 
@@ -105,31 +110,34 @@ function fromcex(trait::AnalysesCex, s::AbstractString,  ::Type{AnalyzedTokens};
         else
             @debug("LINEL: ", ln)
             @debug("Yields $(length(parts)) parts")
-            currpsg = CitablePassage(CtsUrn(parts[1]), parts[2])
 
+            currpsg = CitablePassage(CtsUrn(parts[1]), parts[2])
+            @info("Looking at currpsg $(currpsg)")
             @debug("type empty? $(isempty(parts[9]))")
             if isempty(parts[9])
                 @warn("Couldn't form a token type for $(currpsg)")
             else
                 ttypestr = parts[9] * "()"
-
-                
                 @debug("TTYPE$(ttypestr)")
                 ttype = parts[9] * "()" |> Meta.parse |> eval
+
                 currcitable = CitableToken(currpsg, ttype)
-                @debug("CURRCITALBBE", currcitable)
+                @info("CURRCITALBBE $(currcitable)")
                 analysisstring = join([parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]], delimiter)
                 currentanalysis = analysis(analysisstring, delimiter)
 
+
+                @info("Now compare prev and crr citable: $(prevcitable)/$currcitable")
+                @info("Equal?  $(prevcitable == currcitable)")
                 if isnothing(prevcitable)
                     prevcitable = currcitable
-                    @debug("SET PREV", prevcitable)
+                    @info("SET PREV $(prevcitable)")
                     curranalyses = isnothing(currentanalysis) ? Analysis[] : [currentanalysis]
 
                 elseif urn(currcitable) != urn(prevcitable)
                     push!(tokens, AnalyzedToken(prevcitable, curranalyses))
                     prevcitable = currcitable
-                    @debug("SET PREV", prevcitable)
+                    @info("SET PREV $(prevcitable)")
                     curranalyses = isnothing(currentanalysis) ? Analysis[] : [currentanalysis]
                     
                 else
@@ -139,13 +147,15 @@ function fromcex(trait::AnalysesCex, s::AbstractString,  ::Type{AnalyzedTokens};
                 end
                 
             end
-            @debug("PREVCITABLE: " , prevcitable)
-            if ! isnothing(prevcitable)
-                push!(tokens, AnalyzedToken(prevcitable, curranalyses))
-            end
+            
             
             
         end
+        @debug("PREVCITABLE: " , prevcitable)
+        
+    end
+    if ! isnothing(prevcitable)
+        push!(tokens, AnalyzedToken(prevcitable, curranalyses))
     end
     AnalyzedTokens(tokens)
 end

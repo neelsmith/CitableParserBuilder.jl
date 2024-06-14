@@ -1,4 +1,4 @@
-# Working with vectors of `AnalyzedToken`s
+# Working with analyzed tokens
 
 
 Same set up as before: read corpus, tokenize, parse.
@@ -27,8 +27,14 @@ parser = CitableParserBuilder.gettysburgParser()
 ```{julia}
 #| warning: false
 #| output: false
-parsed =  parsecorpus(tc, parser; data = parser.data)
+parsed =  parsecorpus(tc, parser)
 ```
+
+```{julia}
+parsed
+```
+
+
 
 
 ## Lexemes

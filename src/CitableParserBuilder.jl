@@ -29,13 +29,16 @@ import CitableBase: fromcex
 
 import CitableBase: citablecollectiontrait
 
-
-
+import CitableCorpus: text
+import Orthography: passage
 
 export Analysis, analysis
 export token, lexemeurn, formurn, stemurn, ruleurn, mtoken
 export tokens
 export AnalyzedToken, AnalyzedTokens
+export ctoken, analyses #, passage, text, urn
+
+
 
 export CitableParser
 export AbstractStringParser, AbstractDFParser
@@ -53,7 +56,8 @@ export parselist
 export parsepassage, parsecorpus
 export generate
 
-export AnalyzedToken
+
+
 
 export AbbreviatedUrn
 export objectid, collection

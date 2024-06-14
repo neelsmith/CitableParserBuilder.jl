@@ -40,10 +40,11 @@ length(parsed)
 
 The vector of analyses can be formatted as delimited text with the `delimited` function.  If you include an optional `registry` mapping collection names to full CITE2 collection strings, abbreviated URNs will be expanded in the resulting text.
 
+
 ```{julia}
 urndict = Dict(
     "gburglex" => "urn:cite2:citedemo:gburglex.v1:",
-    "gburgform" => "urn:cite2:citedemo:gburgform.v1:",
+    "pennpos"  => "urn:cite2:citedemo:pennpos.v1:",
     "gburgrule" => "urn:cite2:citedemo:gburgrule.v1:",
     "gburgstem" => "urn:cite2:citedemo:gburgstem.v1:"
 )
@@ -57,20 +58,19 @@ delimited_output = tempname()
 open(delimited_output, "w") do io
     write(io, textoutput)
 end
+delimited_output
 ```
 
 We can read the file to create a new Vector of analyses.
 
 ```{julia}
-#| warning: false
-cexoutput = read(delimited_output, String) 
-fromcex(cexoutput, AnalyzedToken)
+fromcex(delimited_output, AnalyzedTokens, FileReader)
 ```
 
 
 (We'll be tidy and remove the temporary file.) 
 
-```{julia}
+```
 rm(delimited_output)
 ```
 
