@@ -44,7 +44,8 @@ function delimited(at::AnalyzedToken; delim = "|", registry = nothing)
     end
     @debug("Delimited for analyzedtoken ", at)
     if isempty(at.analyses)
-        noanalysis = "|||||"
+        #noanalysis = "|||||||"
+        noanalysis = repeat(delim, 7)
         cex(at.ctoken.passage; delimiter = delim) * noanalysis
     else
         lines = []

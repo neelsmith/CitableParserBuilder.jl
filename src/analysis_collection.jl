@@ -10,6 +10,17 @@ function show(io::IO, analyses::AnalyzedTokens)
     length(analyses.analyses) == 1 ? print(io, "Collection of  1 analysis") : print(io, "Collection of ", length(analyses.analyses), " analyzed tokens.")
 end
 
+
+"""Override `Base.==` for `Analysis`.
+
+$(SIGNATURES)
+"""
+function ==(at1::AnalyzedTokens, at2::AnalyzedTokens)
+    at1.analyses == at2.analyses
+end
+
+
+
 "Value for CitableTrait."
 struct CitableAnalyses <: CitableCollectionTrait end
 
@@ -86,39 +97,56 @@ function fromcex(trait::AnalysesCex, s::AbstractString,  ::Type{AnalyzedTokens};
     @debug(length(datalines), " data lines")
     for ln in datalines
         parts = split(ln, delimiter)
-        @debug("LINEL: ", ln)
-        currpsg = CitablePassage(CtsUrn(parts[1]), parts[2])
-        ttypestr = parts[9] * "()"
-        @debug("TTYPE $(ttypestr)")
-        ttype = parts[9] * "()" |> Meta.parse |> eval
-        currcitable = CitableToken(currpsg, ttype)
-        @debug("CURRCITALBBE", currcitable)
-        analysisstring = join([parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]], delimiter)
-        currentanalysis = analysis(analysisstring, delimiter)
 
-        if isnothing(prevcitable)
-            prevcitable = currcitable
-            @debug("SET PREV", prevcitable)
-            curranalyses = isnothing(currentanalysis) ? Analysis[] : [currentanalysis]
-
-        elseif urn(currcitable) != urn(prevcitable)
-            push!(tokens, AnalyzedToken(prevcitable, curranalyses))
-            prevcitable = currcitable
-            @debug("SET PREV", prevcitable)
-            curranalyses = isnothing(currentanalysis) ? Analysis[] : [currentanalysis]
-            
+        if length(parts) < 9
+            msg = "Error reading AnalyzedTokens from cex. Too few parts ($(length(parts))) in $(parts)"
+            @warn(msg)
+            DomainError(msg)
         else
-            if ! isnothing(currentanalysis)
-                push!(curranalyses, currentanalysis)
+            @debug("LINEL: ", ln)
+            @debug("Yields $(length(parts)) parts")
+            currpsg = CitablePassage(CtsUrn(parts[1]), parts[2])
+
+            @debug("type empty? $(isempty(parts[9]))")
+            if isempty(parts[9])
+                @warn("Couldn't form a token type for $(currpsg)")
+            else
+                ttypestr = parts[9] * "()"
+
+                
+                @debug("TTYPE$(ttypestr)")
+                ttype = parts[9] * "()" |> Meta.parse |> eval
+                currcitable = CitableToken(currpsg, ttype)
+                @debug("CURRCITALBBE", currcitable)
+                analysisstring = join([parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]], delimiter)
+                currentanalysis = analysis(analysisstring, delimiter)
+
+                if isnothing(prevcitable)
+                    prevcitable = currcitable
+                    @debug("SET PREV", prevcitable)
+                    curranalyses = isnothing(currentanalysis) ? Analysis[] : [currentanalysis]
+
+                elseif urn(currcitable) != urn(prevcitable)
+                    push!(tokens, AnalyzedToken(prevcitable, curranalyses))
+                    prevcitable = currcitable
+                    @debug("SET PREV", prevcitable)
+                    curranalyses = isnothing(currentanalysis) ? Analysis[] : [currentanalysis]
+                    
+                else
+                    if ! isnothing(currentanalysis)
+                        push!(curranalyses, currentanalysis)
+                    end
+                end
+                
             end
+            @debug("PREVCITABLE: " , prevcitable)
+            if ! isnothing(prevcitable)
+                push!(tokens, AnalyzedToken(prevcitable, curranalyses))
+            end
+            
+            
         end
-        
     end
-    @debug("PREVCITABLE: " , prevcitable)
-    if ! isnothing(prevcitable)
-        push!(tokens, AnalyzedToken(prevcitable, curranalyses))
-    end
-    
     AnalyzedTokens(tokens)
 end
 

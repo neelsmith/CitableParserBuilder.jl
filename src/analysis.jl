@@ -87,6 +87,7 @@ function delimited(a::Analysis; delim = "|", registry = nothing)
             ], delim)
 
     else
+        @debug("Serializing while expanding URNs. Token $(a.token)")
         @debug("Serialize token $(a.token)")
         @debug("Expand lexeme: $(expand(a.lexeme, registry))")
         @debug("Expand form $(a.form) to...") 
