@@ -25,12 +25,12 @@ Morphological tokens are often treated as the result of applying a rule to a ste
 
 We can therefore model a morphological analysis as associating five pieces of information with an orthograpic token: a morphological token (often identical to the orthographic token);  a lexeme and a form that together identify the morphology of the token; and a stem and inflectional rule that together explain *how* the analysis arrived at the resulting lexeme and form.
 
-The morphological token is a string value. The other four pieces of information can be represented by a unique identifier encoded as a URN.
+The morphological token is a string value. The other four pieces of information can be represented by a unique identifier encoded as a URN. Internally, the `CitableParserBuilder` package works with an abbreviated form of URNs, and defines concrete types for each of these four pieces of information:
 
-1. the *lexeme*
-2. the *morphological form*
-3. the *stem* used to arrive at the analysis
-4. the *inflectional rule* used to arrive at the analysis
+1. the *lexeme* (`LexemeUrn`)
+2. the *morphological form* (`FormUrn`)
+3. the *stem* used to arrive at the analysis (`StemUrn`)
+4. the *inflectional rule* used to arrive at the analysis (`RuleUrn`)
 
 
  The structure of the morphological form identified will vary from one language to another.

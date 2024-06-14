@@ -58,8 +58,11 @@ website:
     - title: "Guides"
       contents:
         - guides/index.qmd
+        - text: "---"
         - guides/abbrurns.qmd
+        - guides/citabletexts.qmd
         - guides/tokenvectors.qmd
+        - text: "---"
         - guides/buildone.qmd
         - guides/parserbackends.qmd
 
@@ -75,8 +78,8 @@ website:
       contents: 
         - concepts/index.qmd
         - concepts/analyses.qmd        
-        - concepts/architecture.qmd
         - concepts/analysis-implementation.qmd        
+        - concepts/architecture.qmd
 
         
 

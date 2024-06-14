@@ -1,0 +1,48 @@
+# Parsing citable texts
+
+
+
+## An example using the `CitablePassage` and `Orthography` packages
+
+
+The `CitablePassage` type from the Julia [`CitableCorpus`](https://neelsmith.quarto.pub/citablecorpus/) package represents a passage of citable text with a URN identifier and a string value.
+
+```{julia}
+using CitableText, CitableCorpus
+s = "Four score and seven years ago..."
+psgurn = CtsUrn("urn:cts:parserdocs:example.docs.v1:1")
+cpsg = CitablePassage(psgurn, s)
+```
+
+The `tokenize` function in the Julia [`Orthography`](https://neelsmith.quarto.pub/orthography/) package includes a method for tokenize `CitablePassage`s. This creates a series of `CitableToken`s.
+
+::: {.callout-tip title="Citable tokens"}
+See [this tutorial](https://neelsmith.quarto.pub/orthography/tutorials/tokenization.html) for a hands-on introduction to tokenizing citable texts with the `Orthography` package.
+:::
+
+
+```{julia}
+using Orthography
+orthosystem = simpleAscii()
+tokenizedpassages = tokenize(cpsg, orthosystem)
+```
+
+
+
+
+Each citable token has defined a new citable passage, with a single token for the text value.
+
+```{julia}
+tokenizedpassages .|> passage
+```
+
+The tokenizer has also extended the canonical citation of passages of text to refer to individual tokens. The entire passage had a passage component with a single level of citation (`1`); the tokens are cited at two levels (`1.1`, etc.)
+
+Each of these citable passages is assigned a tokencategory.
+
+```{julia}
+tokenizedpassages .|> tokencategory
+```
+
+
+
