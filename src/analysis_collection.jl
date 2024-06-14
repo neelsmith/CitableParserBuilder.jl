@@ -88,12 +88,12 @@ function fromcex(trait::AnalysesCex, s::AbstractString,  ::Type{AnalyzedTokens};
         parts = split(ln, delimiter)
         @debug("LINEL: ", ln)
         currpsg = CitablePassage(CtsUrn(parts[1]), parts[2])
-        ttypestr = parts[8] * "()"
+        ttypestr = parts[9] * "()"
         @debug("TTYPE $(ttypestr)")
-        ttype = parts[8] * "()" |> Meta.parse |> eval
+        ttype = parts[9] * "()" |> Meta.parse |> eval
         currcitable = CitableToken(currpsg, ttype)
         @debug("CURRCITALBBE", currcitable)
-        analysisstring = join([parts[3], parts[4], parts[5], parts[6], parts[7]], delimiter)
+        analysisstring = join([parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]], delimiter)
         currentanalysis = analysis(analysisstring, delimiter)
 
         if isnothing(prevcitable)

@@ -17,7 +17,7 @@ or the `delimited` function can be used with a URN registry to write full CITE2 
 """
 function cex(at::AnalyzedToken; delimiter = "|")
     if isempty(at.analyses)
-        noanalysis = repeat(delimiter, 6)
+        noanalysis = repeat(delimiter, 7)
         cex(at.ctoken.passage; delimiter = delimiter) * noanalysis * string(typeof(at.ctoken.tokentype))
     else
         lines = []
@@ -83,16 +83,17 @@ function fromcex(s::AbstractString, ::Type{AnalyzedToken}; delimiter = "|", conf
         !isempty(ln)
     end
 
+    @debug("Analyzing delimited for ATken")
     map(lines) do s
         parts = split(s, delimiter)
         
-        if length(parts) < 8
+        if length(parts) < 9
             @warn("`fromcex` reading AnalyzedTokens: only got $(length(parts)) columns for data line $(s)")
         else
             cp = CitablePassage(CtsUrn(parts[1]), parts[2])
-            tokentype = parts[8] * "()" |> Meta.parse |> eval
+            tokentype = parts[9] * "()" |> Meta.parse |> eval
             ctoken = CitableToken(cp, tokentype)
-            alist =  isempty(parts[3]) ? [] : [analysis(join(parts[3:7], "|"))]
+            alist =  isempty(parts[3]) ? [] : [analysis(join(parts[3:8], "|"))]
             AnalyzedToken(ctoken, alist) 
         end
     end

@@ -9,9 +9,18 @@ struct Analysis
     form::FormUrn
     stem::StemUrn
     rule::RuleUrn
+    mtoken::AbstractString
 end
 
-"""Identify token in `a`.
+"""Identify morphologocal token identified in analysis.
+$(SIGNATURES)
+"""
+function mtoken(a::Analysis)
+    a.mtoken
+end
+
+
+"""Identify orthographic token analyzed.
 $(SIGNATURES)
 """
 function token(a::Analysis)
@@ -19,34 +28,33 @@ function token(a::Analysis)
 end
 
 
-"""Identify lexeme in `a`.
+"""Identify lexeme identifed in analysis.
 $(SIGNATURES)
 """
 function lexemeurn(a::Analysis)
     a.lexeme
 end
 
-"""Identify morphlogical form in `a`.
+"""Identify morphlogical form identifed in analysis.
 $(SIGNATURES)
 """
 function formurn(a::Analysis)
     a.form
 end
 
-"""Identify lexical stem in `a`.
+"""Identify lexical stem identifed in analysis.
 $(SIGNATURES)
 """
 function stemurn(a::Analysis)
     a.stem
 end
 
-"""Identify inflectional rule in `a`.
+"""Identify inflectional rule identifed in analysis.
 $(SIGNATURES)
 """
 function ruleurn(a::Analysis)
     a.rule
 end
-
 
 """Override `Base.==` for `Analysis`.
 
@@ -57,7 +65,8 @@ function ==(a1::Analysis, a2::Analysis)
     a1.lexeme == a2.lexeme &&
     a1.form == a2.form &&
     a1.stem == a2.stem && 
-    a1.rule == a2.rule
+    a1.rule == a2.rule &&
+    a1.mtoken == a2.mtoken
 end
 
 """Serialize an `Analysis` to delimited text.
@@ -73,7 +82,8 @@ function delimited(a::Analysis; delim = "|", registry = nothing)
             a.lexeme,
             a.form,
             a.stem,
-            a.rule
+            a.rule,
+            a.mtoken
             ], delim)
 
     else
@@ -89,7 +99,8 @@ function delimited(a::Analysis; delim = "|", registry = nothing)
             expand(a.lexeme, registry),
             expand(a.form, registry),
             expand(a.stem, registry),
-            expand(a.rule, registry)
+            expand(a.rule, registry),
+            a.mtoken
             ], delim)
         catch e
             @warn("Failed to serialized tokekn $(a.token)")
@@ -121,7 +132,7 @@ function relationsblock(urn::Cite2Urn, label::AbstractString, v::AbstractVector{
         "#!citerelationset",
         join(["urn", urn],  delim),
         join(["label", label], delim),
-        join(["token", "lexeme", "form", "stem", "rule"], delim)
+        join(["token", "lexeme", "form", "stem", "rule","mtoken"], delim)
     ]
     lines = delimited(v; delim = delim, registry = registry)
     join(headerlines, "\n") * lines
@@ -131,7 +142,7 @@ end
 """True if any element in stringlist is empty."""
 function no_id(stringlist)
     isempty(stringlist[1]) || isempty(stringlist[2]) ||
-    isempty(stringlist[3]) || isempty(stringlist[4]) 
+    isempty(stringlist[3]) || isempty(stringlist[4])  
 end
 
 """Parse delimited-text representaiton into an `Analysis`.
@@ -141,36 +152,46 @@ $(SIGNATURES)
 """
 function analysis(s, delim = "|")::Union{Analysis,Nothing}
     parts = split(s, delim)
-    tokentext = parts[1]
-    
-    if no_id(parts[2:5])
-        nothing
-
-    else
-        lexu = startswith(parts[2], "urn:") ? Cite2Urn(parts[2]) |> abbreviate |> LexemeUrn : LexemeUrn(parts[2])
-        formu = startswith(parts[3], "urn:") ? Cite2Urn(parts[3]) |> abbreviate |> FormUrn : FormUrn(parts[3])
-        stemu = startswith(parts[4], "urn:") ? Cite2Urn(parts[4]) |> abbreviate |> StemUrn : StemUrn(parts[4])
-        ruleu = startswith(parts[5], "urn:") ? Cite2Urn(parts[5]) |> abbreviate |> RuleUrn : RuleUrn(parts[5])
-
-        Analysis(
-            tokentext,
-            lexu,
-            formu,
-            stemu,
-            ruleu
+    @debug("delimited for single analysis: $(s) has $(length(parts)) parts")
+    if length(parts) < 6
+        DomainError(
+            "Canont construct Analysis: two few parts in $(parts)"
         )
+    else
+            
+        tokentext = parts[1]
+        mtoken = parts[6]
+        
+        if no_id(parts[2:5])
+            nothing
+
+        else
+            lexu = startswith(parts[2], "urn:") ? Cite2Urn(parts[2]) |> abbreviate |> LexemeUrn : LexemeUrn(parts[2])
+            formu = startswith(parts[3], "urn:") ? Cite2Urn(parts[3]) |> abbreviate |> FormUrn : FormUrn(parts[3])
+            stemu = startswith(parts[4], "urn:") ? Cite2Urn(parts[4]) |> abbreviate |> StemUrn : StemUrn(parts[4])
+            ruleu = startswith(parts[5], "urn:") ? Cite2Urn(parts[5]) |> abbreviate |> RuleUrn : RuleUrn(parts[5])
+
+            Analysis(
+                tokentext,
+                lexu,
+                formu,
+                stemu,
+                ruleu,
+                mtoken
+            )
+        end
     end
 end
 
 
-
+#=
 """Compose a string listing tokens from a list of `Analysis` objects
 """
 function tokentext(v::Vector{Analysis})::AbstractString
     strvals = map(a -> a.token, v)
     join(strvals, ", ")
 end
-
+=#
 
 
 

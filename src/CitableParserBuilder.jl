@@ -33,7 +33,7 @@ import CitableBase: citablecollectiontrait
 
 
 export Analysis, analysis
-export token, lexemeurn, formurn, stemurn, ruleurn
+export token, lexemeurn, formurn, stemurn, ruleurn, mtoken
 export tokens
 export AnalyzedToken, AnalyzedTokens
 
