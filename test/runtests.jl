@@ -5,6 +5,10 @@ using Orthography
 using CSV
 using Test
 
+
+
+includle("test_io.jl")
+
 include("test_parsers.jl")
 
 include("test_abbrexpan.jl")
