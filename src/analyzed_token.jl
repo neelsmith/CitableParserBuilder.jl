@@ -79,3 +79,7 @@ function label(at::AnalyzedToken)
     length(at.analyses) == 1 ? string("$(at.ctoken): 1 analysis.") :
     string("$(at.ctoken): $(length(at.analyses)) analyses.")
 end
+
+
+
+

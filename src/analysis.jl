@@ -1,7 +1,6 @@
 """Citable analysis of a string value.
 
-An `Analysis` has five members: a token string value, and four abbreviated
-URNs, one each for the lexeme, form, rule and stem.
+An `Analysis` has six members: string values for the orthographic token and the morphological token, and four abbreviated URNs, one each for the lexeme, form, rule and stem.
 """
 struct Analysis
     token::AbstractString
@@ -78,14 +77,8 @@ $(SIGNATURES)
 function delimited(a::Analysis; delim = "|", registry = nothing)
     
     if isnothing(registry)
-        join([ a.token,
-            a.lexeme,
-            a.form,
-            a.stem,
-            a.rule,
-            a.mtoken
-            ], delim)
-
+        cex(a; delimiter = delim)
+        
     else
         @debug("Serializing while expanding URNs. Token $(a.token)")
         @debug("Serialize token $(a.token)")
@@ -185,39 +178,36 @@ function analysis(s, delim = "|")::Union{Analysis,Nothing}
 end
 
 
-#=
-"""Compose a string listing tokens from a list of `Analysis` objects
+
+
+# Make this a CEX serializable type
+
+
+"""Define CexTrait for Analysis type.
 """
-function tokentext(v::Vector{Analysis})::AbstractString
-    strvals = map(a -> a.token, v)
-    join(strvals, ", ")
+struct AnalysisCex <: CexTrait end
+function cextrait(::Type{Analysis})
+    AnalysisCex()
 end
-=#
 
 
-
-
-
-#=
-"""Compose delimited text representation for a 
-map of tokens to a vector of analyses.
-
+"""Implementation of cex function for an Analysis.
 $(SIGNATURES)
-
-This could be useful for serializing analyzes for a list
-of unique tokens in a corpus.    
 """
-function tokenmap_cex(prs)::Tuple{ String, Vector{Analysis} }
-    cexlines = []
-    for pr in prs
-        if isempty(pr[2])
-            push!(cexlines, string(pr[1],"|"))
-        else
-            for id in pr[2]
-                push!(cexlines, string(pr[1],"|", cex(id)))
-            end
-        end
-    end
-    join(cexlines,"\n")
+function cex(a::Analysis; delimiter = "|")
+    join([ a.token,
+           a.lexeme,
+            a.form,
+           a.stem,
+           a.rule,
+            a.mtoken
+            ], delimiter)
 end
-=#
+
+"""Implementation of fromcex function for an Analysis.
+$(SIGNATURES)
+"""
+function fromcex(traitvalue::AnalysisCex, cexsrc::AbstractString, T;      
+    delimiter = "|", configuration = nothing, strict = true)
+    analysis(cexsrc, delimiter)
+end

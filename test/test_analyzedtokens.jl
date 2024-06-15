@@ -15,7 +15,7 @@
     expected = "urn:cts:demo:latin.sample:1|Et|Et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1|et|LexicalToken"
     @test cex(atkn) == expected
     # roundtrip:
-    @test_broken fromcex(cex(atkn), AnalyzedToken) == atkn
+    @test fromcex(cex(atkn), AnalyzedToken) == atkn
 end
 
 
@@ -46,7 +46,7 @@ end
 @testset "Test parsing a serialized AnalyzedToken with abbreviated URNs" begin
     cexsrc = "urn:cts:demo:latin.sample:1|Et|Et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1|et|LexicalToken"
     atkn = fromcex(cexsrc, AnalyzedToken )
-    @test_broken isa(atkn, AnalyzedToken)
+    @test isa(atkn, AnalyzedToken)
     #@test_broken length(atkn.analyses) == 1
     #a = atkn.analyses[1]
     #@test_broken a.lexeme == LexemeUrn("ls.n16278")
