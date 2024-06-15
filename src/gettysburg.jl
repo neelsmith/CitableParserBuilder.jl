@@ -27,12 +27,12 @@ GETTYSBURG_DICT_URL = "https://raw.githubusercontent.com/neelsmith/CitableCorpus
 
 
 
-function gettsyburgDictToParser(dict::Dict; delimiter = ",")
-    hdr = join(["Token","Lexeme","Form","Stem","Rule"], delimiter)
+function gettysburgDictToParser(dict::Dict; delimiter = ",")
+    hdr = join(["Token","Lexeme","Form","Stem","Rule","MToken"], delimiter)
     
     datarows = String[hdr]
     for k in keys(dict)
-        row = string(k,delimiter, "gburglex.", k,delimiter, "pennpos.", dict[k],delimiter,"gburgstem.",k,delimiter, "gburgrule.pennid")
+        row = string(k,delimiter, "gburglex.", k,delimiter, "pennpos.", dict[k],delimiter,"gburgstem.",k,delimiter, "gburgrule.pennid",delimiter,k)
         push!(datarows, row)
     end
     csvsrc = join(datarows,"\n")
@@ -50,7 +50,7 @@ function gettysburgParser()
     dict = CSV.File(downloaded) |> Dict
     rm(downloaded)
     
-    gettsyburgDictToParser(dict) |> GettysburgParser
+    gettysburgDictToParser(dict) |> GettysburgParser
 end
 
 
@@ -63,5 +63,5 @@ function gettysburgParser(repo::AbstractString; delimiter = ",")
 
     @debug("Src is $(src)")
     dict = CSV.File(src) |> Dict
-    gettsyburgDictToParser(dict; delimiter = delimiter) |> GettysburgParser
+    gettysburgDictToParser(dict; delimiter = delimiter) |> GettysburgParser
 end

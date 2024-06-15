@@ -17,7 +17,7 @@ or the `delimited` function can be used with a URN registry to write full CITE2 
 """
 function cex(at::AnalyzedToken; delimiter = "|")
     if isempty(at.analyses)
-        noanalysis = repeat(delimiter, 6)
+        noanalysis = repeat(delimiter, 7)
         cex(at.ctoken.passage; delimiter = delimiter) * noanalysis * string(typeof(at.ctoken.tokentype))
     else
         lines = []
@@ -44,7 +44,8 @@ function delimited(at::AnalyzedToken; delim = "|", registry = nothing)
     end
     @debug("Delimited for analyzedtoken ", at)
     if isempty(at.analyses)
-        noanalysis = "|||||"
+        #noanalysis = "|||||||"
+        noanalysis = repeat(delim, 7)
         cex(at.ctoken.passage; delimiter = delim) * noanalysis
     else
         lines = []
@@ -72,29 +73,56 @@ function delimited(v::AbstractVector{AnalyzedToken}; delim = "|", registry = not
     join(lines, "\n")
 end
 
+#=
+function fromcex(trait::CexAnalyzedToken, cexsrc::AbstractString, ::Type{CexAnalyzedToken}; 
+    delimiter = "|",  configuration = nothing, strict = true)
+    @info("HEY! PARSE ONE AnalyzedToken from cex")
+    lines = filter(split(s, "\n")) do ln
+        !isempty(ln)
+    end
+
+    @debug("Analyzing delimited for ATken")
+    map(lines) do s
+        parts = split(s, delimiter)
+        
+        if length(parts) < 9
+            @warn("`fromcex` reading AnalyzedTokenCollection: only got $(length(parts)) columns for data line $(s)")
+        else
+            cp = CitablePassage(CtsUrn(parts[1]), parts[2])
+            tokentype = parts[9] * "()" |> Meta.parse |> eval
+            ctoken = CitableToken(cp, tokentype)
+            alist =  isempty(parts[3]) ? [] : [analysis(join(parts[3:8], "|"))]
+            AnalyzedToken(ctoken, alist) 
+        end
+    end
+end
+
+=#
 
 """Parse a one-line delimited-text representation into an `AnalyzedToken`,
 using abbreviated URNs for identifiers.  Note that for a sigle CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
 
 $(SIGNATURES)
 """
-function fromcex(s::AbstractString, ::Type{AnalyzedToken}; delimiter = "|", configuration = nothing, strict = true)
-    lines = filter(split(s, "\n")) do ln
+#function fromcex(s::AbstractString, ::Type{AnalyzedToken}; delimiter = "|", configuration = nothing, strict = true)
+function fromcex(traitvalue::CexAnalyzedToken, cexsrc::AbstractString, T;      
+    delimiter = "|", configuration = nothing, strict = true)
+    lines = filter(split(cexsrc, "\n")) do ln
         !isempty(ln)
     end
 
+    @debug("Analyzing delimited for ATken")
     map(lines) do s
         parts = split(s, delimiter)
         
-        if length(parts) < 8
-            @warn("`fromcex` reading AnalyzedTokens: only got $(length(parts)) columns for data line $(s)")
+        if length(parts) < 9
+            @warn("`fromcex` reading AnalyzedTokenCollection: only got $(length(parts)) columns for data line $(s)")
         else
             cp = CitablePassage(CtsUrn(parts[1]), parts[2])
-            tokentype = parts[8] * "()" |> Meta.parse |> eval
+            tokentype = parts[9] * "()" |> Meta.parse |> eval
             ctoken = CitableToken(cp, tokentype)
-            alist =  isempty(parts[3]) ? [] : [analysis(join(parts[3:7], "|"))]
+            alist =  isempty(parts[3]) ? [] : [analysis(join(parts[3:8], "|"))]
             AnalyzedToken(ctoken, alist) 
         end
     end
 end
-

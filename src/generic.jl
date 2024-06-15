@@ -73,7 +73,7 @@ end
 
 $(SIGNATURES)
 
-Returns an`AnalyzedTokens` object.
+Returns an`AnalyzedTokenCollection` object.
 """
 function parsecorpus(c::CitableTextCorpus, p::T; data = nothing, countinterval = 100) where {T <: CitableParser}
     wordlist = map(psg -> psg.text, c.passages) |> unique
@@ -90,5 +90,5 @@ function parsecorpus(c::CitableTextCorpus, p::T; data = nothing, countinterval =
             push!(results, at)
         end
     end
-    results |> AnalyzedTokens
+    results |> AnalyzedTokenCollection
 end

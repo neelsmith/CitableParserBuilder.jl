@@ -1,8 +1,8 @@
 
 # Tokens
 @testset "Test extracting string list of tokens from list of Analysis objects" begin
-    a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"))
-    a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"))
+    a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"), "donorum")
+    a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"), "donum")
   
     resultlist = [a1, a2]
   
@@ -12,8 +12,8 @@ end
 
 @testset "Test extracting string list of tokens AnalyzedToken objects" begin
     f = joinpath(pwd(), "data", "ambiganalysis.cex")
-    atc = fromcex(f, AnalyzedTokens, FileReader)
-    expected = ["et", "abducere"]
+    atc = fromcex(f, AnalyzedTokenCollection, FileReader)
+    expected = ["Et", "abducere"]
 
     @test tokens(atc) == expected
 
@@ -25,8 +25,8 @@ end
 
 # Lexemes
 @testset "Test extracting string list of lexemes from list of Analysis objects" begin
-    a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"))
-    a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"))
+    a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"), "donorum")
+    a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"), "donorum")
   
     resultlist = [a1, a2]
   
@@ -37,7 +37,7 @@ end
 
 @testset "Test extracting lexemes from AnalyzedToken objects" begin
     f = joinpath(pwd(), "data", "ambiganalysis.cex")
-    atc = fromcex(f, AnalyzedTokens, FileReader)
+    atc = fromcex(f, AnalyzedTokenCollection, FileReader)
     expected = [ LexemeUrn("ls.n16278"), LexemeUrn("ls.x"), LexemeUrn("ls.y"), LexemeUrn("ls.z")]
 
     @test lexemes(atc) == expected
@@ -49,8 +49,8 @@ end
 
 # Rules
 @testset "Test extracting rules from list of Analysis objects" begin
-    a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"))
-    a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"))
+    a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"), "donorum")
+    a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"), "donorum")
   
     resultlist = [a1, a2]
   
@@ -60,7 +60,7 @@ end
   
 @testset "Test extracting rules from AnalyzedToken objects" begin
     f = joinpath(pwd(), "data", "ambiganalysis.cex")
-    atc = fromcex(f, AnalyzedTokens, FileReader)
+    atc = fromcex(f, AnalyzedTokenCollection, FileReader)
     expected = [ 
     RuleUrn("rules.example1"),
     RuleUrn("rules.x"),
@@ -76,8 +76,8 @@ end
 # Stems
   
 @testset "Test extracting stems from list of Analysis objects" begin
-    a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"))
-    a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"))
+    a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"), "donorum")
+    a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"), "donorum")
   
     resultlist = [a1, a2]
   
@@ -87,7 +87,7 @@ end
   
 @testset "Test extracting stems from AnalyzedToken objects" begin
     f = joinpath(pwd(), "data", "ambiganalysis.cex")
-    atc = fromcex(f, AnalyzedTokens, FileReader)
+    atc = fromcex(f, AnalyzedTokenCollection, FileReader)
     expected = [ 
         StemUrn("stems.example1"),
         StemUrn("stems.x"),
@@ -102,8 +102,8 @@ end
 
 # Forms  
 @testset "Test extracting forms from list of Analysis objects" begin
-    a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"))
-    a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"))
+    a1 = Analysis("donorum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19"), "donorum")
+    a2 =   Analysis("donum", LexemeUrn("ls.n14736"), FormUrn("forms.2020003200"), StemUrn("latcommon.nounn14736"), RuleUrn("nouninfl.us_i19a"),"donum")
   
     resultlist = [a1, a2]
   
@@ -113,7 +113,7 @@ end
   
 @testset "Test extracting forms from AnalyzedToken objects" begin
     f = joinpath(pwd(), "data", "ambiganalysis.cex")
-    atc = fromcex(f, AnalyzedTokens, FileReader)
+    atc = fromcex(f, AnalyzedTokenCollection, FileReader)
     expected = [ 
         FormUrn("morphforms.1000000001"),
         FormUrn("morphforms.x"),

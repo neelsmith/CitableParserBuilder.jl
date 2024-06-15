@@ -13,10 +13,10 @@ function tokens(v::AbstractVector{AnalyzedToken})
     tokens(analyses)
 end
 
-"""Extract a list of string token values from an `AnalyzedTokens` object.
+"""Extract a list of string token values from an `AnalyzedTokenCollection` object.
 $(SIGNATURES)
 """
-function tokens(atokens::AnalyzedTokens)
+function tokens(atokens::AnalyzedTokenCollection)
     tokens(atokens.analyses)
 end
 
@@ -38,10 +38,10 @@ function lexemes(v::AbstractVector{AnalyzedToken})
     lexemes(analyses)
 end
 
-"""Extract a list of lexemes from an `AnalyzedTokens` object.
+"""Extract a list of lexemes from an `AnalyzedTokenCollection` object.
 $(SIGNATURES)
 """
-function lexemes(atokens::AnalyzedTokens)
+function lexemes(atokens::AnalyzedTokenCollection)
     lexemes(atokens.analyses)
 end
 
@@ -61,10 +61,10 @@ function rules(v::AbstractVector{AnalyzedToken})
     rules(analyses)
 end
 
-"""Extract a list of rules from an `AnalyzedTokens` object.
+"""Extract a list of rules from an `AnalyzedTokenCollection` object.
 $(SIGNATURES)
 """
-function rules(atokens::AnalyzedTokens)
+function rules(atokens::AnalyzedTokenCollection)
     rules(atokens.analyses)
 end
 
@@ -85,10 +85,10 @@ function stems(v::AbstractVector{AnalyzedToken})
     stems(analyses)
 end
 
-"""Extract a list of stems from an `AnalyzedTokens` object.
+"""Extract a list of stems from an `AnalyzedTokenCollection` object.
 $(SIGNATURES)
 """
-function stems(atokens::AnalyzedTokens)
+function stems(atokens::AnalyzedTokenCollection)
     stems(atokens.analyses)
 end
 
@@ -109,10 +109,10 @@ function forms(v::AbstractVector{AnalyzedToken})
     forms(analyses)
 end
 
-"""Extract a list of forms from an `AnalyzedTokens` object.
+"""Extract a list of forms from an `AnalyzedTokenCollection` object.
 $(SIGNATURES)
 """
-function forms(atokens::AnalyzedTokens)
+function forms(atokens::AnalyzedTokenCollection)
     forms(atokens.analyses)
 end
 

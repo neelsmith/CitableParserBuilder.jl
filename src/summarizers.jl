@@ -14,7 +14,7 @@ function flatpairs(v::AbstractVector{AnalyzedToken})
     pairlist
 end
 
-function stringsforlexeme(atcollection::AnalyzedTokens, lexstr::AbstractString)
+function stringsforlexeme(atcollection::AnalyzedTokenCollection, lexstr::AbstractString)
     stringsforlexeme(atcollection.analyses, lexstr)
 end
 
@@ -40,7 +40,7 @@ function passagesforlexeme(v::AbstractVector{AnalyzedToken}, lexstr::AbstractStr
 end
 
 
-function lexemedictionary(parses::AnalyzedTokens, tokenindex::Dictionary{String, Vector{CtsUrn}})
+function lexemedictionary(parses::AnalyzedTokenCollection, tokenindex::Dictionary{String, Vector{CtsUrn}})
     lexemedictionary(parses.analyses, tokenindex)
 end
 
@@ -71,12 +71,12 @@ function lexemedictionary(parses::Vector{AnalyzedToken}, tokenindex::Dictionary{
 end
 
 
-"""Compute histogram of lexemes in `AnalyzedTokens`.
+"""Compute histogram of lexemes in `AnalyzedTokenCollection`.
 $(SIGNATURES)
 All distinct lexemes for a token are counted; there is no weighting of counts for 
 lexically ambiguous tokens.
 """
-function lexemehisto(parses::AnalyzedTokens)
+function lexemehisto(parses::AnalyzedTokenCollection)
     counts = map(a -> lexemes(a.analyses), parses.analyses) |> Iterators.flatten |> collect .|> string |> countmap
     sort!(OrderedDict(counts); byvalue=true, rev=true)
 end

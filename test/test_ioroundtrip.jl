@@ -2,30 +2,23 @@
     f = joinpath(pwd(), "data","gburgerrors.cex")
     corpus = fromcex(f, CitableTextCorpus, FileReader)
     tc = tokenizedcorpus(corpus, simpleAscii())
-
     
     parser = CitableParserBuilder.gettysburgParser(pwd() |> dirname)
 
     parsed =  parsecorpus(tc, parser)
-    @test isa(parsed, AnalyzedTokens)
+    @test parsed isa  AnalyzedTokenCollection
     @test length(parsed) == 64
 
-    abbrcexfile = mktemp()[1]
-    open(abbrcexfile,"w") do io
-        write(io, cex(parsed))
-    end
-    roundtripped = fromcex(abbrcexfile, AnalyzedTokens, FileReader)
+    cexout = cex(parsed)
+    roundtripped = fromcex(cexout, AnalyzedTokenCollection)
+    @test roundtripped == parsed
     @test typeof(roundtripped) == typeof(parsed)
     @test length(roundtripped) == length(parsed)
-    rm(abbrcexfile)
-
-
-
-
+    
     # This part is broken:
     urndict = Dict(
     "gburglex" => "urn:cite2:citedemo:gburglex.v1:",
-    "gburgform" => "urn:cite2:citedemo:gburgform.v1:",
+    "pennpos"  => "urn:cite2:citedemo:pennpos.v1:",
     "gburgrule" => "urn:cite2:citedemo:gburgrule.v1:",
     "gburgstem" => "urn:cite2:citedemo:gburgstem.v1:"
     )
@@ -33,8 +26,8 @@
     open(cexfile,"w") do io
         write(io, delimited(parsed; registry = urndict))
     end
-    #roundtrippedurns = fromcex(read(cexfile, String), AnalyzedTokens)
-    #@test typeof(roundtrippedurns) == typeof(parsed)
-    #@test length(roundtrippedurns) == length(parsed)
+    roundtrippedurns = fromcex(read(cexfile, String), AnalyzedTokenCollection)
+    @test typeof(roundtrippedurns) == typeof(parsed)
+    @test_broken length(roundtrippedurns) == length(parsed)
     rm(cexfile)
 end

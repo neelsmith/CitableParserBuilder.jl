@@ -7,7 +7,8 @@ struct DFParser <: AbstractDFParser
     df::DataFrame
     ortho::OrthographicSystem
 
-    DFParser(df::DataFrame,   ortho::OrthographicSystem = simpleAscii()) = new(df, ortho)
+    DFParser(df::DataFrame,   
+        ortho::OrthographicSystem = simpleAscii()) = new(df, ortho)
 end
 
 
@@ -42,7 +43,8 @@ function parsetoken(s, parser::AbstractDFParser; data = nothing)
             LexemeUrn(r.Lexeme),
             FormUrn(r.Form),
             StemUrn(r.Stem),
-            RuleUrn(r.Rule)
+            RuleUrn(r.Rule),
+            r.MToken
         )
         push!(resultarray, a)
     end

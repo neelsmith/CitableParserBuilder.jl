@@ -5,6 +5,31 @@ struct AnalyzedToken <: Citable
     analyses::Vector{Analysis}
 end
 
+function analyses(at::AnalyzedToken)
+    at.analyses
+end
+
+function passage(at::AnalyzedToken)
+    at.ctoken |> passage
+end
+
+
+"""Get URN for analysis.
+$(SIGNATURES)
+"""
+function text(at::AnalyzedToken)
+    at.ctoken |> passage |> text
+end
+
+
+"""Get citable token for analysis.
+$(SIGNATURES)
+"""
+function ctoken(at::AnalyzedToken)
+    at.ctoken
+end
+
+
 """Override Base.show for `AnalyzedToken`.
 $(SIGNATURES)
 """

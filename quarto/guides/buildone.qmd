@@ -1,57 +1,79 @@
-# Worked example: build your own `CitableParser`
+# Build your own `CitableParser`
+
+This DIY recipe will "parse" a form by normalizing tokens to lower case, but then simply reporting the same analysis for every token it sees. It illustrates how simple the basic framework for building a parser is: two steps are all it takes.
+
 
 
 ## 1. Define your parser type
 
-Import `CitableParserBuilder`, and define your parser as a subtype of `CitableParser`.
-```doctest buildone
+Use `CitableParserBuilder`, and define your parser as a subtype of `CitableParser`.
+
+In Julia, it could look like this if your parser object contained no information beyond a labelling string.
+
+```
 using CitableParserBuilder
 struct FakeParser <: CitableParser
-    label
+    label::AbstractString
 end
-fakeParser = FakeParser("Parser generating dummy values")
 
-# output
-
-FakeParser("Parser generating dummy values")
 ```
 
 
 ## 2. Implement `parsetoken`
 
-Be sure to import `CitableParserBuilder: parsetoken` before defining a method of `parsetoken` for your parser's type.  You're done!  You can now use `parsetoken` and all the other functions of the `ParserTrait`.
+The second step is to import `CitableParserBuilder: parsetoken` and then define a method of `parsetoken` for your parser's type.  You're done!  You can now use `parsetoken` and all the other functions of the `ParserTrait`.
 
-```doctest buildone
-import CitableParserBuilder: parsetoken
-function parsetoken(s::AbstractString, parser::FakeParser, ortho::T; data = nothing)  where {T <: OrthographicSystem}
-    # Returns only the same analysis no matter
-    # what the token is
-    [
-        Analysis(
-        s,
-        LexemeUrn("fakeparser.nolexemeanalysis"),
-        FormUrn("fakeparser.noformanalysis"),
-        StemUrn("fakeparser.nostemanalysis"),
-        RuleUrn("fakeparser.noruleanalysis")
-    )
-    ]
-end
-tokenparses = parsetoken("word", fakeParser)
-tokenparses[1].token
+In the following cell, we'll wrap the whole package in a module named `DIYParser`, then use `DIYParser` along with `CitableParserBuilder` and `Orthography` to parse a token.
 
-# output
+```{julia}
+module DIYParser
+    using CitableParserBuilder, Orthography
+    import CitableParserBuilder: parsetoken
+    export FakeParser
 
-"word"
+    struct FakeParser <: CitableParser
+        label::AbstractString
+    end
+
+    function parsetoken(s::AbstractString, parser::FakeParser, ortho::T)  where {T <: OrthographicSystem}
+        # Returns only the same analysis no matter
+        # what the token is
+        [
+            Analysis(
+            s,
+            LexemeUrn("fakeparser.nolexemeanalysis"),
+            FormUrn("fakeparser.noformanalysis"),
+            StemUrn("fakeparser.nostemanalysis"),
+            RuleUrn("fakeparser.noruleanalysis"),
+            lowercase(s)
+        )
+        ]
+    end
+end # end of module
+
+
+# Use the new module along with CitableParserBuilder:
+using .DIYParser, CitableParserBuilder, Orthography
+fakeParser = FakeParser("Parser generating dummy values")
+tokenparses = parsetoken("Word", fakeParser, simpleAscii())
 ```
 
-```doctest buildone
-wordlist = split("More than one word")
-listparses = parselist(wordlist, fakeParser)
-length(listparses)
 
-# output
+The result is a generic Vector of `Analysis` objects which we can use just like the output of any other `CitableParser`.
 
-4
+
+```{julia}
+tokenparses .|> token
 ```
-    
 
+```{julia}
+tokenparses .|> mtoken
+```
+
+```{julia}
+tokenparses .|> lexemeurn
+```
+
+```{julia}
+tokenparses .|> formurn
+```

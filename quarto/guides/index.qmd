@@ -4,3 +4,39 @@ title: "Guides"
 
 
 Follow any of these recipes to complete specific tasks using `CitableParserBuilder.jl`.
+
+
+
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+**Work with parsing output**
+
+
+[Abbreviated URNs](./abbrurns.qmd)
+
+[Parsing citable texts](./citabletexts.qmd)
+
+[Working with analyzed tokens](./tokenvectors.qmd)
+
+:::
+
+
+::: {.column width="5%"}
+
+:::
+
+
+::: {.column width="40%"}
+
+**Work with underlying data**
+
+[Working directly with parser back ends](./parserbackends.qmd)
+
+
+[Building your own parser](./buildone.qmd)
+:::
+
+::::
