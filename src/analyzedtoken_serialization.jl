@@ -86,7 +86,7 @@ function fromcex(trait::CexAnalyzedToken, cexsrc::AbstractString, ::Type{CexAnal
         parts = split(s, delimiter)
         
         if length(parts) < 9
-            @warn("`fromcex` reading AnalyzedTokens: only got $(length(parts)) columns for data line $(s)")
+            @warn("`fromcex` reading AnalyzedTokenCollection: only got $(length(parts)) columns for data line $(s)")
         else
             cp = CitablePassage(CtsUrn(parts[1]), parts[2])
             tokentype = parts[9] * "()" |> Meta.parse |> eval
@@ -111,12 +111,12 @@ function fromcex(traitvalue::CexAnalyzedToken, cexsrc::AbstractString, T;
         !isempty(ln)
     end
 
-    @info("Analyzing delimited for ATken")
+    @debug("Analyzing delimited for ATken")
     map(lines) do s
         parts = split(s, delimiter)
         
         if length(parts) < 9
-            @warn("`fromcex` reading AnalyzedTokens: only got $(length(parts)) columns for data line $(s)")
+            @warn("`fromcex` reading AnalyzedTokenCollection: only got $(length(parts)) columns for data line $(s)")
         else
             cp = CitablePassage(CtsUrn(parts[1]), parts[2])
             tokentype = parts[9] * "()" |> Meta.parse |> eval

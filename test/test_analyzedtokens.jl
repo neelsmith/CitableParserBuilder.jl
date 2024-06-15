@@ -69,7 +69,7 @@ end
 
 @testset "Test parsing multiple analyses" begin
     f = joinpath(pwd(), "data", "ambiganalysis.cex")
-    atokens = fromcex(f, AnalyzedTokens, FileReader)
+    atokens = fromcex(f, AnalyzedTokenCollection, FileReader)
     @test length(atokens) == 2
     @test length(atokens.analyses[2].analyses) == 3
 

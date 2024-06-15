@@ -35,7 +35,7 @@ import Orthography: passage
 export Analysis, analysis
 export token, lexemeurn, formurn, stemurn, ruleurn, mtoken
 export tokens
-export AnalyzedToken, AnalyzedTokens
+export AnalyzedToken, AnalyzedTokenCollection
 export ctoken, analyses #, passage, text, urn
 
 

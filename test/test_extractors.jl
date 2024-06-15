@@ -12,7 +12,7 @@ end
 
 @testset "Test extracting string list of tokens AnalyzedToken objects" begin
     f = joinpath(pwd(), "data", "ambiganalysis.cex")
-    atc = fromcex(f, AnalyzedTokens, FileReader)
+    atc = fromcex(f, AnalyzedTokenCollection, FileReader)
     expected = ["Et", "abducere"]
 
     @test tokens(atc) == expected
@@ -37,7 +37,7 @@ end
 
 @testset "Test extracting lexemes from AnalyzedToken objects" begin
     f = joinpath(pwd(), "data", "ambiganalysis.cex")
-    atc = fromcex(f, AnalyzedTokens, FileReader)
+    atc = fromcex(f, AnalyzedTokenCollection, FileReader)
     expected = [ LexemeUrn("ls.n16278"), LexemeUrn("ls.x"), LexemeUrn("ls.y"), LexemeUrn("ls.z")]
 
     @test lexemes(atc) == expected
@@ -60,7 +60,7 @@ end
   
 @testset "Test extracting rules from AnalyzedToken objects" begin
     f = joinpath(pwd(), "data", "ambiganalysis.cex")
-    atc = fromcex(f, AnalyzedTokens, FileReader)
+    atc = fromcex(f, AnalyzedTokenCollection, FileReader)
     expected = [ 
     RuleUrn("rules.example1"),
     RuleUrn("rules.x"),
@@ -87,7 +87,7 @@ end
   
 @testset "Test extracting stems from AnalyzedToken objects" begin
     f = joinpath(pwd(), "data", "ambiganalysis.cex")
-    atc = fromcex(f, AnalyzedTokens, FileReader)
+    atc = fromcex(f, AnalyzedTokenCollection, FileReader)
     expected = [ 
         StemUrn("stems.example1"),
         StemUrn("stems.x"),
@@ -113,7 +113,7 @@ end
   
 @testset "Test extracting forms from AnalyzedToken objects" begin
     f = joinpath(pwd(), "data", "ambiganalysis.cex")
-    atc = fromcex(f, AnalyzedTokens, FileReader)
+    atc = fromcex(f, AnalyzedTokenCollection, FileReader)
     expected = [ 
         FormUrn("morphforms.1000000001"),
         FormUrn("morphforms.x"),

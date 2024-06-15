@@ -64,7 +64,7 @@ delimited_output
 We can read the file to create a new Vector of analyses.
 
 ```{julia}
-fromcex(delimited_output, AnalyzedTokens, FileReader)
+fromcex(delimited_output, AnalyzedTokenCollection, FileReader)
 ```
 
 

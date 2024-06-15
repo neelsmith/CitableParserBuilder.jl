@@ -19,7 +19,7 @@ Follow any of these recipes to complete specific tasks using `CitableParserBuild
 
 [Parsing citable texts](./citabletexts.qmd)
 
-[Working with parsing results](./tokenvectors.qmd)
+[Working with analyzed tokens](./tokenvectors.qmd)
 
 :::
 
