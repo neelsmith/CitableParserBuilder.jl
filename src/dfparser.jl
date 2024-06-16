@@ -72,23 +72,35 @@ function tofile(dfp::DFParser, outfile; delimiter = "|")
 end
 
 
-#=
-function parsetoken(s::AbstractString, parser::DFParser; data = nothing)
-    @debug("SEARCH FOR $(knormal(s))...")
-    resultdf = subset(parser.df, :Token => t -> t .== knormal(s))
 
-    resultarray = Analysis[]
 
-    for r in eachrow(resultdf)
-        a =  Analysis(
-            r.Token, 
-            LexemeUrn(r.Lexeme),
-            FormUrn(r.Form),
-            StemUrn(r.Stem),
-            RuleUrn(r.Rule)
-        )
-        push!(resultarray, a)
-    end
-    resultarray
+## 
+"""Serializable trait for DF Parser.
+"""
+struct DFParserCex <: CexTrait end
+"""Get serializable trait for DFParser type.
+$(SIGNATURES)
+"""
+function cextrait(::Type{DFParser})
+    DFParserCex()
 end
-=#
+
+
+
+"""Compose delimited text string for a DFParser.
+$(SIGNATURES)
+"""
+function cex(dfp::DFParser; delimiter = "|")
+    buf = IOBuffer()
+    CSV.write(buf, dfp.df; delim = delimiter) 
+    take!(buf) |> String
+end
+
+
+"""Create a DFParser from a delimited-text source.
+$(SIGNATURES)
+"""
+function fromcex(trait::DFParserCex, cexsrc::AbstractString, T; 
+    delimiter = "|", configuration = nothing, strict = true)
+    CSV.File(IOBuffer(cexsrc); delim = delimiter)  |> DataFrame |> DFParser
+end

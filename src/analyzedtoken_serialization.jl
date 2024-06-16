@@ -82,7 +82,7 @@ $(SIGNATURES)
 function fromcex(traitvalue::CexAnalyzedToken, cexsrc::AbstractString, T;      
     delimiter = "|", configuration = nothing, strict = true)
 
-    @info("Reading CEX to create an AnalyzedToken")
+    @debug("Reading CEX to create an AnalyzedToken")
 
 
     lines = filter(split(cexsrc, "\n")) do ln

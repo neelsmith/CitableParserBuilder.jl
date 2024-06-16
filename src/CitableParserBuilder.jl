@@ -43,7 +43,6 @@ export ctoken, analyses #, passage, text, urn
 export CitableParser
 export AbstractStringParser, AbstractDFParser
 export datasource, orthography
-# TBA: AbstractrDictionaryParser
 export Stem, Rule
 
 export StringParser, stringParser, delimiter, dataframe
@@ -83,7 +82,6 @@ include("abbrurn.jl")
 include("parser.jl")
 include("dfparser.jl")
 include("stringparser.jl")
-include("dictparser.jl")
 include("generators.jl")
 
 include("analysis.jl")

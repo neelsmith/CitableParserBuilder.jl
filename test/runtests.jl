@@ -7,7 +7,7 @@ using Test
 
 
 
-includle("test_io.jl")
+include("test_io.jl")
 
 include("test_parsers.jl")
 
