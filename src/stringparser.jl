@@ -22,23 +22,6 @@ function delimiter(sp::StringParser)
     sp.delimiter
 end
 
-#=
-"""Create an `Analysis` from line of delimited text.
-$(SIGNATURES)
-"""
-function fromline(s::AbstractString; delimiter = "|")
-    pieces = split(s,delimiter)
-    Analysis(
-        pieces[1], 
-        LexemeUrn(pieces[2]),
-        FormUrn(pieces[3]),
-        StemUrn(pieces[4]),
-        RuleUrn(pieces[5])
-    )
-end
-=#
-
-
 
 """Parse a single token using `parser`.
 $(SIGNATURES)
@@ -47,22 +30,8 @@ function parsetoken(s::AbstractString, parser::AbstractStringParser)
     ptrn = s * delimiter(parser)
     @debug("Looking for $(s) in parser data")
     matches = filter(ln -> startswith(ln, ptrn), datasource(parser))
-    map(ln -> cex(ln), matches)
+    map(ln -> fromcex(ln, Analysis), matches)
 end
-
-
-
-"""Write entries to file.
-$(SIGNATURES)
-"""
-function tofile(p::StringParser, f; addheader = false)
-    hdr = join(["Token","Lexeme","Form","Stem","Rule"], delimiter(p))
-    content = addheader ? hdr * "\n" * join(p.entries,"\n") : join(p.entries,"\n")
-    open(f, "w") do io
-        write(f, content)
-    end
-end
-
 
 """Construct a string-backed parser from a dataframe.
 $(SIGNATURES)
