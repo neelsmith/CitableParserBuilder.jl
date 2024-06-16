@@ -22,19 +22,6 @@ function delimiter(sp::StringParser)
     sp.delimiter
 end
 
-"""Create an `Analysis` from line of delimited text.
-$(SIGNATURES)
-"""
-function fromline(s::AbstractString; delimiter = "|")
-    pieces = split(s,delimiter)
-    Analysis(
-        pieces[1], 
-        LexemeUrn(pieces[2]),
-        FormUrn(pieces[3]),
-        StemUrn(pieces[4]),
-        RuleUrn(pieces[5])
-    )
-end
 
 """Parse a single token using `parser`.
 $(SIGNATURES)
@@ -43,22 +30,8 @@ function parsetoken(s::AbstractString, parser::AbstractStringParser)
     ptrn = s * delimiter(parser)
     @debug("Looking for $(s) in parser data")
     matches = filter(ln -> startswith(ln, ptrn), datasource(parser))
-    map(ln -> fromline(ln), matches)
+    map(ln -> fromcex(ln, Analysis), matches)
 end
-
-
-
-"""Write entries to file.
-$(SIGNATURES)
-"""
-function tofile(p::StringParser, f; addheader = false)
-    hdr = join(["Token","Lexeme","Form","Stem","Rule"], delimiter(p))
-    content = addheader ? hdr * "\n" * join(p.entries,"\n") : join(p.entries,"\n")
-    open(f, "w") do io
-        write(f, content)
-    end
-end
-
 
 """Construct a string-backed parser from a dataframe.
 $(SIGNATURES)
@@ -105,3 +78,23 @@ end
 function dataframe(sp::StringParser)
     CSV.File(IOBuffer( join(datasource(sp),"\n")) , delim = "|") |> DataFrame
 end
+
+
+## 
+struct StringParserCex <: CexTrait end
+function cextrait(::Type{StringParser})
+    StringParserCex()
+end
+
+
+
+function cex(sp::StringParser; delimiter = "|")
+    join(sp.entries, "\n")
+end
+
+
+function fromcex(trait::StringParserCex, cexsrc::AbstractString, T; 
+    delimiter = "|", configuration = nothing, strict = true)
+    split(cexsrc,"\n") |> StringParser
+end
+    
