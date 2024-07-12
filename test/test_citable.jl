@@ -5,7 +5,8 @@
     rule = RuleUrn("rules.example1")
     stem = StemUrn("stems.example1")
     mform = "et"
-    a = Analysis(str, lex, form, stem, rule, mform)
+    mformid = "1"
+    a = Analysis(str, lex, form, stem, rule, mform, mformid)
 
     u = CtsUrn("urn:cts:demo:latin.sample:1")
     cn = CitablePassage(u, "Et")

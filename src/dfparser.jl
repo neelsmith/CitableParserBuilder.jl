@@ -30,7 +30,7 @@ function orthography(dfp::DFParser)
 end
 
 function parsetoken(s, parser::AbstractDFParser; data = nothing)
-    @debug("SEARCH FOR $(s)...")
+    @debug("SEARCH DF FOR $(s)...")
     df = datasource(parser)
     @debug("df is $(df)")
     resultdf = subset(df, :Token => t -> t .== s)
@@ -44,7 +44,8 @@ function parsetoken(s, parser::AbstractDFParser; data = nothing)
             FormUrn(r.Form),
             StemUrn(r.Stem),
             RuleUrn(r.Rule),
-            r.MToken
+            r.MToken,
+            r.MTokenID
         )
         push!(resultarray, a)
     end

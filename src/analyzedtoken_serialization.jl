@@ -1,4 +1,3 @@
-
 "Value for CexTrait for AnalyzedToken"
 struct CexAnalyzedToken <: CexTrait end
 """Define`CexTrait` value for `CitableToken`.
@@ -15,7 +14,7 @@ Uses abbreviated URNs.
 These can be expanded to full CITE2 URNs when read back with a URN registry,
 or the `delimited` function can be used with a URN registry to write full CITE2 URNs.
 """
-function cex(at::AnalyzedToken; delimiter = "|")
+function cex(at::AnalyzedToken; delimiter = "|", registry = nothing)
     if isempty(at.analyses)
         noanalysis = repeat(delimiter, 7)
         cex(at.ctoken.passage; delimiter = delimiter) * noanalysis * string(typeof(at.ctoken.tokentype))
@@ -25,7 +24,7 @@ function cex(at::AnalyzedToken; delimiter = "|")
 
             push!(lines, join([
                 cex(at.ctoken.passage; delimiter = delimiter), 
-                delimited(analysis; delim = delimiter),
+                cex(analysis; delim = delimiter),
                 string(typeof(at.ctoken.tokentype))
                 ], delimiter))
         end
@@ -33,7 +32,7 @@ function cex(at::AnalyzedToken; delimiter = "|")
     end
 end
 
-
+#=
 """Serialize a single `AnalyzedToken` as one or more lines of delimited text.
 
 $(SIGNATURES)
@@ -72,7 +71,7 @@ function delimited(v::AbstractVector{AnalyzedToken}; delim = "|", registry = not
     end
     join(lines, "\n")
 end
-
+=#
 
 """Parse a one-line delimited-text representation into an `AnalyzedToken`,
 using abbreviated URNs for identifiers.  Note that for a sigle CEX line, the `AnalyzedToken` will have a single `Analysis` in its vector of analyses.
@@ -96,11 +95,13 @@ function fromcex(traitvalue::CexAnalyzedToken, cexsrc::AbstractString, T;
     map(lines) do s
         parts = split(s, delimiter)
         
-        if length(parts) < 9
+        if length(parts) < 10
             @warn("`fromcex` reading AnalyzedTokenCollection: only got $(length(parts)) columns for data line $(s)")
         else
             cp = CitablePassage(CtsUrn(parts[1]), parts[2])
-            tokentype = parts[9] * "()" |> Meta.parse |> eval
+            @debug("Tring to parse type from $(parts[10])")
+            typelabel = parts[10]
+            tokentype = typelabel * "()" |> Meta.parse |> eval
 
             currctoken = CitableToken(cp, tokentype)
             if isnothing(citabletoken)
@@ -115,7 +116,9 @@ function fromcex(traitvalue::CexAnalyzedToken, cexsrc::AbstractString, T;
             if isempty(parts[3])
                # skip it. 
             else
-                push!(analysislist, analysis(join(parts[3:8], "|")))
+                onelinecex = join(parts[3:9], delimiter)
+                @debug("Try to make analysis from $(onelinecex)")
+                push!(analysislist, fromcex(onelinecex, Analysis; delimiter = delimiter))
             end
             #AnalyzedToken(ctoken, alist) 
         end
