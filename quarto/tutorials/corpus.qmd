@@ -49,7 +49,7 @@ urndict = Dict(
     "gburgstem" => "urn:cite2:citedemo:gburgstem.v1:"
 )
 
-textoutput = delimited(parsed; registry = urndict)
+textoutput = cex(parsed; registry = urndict)
 ```
 
 

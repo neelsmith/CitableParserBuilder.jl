@@ -5,7 +5,8 @@
     rule = RuleUrn("rules.example1")
     stem = StemUrn("stems.example1")
     mform = "et"
-    a1 = Analysis(str, lex, form, stem, rule, mform)
+    mformid = "1"
+    a1 = Analysis(str, lex, form, stem, rule, mform, mformid)
     analysiscex = cex(a1)
     a2 = fromcex(analysiscex, Analysis)
     @test a1 == a2
@@ -23,7 +24,7 @@ end
 
 
 @testset "Test CITE I/O patterns on AnalyzedToken type" begin
-    atknsrc =  "urn:cts:demo:latin.sample:1|Et|Et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1|et|LexicalToken"
+    atknsrc =  "urn:cts:demo:latin.sample:1|Et|Et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1|et|1|LexicalToken"
     atkn1 = fromcex(atknsrc, AnalyzedToken)
     
    
@@ -36,9 +37,9 @@ end
 
 
 
-    ambigcex = """urn:cts:demo:latin.sample:2|abducere|abducere|urn:cite2:citedemo:ls.v1:x|urn:cite2:citedemo:morphforms.v1:x|urn:cite2:citedemo:stems.v1:x|urn:cite2:citedemo:rules.v1:x|abducere|LexicalToken
-urn:cts:demo:latin.sample:2|abducere|abducere|urn:cite2:citedemo:ls.v1:y|urn:cite2:citedemo:morphforms.v1:y|urn:cite2:citedemo:stems.v1:y|urn:cite2:citedemo:rules.v1:y|abducere|LexicalToken
-urn:cts:demo:latin.sample:2|abducere|abducere|urn:cite2:citedemo:ls.v1:z|urn:cite2:citedemo:morphforms.v1:z|urn:cite2:citedemo:stems.v1:y|urn:cite2:citedemo:rules.v1:z|abducere|LexicalToken
+    ambigcex = """urn:cts:demo:latin.sample:2|abducere|abducere|urn:cite2:citedemo:ls.v1:x|urn:cite2:citedemo:morphforms.v1:x|urn:cite2:citedemo:stems.v1:x|urn:cite2:citedemo:rules.v1:x|abducere|1|LexicalToken
+urn:cts:demo:latin.sample:2|abducere|abducere|urn:cite2:citedemo:ls.v1:y|urn:cite2:citedemo:morphforms.v1:y|urn:cite2:citedemo:stems.v1:y|urn:cite2:citedemo:rules.v1:y|abducere|2|LexicalToken
+urn:cts:demo:latin.sample:2|abducere|abducere|urn:cite2:citedemo:ls.v1:z|urn:cite2:citedemo:morphforms.v1:z|urn:cite2:citedemo:stems.v1:y|urn:cite2:citedemo:rules.v1:z|abducere|3|LexicalToken
 """
     atkn3 = fromcex(ambigcex, AnalyzedToken)
     @test length(analyses(atkn3)) == 3

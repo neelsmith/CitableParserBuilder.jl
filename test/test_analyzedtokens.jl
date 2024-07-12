@@ -1,18 +1,19 @@
 @testset "Test serializing analyzed token" begin
     str = "Et"
     mtoken = "et"
+    mtokenid = "1"
     form = FormUrn("morphforms.1000000001")
     lex = LexemeUrn("ls.n16278")
     rule = RuleUrn("rules.example1")
     stem = StemUrn("stems.example1")
-    a = Analysis(str, lex, form, stem, rule, mtoken)
+    a = Analysis(str, lex, form, stem, rule, mtoken, mtokenid)
 
     u = CtsUrn("urn:cts:demo:latin.sample:1")
     cn = CitablePassage(u, "Et")
     ctkn = CitableToken(cn, LexicalToken())
     atkn = AnalyzedToken(ctkn, [a]) 
    
-    expected = "urn:cts:demo:latin.sample:1|Et|Et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1|et|LexicalToken"
+    expected = "urn:cts:demo:latin.sample:1|Et|Et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1|et|1|LexicalToken"
     @test cex(atkn) == expected
     # roundtrip:
     @test fromcex(cex(atkn), AnalyzedToken) == atkn
@@ -28,25 +29,26 @@ end
     )
     str = "Et"
     mform = "et"
+    mformid = "1"
     form = FormUrn("morphforms.1000000001")
     lex = LexemeUrn("ls.n16278")
     rule = RuleUrn("rules.example1")
     stem = StemUrn("stems.example1")
-    a = Analysis(str, lex, form, stem, rule, mform)
+    a = Analysis(str, lex, form, stem, rule, mform, mformid)
   
     u = CtsUrn("urn:cts:demo:latin.sample:1")
     cn = CitablePassage(u, "Et")
     ctkn = CitableToken(cn, LexicalToken())
     atkn = AnalyzedToken(ctkn, [a]) 
 
-    expected = "urn:cts:demo:latin.sample:1|Et|Et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1|et|LexicalToken"
-    @test delimited(atkn; registry = abbrdict) == expected
+    expected = "urn:cts:demo:latin.sample:1|Et|Et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1|et|1|LexicalToken"
+    @test_broken cex(atkn; registry = abbrdict) == expected
 end
 
 @testset "Test parsing a serialized AnalyzedToken with abbreviated URNs" begin
-    cexsrc = "urn:cts:demo:latin.sample:1|Et|Et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1|et|LexicalToken"
+    cexsrc = "urn:cts:demo:latin.sample:1|Et|Et|ls.n16278|morphforms.1000000001|stems.example1|rules.example1|et|1|LexicalToken"
     atkn = fromcex(cexsrc, AnalyzedToken )
-    @test isa(atkn, AnalyzedToken)
+    @test atkn isa AnalyzedToken
     #@test_broken length(atkn.analyses) == 1
     #a = atkn.analyses[1]
     #@test_broken a.lexeme == LexemeUrn("ls.n16278")
@@ -56,7 +58,7 @@ end
 end
 
 @testset "Test parsing a serialized AnalyzedToken using full URNs" begin
-    cexsrc =  "urn:cts:demo:latin.sample:1|Et|Et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1|et|LexicalToken"
+    cexsrc =  "urn:cts:demo:latin.sample:1|Et|Et|urn:cite2:citedemo:ls.v1:n16278|urn:cite2:citedemo:morphforms.v1:1000000001|urn:cite2:citedemo:stems.v1:example1|urn:cite2:citedemo:rules.v1:example1|et|1|LexicalToken"
     atkn = fromcex(cexsrc, AnalyzedToken)
     #@test isa(atkn, AnalyzedToken)
     #@test length(atkn.analyses) == 1

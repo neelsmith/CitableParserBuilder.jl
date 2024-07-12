@@ -28,15 +28,15 @@ GETTYSBURG_DICT_URL = "https://raw.githubusercontent.com/neelsmith/CitableCorpus
 
 
 function gettysburgDictToParser(dict::Dict; delimiter = ",")
-    hdr = join(["Token","Lexeme","Form","Stem","Rule","MToken"], delimiter)
+    hdr = join(["Token","Lexeme","Form","Stem","Rule","MToken","MTokenID"], delimiter)
     
     datarows = String[hdr]
     for k in keys(dict)
-        row = string(k,delimiter, "gburglex.", k,delimiter, "pennpos.", dict[k],delimiter,"gburgstem.",k,delimiter, "gburgrule.pennid",delimiter,k)
+        row = string(k, delimiter, "gburglex.", k, delimiter, "pennpos.", dict[k],delimiter,"gburgstem.",k,delimiter, "gburgrule.pennid",delimiter,k, delimiter, "A")
         push!(datarows, row)
     end
     csvsrc = join(datarows,"\n")
-    CSV.File(IOBuffer(csvsrc)) |> DataFrame #|> GettysburgParser
+    CSV.File(IOBuffer(csvsrc)) |>  DataFrame #|> GettysburgParser
 end
 
 

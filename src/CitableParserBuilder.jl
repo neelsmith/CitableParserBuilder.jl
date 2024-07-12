@@ -33,7 +33,7 @@ import CitableCorpus: text
 import Orthography: passage
 
 export Analysis, analysis
-export token, lexemeurn, formurn, stemurn, ruleurn, mtoken
+export token, lexemeurn, formurn, stemurn, ruleurn, mtoken, mtokenid
 export tokens
 export AnalyzedToken, AnalyzedTokenCollection
 export ctoken, analyses #, passage, text, urn
