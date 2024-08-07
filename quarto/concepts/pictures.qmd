@@ -3,11 +3,17 @@
 
 ```{mermaid}
 flowchart TD
-subgraph toplevel
+class toplevel clust
+
+classDef clust color:#f00,background-color:white
+
+
+
+subgraph toplevel [Text]
 Text
 end
 
-subgraph otokens
+subgraph otokens [Orthographic tokens]
 Text --> tkn1
 Text --> tkn2(...)
 Text --> tkn3
@@ -15,14 +21,14 @@ end
 
 
 
-subgraph mtokens
+subgraph mtokens [Morphological tokens]
 tkn1 --> mtkn1
 tkn1 --> mtkn2(...)
 tkn1 --> mtkn3
 end
 
 
-subgraph analyses
+subgraph analyses [Analyses of lexical tokens]
 mtkn1 --> alys1
 mtkn1 --> alys(...)
 mtkn1 --> alys3
