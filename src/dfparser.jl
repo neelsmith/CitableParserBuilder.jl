@@ -54,8 +54,6 @@ end
 
 
 
-
-
 """Create a `DFParser` from delimited text file.
 $(SIGNATURES)
 """

@@ -1,0 +1,43 @@
+# Graphic summary
+
+
+```{mermaid}
+flowchart TD
+subgraph toplevel
+Text
+end
+
+subgraph otokens
+Text --> tkn1
+Text --> tkn2(...)
+Text --> tkn3
+end
+
+
+
+subgraph mtokens
+tkn1 --> mtkn1
+tkn1 --> mtkn2(...)
+tkn1 --> mtkn3
+end
+
+
+subgraph analyses
+mtkn1 --> alys1
+mtkn1 --> alys(...)
+mtkn1 --> alys3
+end
+
+```
+
+
+```{mermaid}
+flowchart TD
+top("urn:cts:group.work:passage")
+
+top --> otoken("urn:cts:group.work:passage.otokenid")
+
+otoken --> mtoken("urn:cts:group.work:passage.otokenid.mtokenid")
+
+mtoken --> alys("urn:cts:group.work:passage.otokenid.mtokenid.analysisid")
+```
