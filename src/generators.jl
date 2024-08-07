@@ -6,12 +6,17 @@ function DFParser(sp::StringParser)
 end
 
 
+
 """Generate all possible morphological analyses for a given lexeme and form.
 $(SIGNATURES)
 """
 function generate(lex::LexemeUrn, mform::FormUrn, parser::AbstractStringParser; delim = "|") 
+    @info("Generating from string-backed parser")
     ptrn = string(delim, lex, delim, mform, delim)
-    filter(ln -> occursin(ptrn, ln), datasource(parser)) .|> analysis
+    @info("Ptr $(ptrn)")
+    matches = filter(ln -> occursin(ptrn, ln), datasource(parser)) 
+    map(ln -> fromcex(ln, Analysis; delimiter = delim), matches)
+    # .|> analysis
 end
 
 
@@ -29,7 +34,10 @@ function generate(lex::LexemeUrn, mform::FormUrn, parser::AbstractDFParser)
             LexemeUrn(r.Lexeme),
             FormUrn(r.Form),
             StemUrn(r.Stem),
-            RuleUrn(r.Rule)
+            RuleUrn(r.Rule),
+            r.MToken,
+            r.MTokenID
+
         )
         push!(resultarray, a)
     end

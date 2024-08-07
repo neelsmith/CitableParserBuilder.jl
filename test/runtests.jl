@@ -2,7 +2,7 @@ using CitableParserBuilder
 using CitableBase
 using CitableObject, CitableText, CitableCorpus
 using Orthography
-using CSV
+using CSV, DataFrames
 using Test
 
 
@@ -23,6 +23,7 @@ include("test_ioroundtrip.jl")
 include("test_parsing.jl")
 include("test_types.jl")
 include("test_urntypes.jl")
+include("test_generate.jl")
 
 
 
